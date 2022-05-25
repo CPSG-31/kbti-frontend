@@ -1,29 +1,32 @@
-/* eslint-disable react/react-in-jsx-scope */
-import logo from './logo.svg';
-import './App.css';
+/* eslint-disable no-unused-expressions */
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PublicLayout from './layouts/Public';
+import PrivateLayout from './layouts/Private';
+import AdminLayout from './layouts/Admin';
+// import Home from './pages/Home';
+import ErrorPage from './pages/Error';
 
 function App() {
+  const roles = [
+    { role: 'admin', isLogin: true },
+    { role: 'admin', isLogin: false },
+    { role: 'user', isLogin: true },
+    { role: 'user', isLogin: false },
+  ];
+  const { role: currentRole, isLogin } = roles[2];
+
+  const checkRole = currentRole === 'user' ? <PrivateLayout /> : <AdminLayout />;
+
+  const dashboard = isLogin ? checkRole : <PublicLayout />;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={dashboard} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </Router>
   );
 }
 
