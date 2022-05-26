@@ -1,30 +1,76 @@
-/* eslint-disable react/react-in-jsx-scope */
-import logo from './logo.svg';
-import './App.css';
+/* eslint-disable no-unused-expressions */
+import { Routes, Route } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
 
-function App() {
+import { UserLayout, AdminLayout, PublicLayout } from './layouts';
+import { Error } from './components';
+import {
+  Home,
+  BrowseResult,
+  CreateDefinition,
+  ListDefinition,
+  ListDeteledDefinition,
+  ListUser,
+  Login,
+  Register,
+  PublicListDefintion,
+  ReviewDefinition,
+  UpdateDefinition,
+  DetailUser,
+  ReviewDetailDefinition,
+} from './pages';
+
+import './styles/global.css';
+
+const App = () => {
+  const { role, isLoggedIn } = useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="browse" element={<BrowseResult />} />
+        <Route path="terms/:term/defintions" element={<PublicListDefintion />}/>
+      </Route>
+
+      {(!isLoggedIn || (role !== 'admin' && role !== 'user')) && (
+        <Route element={<PublicLayout />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+      )}
+
+      {isLoggedIn && (
+        <Route element={<PublicLayout />}>
+          <Route path="create-definition" element={<CreateDefinition />} />
+        </Route>
+      )}
+
+      {role === 'user' && isLoggedIn && (
+        <Route element={<PublicLayout />}>
+          <Route path="dashboard" element={<UserLayout />} />
+          <Route path="update-definition/:idDefinition" element={<UpdateDefinition />} />
+        </Route>
+      )}
+        
+      {role === 'admin' && isLoggedIn && (
+        <>
+          <Route path="dashboard" element={<AdminLayout />} >
+            <Route path="definitions" element={<ListDefinition />}/>
+            <Route path="review-definitions" element={<ReviewDefinition />}/>
+            <Route path="review-definitions/:idDefinition" element={<ReviewDetailDefinition />}/>
+            <Route path="deleted-definitions" element={<ListDeteledDefinition />}/>
+            <Route path="users" element={<ListUser />}/>
+            <Route path="users/:idUser" element={<DetailUser />}/>
+          </Route>
+        </>
+      )}
+
+      <Route element={<PublicLayout />}>
+        <Route path="*" element={<Error />} />
+      </Route>
+    </Routes>
   );
-}
+};
 
 export default App;
