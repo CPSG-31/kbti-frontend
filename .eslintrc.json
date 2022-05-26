@@ -19,5 +19,23 @@
         "react"
     ],
     "rules": {
+        "react/react-in-jsx-scope": "off",
+        "no-trailing-spaces": "off",
+        "react/jsx-tag-spacing": "off",
+        "no-unused-vars": "off",
+        "no-multiple-empty-lines": "off",
+        "react/jsx-no-useless-fragment": "off",
+        "react/jsx-no-undef": "off",
+        "react/jsx-indent": "off",
+        "react/no-unknown-property": "off",
+        "react/self-closing-comp": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "react/function-component-definition": "off",
+        "eol-last": "off",
+        "arrow-body-style": "off",
+        "react/prop-types": "off",
+        "react/jsx-filename-extension": "off",
+        "indent": "off",
+        "max-len": "off"
     }
 }
