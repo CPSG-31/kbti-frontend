@@ -1,33 +1,76 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PublicLayout from './layouts/Public';
-import PrivateLayout from './layouts/Private';
-import AdminLayout from './layouts/Admin';
-// import Home from './pages/Home';
-import ErrorPage from './pages/Error';
+import { Routes, Route } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
 
-function App() {
-  const roles = [
-    { role: 'admin', isLogin: true },
-    { role: 'admin', isLogin: false },
-    { role: 'user', isLogin: true },
-    { role: 'user', isLogin: false },
-  ];
-  const { role: currentRole, isLogin } = roles[2];
+import { UserLayout, AdminLayout, PublicLayout } from './layouts';
+import { Error } from './components';
+import {
+  Home,
+  BrowseResult,
+  CreateDefinition,
+  ListDefinition,
+  ListDeteledDefinition,
+  ListUser,
+  Login,
+  Register,
+  PublicListDefintion,
+  ReviewDefinition,
+  UpdateDefinition,
+  DetailUser,
+  ReviewDetailDefinition,
+} from './pages';
 
-  const checkRole = currentRole === 'user' ? <PrivateLayout /> : <AdminLayout />;
+import './styles/global.css';
 
-  const dashboard = isLogin ? checkRole : <PublicLayout />;
+const App = () => {
+  const { role, isLoggedIn } = useAuth();
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={dashboard} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="browse" element={<BrowseResult />} />
+        <Route path="terms/:term/defintions" element={<PublicListDefintion />}/>
+      </Route>
+
+      {(!isLoggedIn || (role !== 'admin' && role !== 'user')) && (
+        <Route element={<PublicLayout />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+      )}
+
+      {isLoggedIn && (
+        <Route element={<PublicLayout />}>
+          <Route path="create-definition" element={<CreateDefinition />} />
+        </Route>
+      )}
+
+      {role === 'user' && isLoggedIn && (
+        <Route element={<PublicLayout />}>
+          <Route path="dashboard" element={<UserLayout />} />
+          <Route path="update-definition/:idDefinition" element={<UpdateDefinition />} />
+        </Route>
+      )}
+        
+      {role === 'admin' && isLoggedIn && (
+        <>
+          <Route path="dashboard" element={<AdminLayout />} >
+            <Route path="definitions" element={<ListDefinition />}/>
+            <Route path="review-definitions" element={<ReviewDefinition />}/>
+            <Route path="review-definitions/:idDefinition" element={<ReviewDetailDefinition />}/>
+            <Route path="deleted-definitions" element={<ListDeteledDefinition />}/>
+            <Route path="users" element={<ListUser />}/>
+            <Route path="users/:idUser" element={<DetailUser />}/>
+          </Route>
+        </>
+      )}
+
+      <Route element={<PublicLayout />}>
+        <Route path="*" element={<Error />} />
+      </Route>
+    </Routes>
   );
-}
+};
 
 export default App;
