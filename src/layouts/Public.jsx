@@ -1,11 +1,20 @@
-import React from 'react';
+import { Outlet } from "react-router-dom";
+import { NavbarPublic } from "../components";
 
-function PublicLayout() {
+const PublicLayout = () => {
   return (
-    <div>
-      <h1>Public User Layout</h1>
-    </div>
-  );
-}
+    <>
+      <header className="p-3">
+        <NavbarPublic />
+      </header>
+      <main>
+        <Outlet />
+      </main>
+      <footer>
+        this is footer
+      </footer>
+    </>
+  )
+};
 
 export default PublicLayout;
