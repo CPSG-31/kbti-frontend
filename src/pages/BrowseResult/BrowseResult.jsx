@@ -3,7 +3,7 @@ const BrowseResult = () => {
     <div>
       This is BrowseResult page
     </div>
-  )
+  );
 };
 
 export default BrowseResult;
