@@ -36,6 +36,7 @@
         "react/prop-types": "off",
         "react/jsx-filename-extension": "off",
         "indent": "off",
-        "max-len": "off"
+        "max-len": "off",
+        "no-confusing-arrow": "off"
     }
 }
