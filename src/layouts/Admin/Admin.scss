@@ -1,0 +1,32 @@
+.admin-layout {
+	header {
+		@media screen and (max-width: 991px) {
+			position: fixed;
+			height: 100vh;
+			z-index: 2;
+			background-color: white;
+		}
+	}
+
+	&__body {
+		background-color: #e5e5e5;
+		height: 100vh;
+
+		main {
+			flex: 1;
+
+			.nav__drawer-container {
+				padding: 10px 0;
+				background-color: white;
+
+				&-item {
+					font-size: 20px;
+				}
+			}
+		}
+
+		footer {
+			flex: 0;
+		}
+	}
+}
