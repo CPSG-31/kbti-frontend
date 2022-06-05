@@ -37,6 +37,8 @@
         "react/jsx-filename-extension": "off",
         "indent": "off",
         "max-len": "off",
-        "no-confusing-arrow": "off"
+        "no-confusing-arrow": "off",
+        "react/button-has-type": "off",
+        "object-curly-newline": "off"
     }
 }
