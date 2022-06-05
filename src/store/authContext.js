@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import { createContext, useState } from 'react';
 
 export const AuthContext = createContext({
@@ -8,7 +9,7 @@ export const AuthContext = createContext({
   logout: () => {},
 });
 
-const AuthContextProvider = ({children}) => {
+const AuthContextProvider = ({ children }) => {
   const authenticationData = JSON.parse(localStorage.getItem('authentication'));
   const [token, setToken] = useState(authenticationData.token || '');
 
@@ -26,11 +27,11 @@ const AuthContextProvider = ({children}) => {
   
   const contextValue = {
     isLoggedIn: !!token,
-    token: token,
+    token,
     role: authenticationData.role,
     Login: loginHandler,
     logout: logoutHandler,
-  }
+  };
   
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };

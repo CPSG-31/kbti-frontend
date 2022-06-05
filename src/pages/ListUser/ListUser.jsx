@@ -1,9 +1,7 @@
-const ListUser = () => {
-  return (
-    <div>
-      This is ListUser page
-    </div>
-  )
-};
+const ListUser = () => (
+  <div>
+    This is ListUser page
+  </div>
+);
 
 export default ListUser;

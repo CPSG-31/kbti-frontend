@@ -3,7 +3,7 @@ const ReviewDefinition = () => {
     <div>
       This is Review Definition page
     </div>
-  )
+  );
 };
 
 export default ReviewDefinition;

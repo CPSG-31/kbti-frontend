@@ -7,11 +7,11 @@ function AdminLayout() {
 
   return (
     <>
-      <header className="p-3">
+      <header>
         <NavbarAdmin />
       </header>
       <main>
-        {location.pathname === "/dashboard" ? <p>Statistic</p> : <Outlet />}
+        {location.pathname === '/dashboard' ? <p>Statistic</p> : <Outlet />}
       </main>
       <footer>
         This is footer
