@@ -10,10 +10,10 @@
 
 	&__body {
 		background-color: #e5e5e5;
-		height: 100vh;
+		min-height: 100vh;
 
 		main {
-			flex: 1;
+			flex: 1 0;
 
 			.nav__drawer-container {
 				padding: 10px 0;
@@ -26,7 +26,7 @@
 		}
 
 		footer {
-			flex: 0;
+			flex: 0 0;
 		}
 	}
 }
