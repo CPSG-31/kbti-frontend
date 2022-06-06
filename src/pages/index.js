@@ -11,3 +11,4 @@ export { default as ReviewDefinition } from './ReviewDefinition/ReviewDefinition
 export { default as UpdateDefinition } from './UpdateDefinition/UpdateDefinition';
 export { default as DetailUser } from './UpdateRole/UpdateRole';
 export { default as ReviewDetailDefinition } from './ReviewDetailDefinition/ReviewDetailDefinition';
+export { default as DashboardUser } from './DashboardUser/DashboardUser';
