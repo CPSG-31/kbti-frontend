@@ -1,0 +1,15 @@
+.table__data {
+	&-action__review {
+		padding: 9px 20px;
+		border-radius: 25px;
+		width: 130px;
+
+		svg {
+			margin-top: -5px;
+			margin-right: 10px;
+		}
+		&:hover {
+			background-color: #06c5dc;
+		}
+	}
+}
