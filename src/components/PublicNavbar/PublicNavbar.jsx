@@ -70,13 +70,13 @@ function PublicNavbar() {
                   className="dropdown-menu"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
-                  <div class="container dropdown-item">
-                    <div class="row row gap-2">
+                  <div className="container dropdown-item">
+                    <div className="row gap-2">
                       {alphabet.map((letter, index) => {
                         return (
                           <button
                             type="button"
-                            class="col-1 btn btn-outline-dark rounded-circle fw-bold"
+                            className="col-1 btn btn-outline-dark rounded-circle fw-bold"
                             key={index}
                           >
                             {letter}
