@@ -1,0 +1,20 @@
+.table__data-action-user {
+	a, button {
+		display: inline-block;
+		padding: 7px 7px;
+		border-radius: 50%;
+
+		&:hover {
+			background-color: #9aa8bb;
+
+		}
+	}
+
+	a {
+		svg {
+			path {
+				background-color: #184C92;
+			}
+		}
+	}
+}

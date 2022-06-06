@@ -1,0 +1,40 @@
+.table__data {
+	&-description {
+		width: 55%;
+	}
+
+	&-description p {
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	@media screen and (max-width: 800px) {
+		&-description p {
+			width: 400px;
+		}
+
+		&-date span {
+			display: inline-block;
+			width: 150px;
+		}
+	}
+
+	&-status span {
+		text-align: center;
+		color: white;
+		display: block;
+		margin: auto;
+		padding: 1px 10px;
+		border-radius: 20px;
+	}
+
+	&-action__delete-only {
+		padding: 9px 10px;
+		border-radius: 50%;
+		&:hover {
+			background-color: #06c5dc;
+		}
+	}
+}

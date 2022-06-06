@@ -1,7 +1,64 @@
-const ListUser = () => (
-  <div>
-    This is ListUser page
-  </div>
-);
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import {
+  Paginate,
+  Table,
+  TableDataUser,
+} from '../../components';
+
+import './ListUser.scss';
+
+const ListUser = () => {
+  const [items, setItems] = useState([]);
+  const [pageCount, setPageCount] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  
+  const fetchData = async (queryCurrentPage = 1) => {
+    const response = await axios.get(`http://localhost:3002/users?_page=${queryCurrentPage}&_limit=10`);
+    const totalData = response.headers['x-total-count'];
+    const totalPages = Math.ceil(totalData / 10);
+    
+    setPageCount(totalPages);
+    setTotalItems(totalData);
+    return response.data;
+  };
+  
+  useEffect(() => {
+    const firstTimeFetchData = async () => {
+      const data = await fetchData();
+      setItems(data);
+    };
+    
+    firstTimeFetchData();
+  }, []);
+  
+  const paginateChangeHandler = async (page) => {
+    const currentPagePaginate = page.selected + 1;
+    
+    const fetchNewData = await fetchData(currentPagePaginate);
+    setItems(fetchNewData);
+    setCurrentPage(currentPagePaginate);
+  };
+  
+  return (
+    <section className="list__user-admin">
+      <h1>Kelola Pengguna</h1>
+      
+      <Table
+        items={items}
+        currentPage={currentPage}
+        totalItems={totalItems}
+        component={<TableDataUser items={items} currentPage={currentPage}/>}
+      />
+      
+      <Paginate
+        pageCount={pageCount}
+        paginateChangeHandler={paginateChangeHandler}
+      />
+      
+    </section>
+  );
+};
 
 export default ListUser;

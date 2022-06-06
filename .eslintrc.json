@@ -36,6 +36,10 @@
         "react/prop-types": "off",
         "react/jsx-filename-extension": "off",
         "indent": "off",
-        "max-len": "off"
+        "max-len": "off",
+        "no-confusing-arrow": "off",
+        "react/button-has-type": "off",
+        "object-curly-newline": "off",
+        "jsx-a11y/label-has-associated-control": "off"
     }
 }
