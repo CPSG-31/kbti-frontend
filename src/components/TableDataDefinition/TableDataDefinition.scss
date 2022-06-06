@@ -15,7 +15,7 @@
 			width: 400px;
 		}
 
-		&-date {
+		&-date span {
 			display: inline-block;
 			width: 150px;
 		}
@@ -30,7 +30,7 @@
 		border-radius: 20px;
 	}
 
-	&-action button {
+	&-action__delete {
 		padding: 9px 10px;
 		border-radius: 50%;
 		&:hover {

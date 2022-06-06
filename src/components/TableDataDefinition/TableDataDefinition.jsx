@@ -32,9 +32,11 @@ const TableDataDefinition = ({ items, currentPage }) => {
               <td className="table__data-status">
                 <span className={statusDefinition}>{status}</span>
               </td>
-              <td className="table__data-date">{date}</td>
+              <td className="table__data-date">
+                <span>{date}</span>
+              </td>
               <td className="table__data-action">
-                  <button className="btn">
+                  <button className="btn table__data-action__delete">
                     <DeleteIcon />
                   </button>
               </td>
