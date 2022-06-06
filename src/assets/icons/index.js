@@ -6,3 +6,4 @@ export { ReactComponent as BookIcon } from './lib/book-open.svg';
 export { ReactComponent as DeleteIcon } from './lib/deteleButton.svg';
 export { ReactComponent as ReviewIcon } from './lib/review.svg';
 export { ReactComponent as PlusSvg } from './lib/plus.svg';
+export { ReactComponent as EditIcon } from './lib/edit.svg';
