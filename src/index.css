@@ -7,7 +7,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: "Lora", serif;
+  font-family: "Lora", serif !important;
 }
 
 a,
