@@ -1,0 +1,37 @@
+.homepage {
+  background-color: #f8fafc;
+  min-height: calc(100vh - 100px);
+  padding: 4% 5%;
+}
+
+.search-form {
+  border: 1px solid #dadce0;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.search-form::placeholder {
+    color: #184C92;
+}
+
+.search-form {
+    border-radius: 30px 0 0 30px;
+}
+
+.add-term__button{
+    width: 100%;
+    background-color: #184C92;
+}
+
+@media (min-width: 768px) {
+  .homepage {
+    padding: 2% 18%;
+  }
+}
+
+@media (min-width: 992px) {
+    .homepage {
+      padding: 2% 12%;
+    }
+  }
+  
+
