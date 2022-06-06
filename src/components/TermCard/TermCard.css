@@ -1,5 +1,24 @@
+a,
+button {
+  min-height: 44px !important;
+  min-width: 44px !important;
+}
 
-a, button{
-    min-height: 44px !important;
-    min-width: 44px !important;
+.card {
+  box-shadow: -1px 1px 7px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.card-title {
+   color: #1D2A57
+}
+
+.term__action-button {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.term__action-button:hover {
+  box-shadow: none !important;
+  background: rgba(24, 76, 146, 0.2);
 }
