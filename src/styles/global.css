@@ -1,3 +1,24 @@
+
 * {
     color: #184C92;
+
+.btn-kbti {
+  color: #fff;
+  background-color: #184c92;
+  border-color: #184c92;
+}
+
+.btn-kbti:hover {
+  color: #fff;
+  background-color: #1d2a57;
+  border-color: #1d2a57;
+}
+
+.kbti-link {
+  color: #1d2a57;
+  font-weight: 600;
+}
+
+.kbti-link:hover {
+  color: #184c92;
 }
