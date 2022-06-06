@@ -1,17 +1,50 @@
+h2 {
+  font-family: "Lora", serif !important;
+  font-weight: 600;
+  color: #33333;
+}
+
 .dashboard-user {
-    background-color: #f8fafc;
-    min-height: calc(100vh - 100px);
-    padding: 4% 5%;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 100px);
+  padding: 4% 5%;
+}
+
+.info-btn {
+  width: 48px;
+  height: 50px;
+  border: none;
+  background-color: #f8fafc;
+}
+
+.dashboard__user-info {
+  box-shadow: -1px 1px 7px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border: 0;
+}
+
+.status-container {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 8px 5px;
+}
+
+.status-count{
+  font-size: 1.8em;
+}
+
+.status-text{
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .dashboard-user {
+    padding: 2% 18%;
   }
-  
-  @media (min-width: 768px) {
-    .dashboard-user {
-      padding: 2% 18%;
-    }
+}
+
+@media (min-width: 992px) {
+  .dashboard-user {
+    padding: 2% 4%;
   }
-  
-  @media (min-width: 992px) {
-    .dashboard-user {
-      padding: 2% 12%;
-    }
-  }
+}
