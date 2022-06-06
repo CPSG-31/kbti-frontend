@@ -6,6 +6,7 @@
 
 .search-form {
   border: 1px solid #dadce0;
+  height: 46px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
@@ -30,7 +31,7 @@
 
 @media (min-width: 992px) {
     .homepage {
-      padding: 2% 12%;
+      padding: 2% 8%;
     }
   }
   
