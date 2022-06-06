@@ -26,7 +26,7 @@ function AdminLayout() {
             )}
             {location.pathname === '/dashboard' ? <p>Statistic</p> : <Outlet />}
           </main>
-          <footer className="px-3 px-lg-5">
+          <footer className="px-3 px-lg-5 footer-admin">
             <Footer />
           </footer>
         </div>
