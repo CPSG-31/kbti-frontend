@@ -39,6 +39,7 @@
         "max-len": "off",
         "no-confusing-arrow": "off",
         "react/button-has-type": "off",
-        "object-curly-newline": "off"
+        "object-curly-newline": "off",
+        "jsx-a11y/label-has-associated-control": "off"
     }
 }
