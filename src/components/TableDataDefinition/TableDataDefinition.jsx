@@ -36,7 +36,7 @@ const TableDataDefinition = ({ items, currentPage }) => {
                 <span>{date}</span>
               </td>
               <td className="table__data-action">
-                  <button className="btn table__data-action__delete">
+                  <button className="btn table__data-action__delete-only">
                     <DeleteIcon />
                   </button>
               </td>
