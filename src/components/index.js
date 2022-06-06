@@ -4,3 +4,4 @@ export { default as NavbarAdmin } from './AdminNavbar/AdminNavbar';
 export { default as Error } from './Error/Error';
 export { default as TermPill } from './TermPill/TermPill';
 export { default as TermCard } from './TermCard/TermCard';
+export { default as UserTermCard } from './UserTermCard/UserTermCard';
