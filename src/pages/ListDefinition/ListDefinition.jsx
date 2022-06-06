@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { PlusSvg } from "../../assets/icons";
+import { PlusSvg } from '../../assets/icons';
 import {
   Table,
   Paginate,

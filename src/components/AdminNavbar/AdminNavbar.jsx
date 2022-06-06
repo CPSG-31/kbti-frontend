@@ -1,12 +1,12 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import navbarLogo from '../../../assets/images/logo/logo-yellow.png';
+import navbarLogo from '../../assets/images/logo/logo-yellow.png';
 import {
   CloseIcon,
   GridIcon,
   UserIcon,
   LogoutIcon,
   BookIcon,
-} from '../../../assets/icons';
+} from '../../assets/icons';
 
 import './AdminNavbar.scss';
 
