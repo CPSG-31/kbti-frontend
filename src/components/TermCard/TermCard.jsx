@@ -8,11 +8,11 @@ const TermCard = ({ index, term }) => (
     <div className="row g-0">
       <div className="vote__container col-2 text-center py-1">
         <div className="vote__inner">
-          <button type="button" class="btn pb-0">
+          <button type="button" className="btn pb-0">
             <UpvoteSvg />
           </button>
           <div className="vote__count fs-6 lh-2">100</div>
-          <button type="button" class="btn pt-0">
+          <button type="button" className="btn pt-0">
             <DownvoteSvg />
           </button>
         </div>
@@ -21,7 +21,7 @@ const TermCard = ({ index, term }) => (
         <div className="card-body">
           <h2 className="card-title mb-0">Block Chain</h2>
           <div className="term__info">
-            <a href="#" class="link-primary">
+            <a href="#" className="link-primary">
               Egi
             </a>
             <span className="mx-1 text-muted">&#8226;</span>
@@ -32,10 +32,10 @@ const TermCard = ({ index, term }) => (
             secara digital yang terhubung dengan kriptografi.
           </p>
           <div className="term__action d-flex justify-content-end mt-1">
-            <button type="button" class="btn">
+            <button type="button" className="term__action-button btn">
               <FlagSvg />
             </button>
-            <button type="button" class="btn">
+            <button type="button" className="term__action-button btn">
               <ShareSvg />
             </button>
           </div>
