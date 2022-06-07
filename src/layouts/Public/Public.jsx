@@ -11,7 +11,7 @@ const PublicLayout = () => {
       <main>
         <Outlet />
       </main>
-      <footer className="text-center py-3 text-light">
+      <footer className="text-center py-3 text-light footer-user">
       © 2022 KBTI  - Term of use - About
       </footer>
     </>

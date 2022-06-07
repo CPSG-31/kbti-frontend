@@ -71,7 +71,7 @@ function PublicNavbar() {
                   aria-labelledby="navbarDropdownMenuLink"
                 >
                   <div className="container dropdown-item">
-                    <div className="row row gap-2">
+                    <div className="row gap-2">
                       {alphabet.map((letter, index) => {
                         return (
                           <button

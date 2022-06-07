@@ -29,10 +29,10 @@ const TermCard = ({ index, term }) => (
           </div>
           <p className="card-text my-3">Teknologi yang digunakan sebagai sistem penyimpanan atau bank data secara digital yang terhubung dengan kriptografi.</p>
           <div className="term__action d-flex justify-content-end mt-1">
-            <button type="button" className="btn">
+            <button type="button" className="term__action-button btn">
               <FlagSvg />
             </button>
-            <button type="button" className="btn">
+            <button type="button" className="term__action-button btn">
               <ShareSvg />
             </button>
           </div>
