@@ -1,14 +1,10 @@
-.auth-container {
-  height: 90vh;
-}
-
 .btn-kbti {
   width: 168px;
 }
 
 .form__title {
   color: #184c92;
-  font-family: Lato, "Segoe UI", sans-serif;
+  font-family: Lato, "Segoe UI", sans-serif !important;
   text-align: center;
 }
 

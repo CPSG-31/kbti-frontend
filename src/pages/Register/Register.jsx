@@ -1,12 +1,12 @@
 import '../../index.css';
 import '../../styles/global.css';
-import '../../styles/Auth.css';
+import '../../styles/Form.css';
 
 const Register = () => {
   return (
     <>
-      <div className="container auth-container">
-        <div className="h-100 d-flex flex-column align-items-center justify-content-center">
+      <div className="container py-5">
+        <div className="d-flex flex-column align-items-center justify-content-center my-5">
           <form className="col-10 col-md-6 col-lg-4 py-4">
             <h1 className="form__title mb-5">Daftar</h1>
             <div className="row mb-3">
