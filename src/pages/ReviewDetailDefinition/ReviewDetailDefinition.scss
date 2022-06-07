@@ -1,0 +1,67 @@
+.form-admin {
+	width: 70%;
+	margin: auto;
+
+	h1 {
+		font-size: 24px;
+		margin-top: 50px;
+	}
+
+	&__container {
+		margin-top: 20px;
+	}
+
+	&__group {
+		margin-bottom: 20px;
+		label {
+			margin-bottom: 15px;
+		}
+
+		input, textarea, select {
+			background-color: white !important;
+			color: #184C92;
+			border: 2px solid #184C92;
+			border-radius: 10px;
+		}
+
+		select {
+			width: 200px;
+		}
+
+		button {
+			border: 1px solid #184C92;
+			margin-top: 20px;
+			margin-right: 50px;
+			width: 150px;
+			padding: 6px 0;
+			border-radius: 20px;
+		}
+	}
+
+	&__button-approve {
+		background-color: #184C92;
+		color: white;
+		&:hover {
+			background-color: #06c5dc;
+		}
+	}
+
+	&__button-reject {
+		color: #184C92;
+		&:hover {
+			background-color: #06c5dc;
+		}
+	}
+
+	@media screen and (max-width: 600px) {
+		width: 90%;
+
+		&__group:last-of-type {
+			display: flex;
+			justify-content: space-between;
+			button {
+				margin: 0;
+			}
+		}
+	}
+}
