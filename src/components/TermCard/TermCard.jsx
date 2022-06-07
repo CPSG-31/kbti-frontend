@@ -27,10 +27,7 @@ const TermCard = ({ index, term }) => (
             <span className="mx-1 text-muted">&#8226;</span>
             <small className="text-muted">22 Mei 2022</small>
           </div>
-          <p className="card-text my-3">
-            Teknologi yang digunakan sebagai sistem penyimpanan atau bank data
-            secara digital yang terhubung dengan kriptografi.
-          </p>
+          <p className="card-text my-3">Teknologi yang digunakan sebagai sistem penyimpanan atau bank data secara digital yang terhubung dengan kriptografi.</p>
           <div className="term__action d-flex justify-content-end mt-1">
             <button type="button" className="term__action-button btn">
               <FlagSvg />

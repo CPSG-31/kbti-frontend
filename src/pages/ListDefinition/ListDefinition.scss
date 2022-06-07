@@ -1,0 +1,28 @@
+.list__definition-admin {
+	padding: 30px;
+	h1 {
+		font-size: 26px;
+	}
+
+	&__create-cta {
+		background-color: #184C92;
+		color: #fff;
+		padding: 10px 20px;
+		display: inline-block;
+		margin: 10px 0 20px;
+		border-radius: 30px;
+
+		&:hover {
+			color: yellow;
+
+			svg path {
+				fill: yellow;
+			}
+		}
+
+		svg {
+			margin-right: 10px;
+			margin-top: -3px;
+		}
+	}
+}
