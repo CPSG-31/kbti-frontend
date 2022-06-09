@@ -40,6 +40,8 @@
         "no-confusing-arrow": "off",
         "react/button-has-type": "off",
         "object-curly-newline": "off",
-        "jsx-a11y/label-has-associated-control": "off"
+        "jsx-a11y/label-has-associated-control": "off",
+        "spaced-comment": "off",
+        "linebreak-style": "off"
     }
 }
