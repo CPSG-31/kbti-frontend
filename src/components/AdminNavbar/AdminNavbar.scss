@@ -33,7 +33,7 @@
 		position: relative;
 		margin-left: -32px;
 
-		svg {
+		svg, path {
 			fill: #184C92;
 		}
 
@@ -46,12 +46,12 @@
 				text-decoration: none;
 				color: #184C92;
 
-				&.active {
+				&.active-item {
 					background-color: #184C92;
 					color: white;
 					border-radius: 0 25px 25px 0;
 
-					svg {
+					svg, path {
 						fill: white;
 					}
 				}
