@@ -46,7 +46,7 @@ const ListDefinition = () => {
   return (
     <section className="list__definition-admin">
       <h1>Data Definisi</h1>
-      <Link to="/create-definition" className="list__definition-admin__create-cta btn">
+      <Link to="/definitions/create" className="list__definition-admin__create-cta btn">
         <PlusSvg />
         Tambah Definisi
       </Link>

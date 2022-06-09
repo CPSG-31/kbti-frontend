@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 import useAuth from './hooks/useAuth';
 
-import { UserLayout, AdminLayout, PublicLayout } from './layouts';
+import { AdminLayout, PublicLayout } from './layouts';
 import { Error } from './components';
 import {
   Home,
@@ -17,7 +17,7 @@ import {
   ReviewDefinition,
   UpdateDefinition,
   DetailUser,
-  ReviewDetailDefinition,
+  ReviewDetailDefinition, DashboardUser,
 } from './pages';
 
 import './styles/global.css';
@@ -29,43 +29,43 @@ const App = () => {
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="browse" element={<BrowseResult />} />
-        <Route path="terms/:term/defintions" element={<PublicListDefintion />}/>
+        <Route path="search" element={<BrowseResult />} />
+        <Route path="definitions" element={<PublicListDefintion />}/>
       </Route>
-
+    
       {(!isLoggedIn || (role !== 'admin' && role !== 'user')) && (
         <Route element={<PublicLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
       )}
-
+    
       {isLoggedIn && (
         <Route element={<PublicLayout />}>
-          <Route path="create-definition" element={<CreateDefinition />} />
+          <Route path="definitions/create" element={<CreateDefinition />} />
         </Route>
       )}
-
+    
       {role === 'user' && isLoggedIn && (
         <Route element={<PublicLayout />}>
-          <Route path="dashboard" element={<UserLayout />} />
-          <Route path="update-definition/:idDefinition" element={<UpdateDefinition />} />
+          <Route path="dashboard" element={<DashboardUser />} />
+          <Route path="definitions/:idDefinition/edit" element={<UpdateDefinition />} />
         </Route>
       )}
-        
+    
       {role === 'admin' && isLoggedIn && (
         <>
           <Route path="dashboard" element={<AdminLayout />} >
             <Route path="definitions" element={<ListDefinition />}/>
-            <Route path="review-definitions" element={<ReviewDefinition />}/>
-            <Route path="review-definitions/:idDefinition" element={<ReviewDetailDefinition />}/>
-            <Route path="deleted-definitions" element={<ListDeteledDefinition />}/>
+            <Route path="definitions/review" element={<ReviewDefinition />}/>
+            <Route path="definitions/:idDefinition/review" element={<ReviewDetailDefinition />}/>
+            <Route path="definitions/deleted" element={<ListDeteledDefinition />}/>
             <Route path="users" element={<ListUser />}/>
             <Route path="users/:idUser" element={<DetailUser />}/>
           </Route>
         </>
       )}
-
+    
       <Route element={<PublicLayout />}>
         <Route path="*" element={<Error />} />
       </Route>
