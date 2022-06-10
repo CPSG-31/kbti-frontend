@@ -5,28 +5,29 @@ import useAuth from '../../hooks/useAuth';
 import './PublicNavbar.css';
 
 function PublicNavbar() {
-  const { isLoggedIn, role } = useAuth();
+  const { isLoggedIn, role_id: roleId, token, logout } = useAuth();
+  const role = roleId === 1 ? 'admin' : 'user';
 
   let actionNavbar;
-  if (!isLoggedIn || (role !== 'admin' && role !== 'user')) {
+  if ((!token && !isLoggedIn) || (role !== 'admin' && role !== 'user')) {
     actionNavbar = (
       <>
-        <li>
-          <Link to="/login">Login</Link>
+        <li className="nav-item my-auto me-3">
+          <Link className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50" to="/login">Login</Link>
         </li>
-        <li>
-          <Link to="/register">Register</Link>
+        <li className="nav-item my-auto">
+          <Link className="btn btn-light d-inline-block rounded-pill fw-bold pt-2" to="/register">Register</Link>
         </li>
       </>
     );
-  } else if ((role === 'admin' || role === 'user') && isLoggedIn) {
+  } else if (token && (role === 'admin' || role === 'user') && isLoggedIn) {
     actionNavbar = (
       <>
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
+        <li className="nav-item my-auto me-3">
+          <Link to="/dashboard" className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50">Dashboard</Link>
         </li>
-        <li>
-          <button>Logout</button>
+        <li className="nav-item my-auto">
+          <button onClick={logout} className="btn btn-light d-inline-block rounded-pill fw-bold pt-2">Logout</button>
         </li>
       </>
     );
@@ -124,24 +125,7 @@ function PublicNavbar() {
               </li>
             </div>
             <div className="nav__action d-flex my-3 my-md-0 mt-4 mt-md-0">
-              <li className="nav-item me-3 rounded-circle">
-                <a
-                  className="btn btn-outline-light rounded-pill fw-bold pt-2"
-                  href="#"
-                  role="button"
-                >
-                  Masuk
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="btn btn-light rounded-pill fw-bold pt-2"
-                  href="#"
-                  role="button"
-                >
-                  Daftar
-                </a>
-              </li>
+                {actionNavbar}
             </div>
           </ul>
         </div>
