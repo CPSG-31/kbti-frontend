@@ -3,6 +3,7 @@
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import './PublicNavbar.css';
+import Logo from '../../assets/images/logo/logo-yellow.png';
 
 function PublicNavbar() {
   const { isLoggedIn, role_id: roleId, token, logout } = useAuth();
@@ -40,7 +41,7 @@ function PublicNavbar() {
     <nav className="navbar navbar-dark navbar-expand-md">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
-          <img src="./logo-yellow.png" alt="logo" />
+          <img src={Logo} alt="logo" />
         </a>
         <button
           className="navbar-toggler"
