@@ -27,7 +27,7 @@ function PublicNavbar() {
           <Link to="/dashboard" className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50">Dashboard</Link>
         </li>
         <li className="nav-item my-auto">
-          <button onClick={logout} className="btn btn-light d-inline-block rounded-pill fw-bold pt-2">Logout</button>
+          <button onClick={logout} className="btn btn-light rounded-pill fw-bold pt-2">Logout</button>
         </li>
       </>
     );
