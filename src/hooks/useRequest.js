@@ -48,6 +48,7 @@ const useRequest = (startPending) => {
     
     const bodyDataRequest = JSON.stringify(data);
     
+    dispatchHttp('SEND');
     try {
       let responseData;
       switch (method) {
