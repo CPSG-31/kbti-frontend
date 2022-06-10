@@ -28,13 +28,13 @@ const UserTermCard = ({
         </div>
         <div className="term__vote-container d-flex">
           <div className="term__upvote-container">
-            <div className="term__vote-inner d-flex ms-2">
+            <div className="term__vote-inner d-flex ms-2 me-1">
               <ThumbsUpSvg className="align-self-center me-1" />
-              <span className="term__vote-count">100</span>
+              <span className="term__vote-count">1004</span>
             </div>
           </div>
           <div className="term__downvote-container">
-            <div className="term__vote-inner d-flex ms-1">
+            <div className="term__vote-inner d-flex ms-1 me-2">
               <ThumbsDownSvg className="align-self-center me-1" />
               <span className="term__vote-count">20</span>
             </div>
@@ -61,7 +61,7 @@ const UserTermCard = ({
           <small className="text-muted">{date}</small>
         </div>
         <p className="card-text mt-2 mb-0">{shortDescription}</p>
-        <a href="#" class="">
+        <a href="#" className="">
           Baca Selengkapnya
         </a>
         <div className="term__action d-flex justify-content-end mt-1">
