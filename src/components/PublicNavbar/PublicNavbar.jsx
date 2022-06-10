@@ -67,23 +67,21 @@ function PublicNavbar() {
                   Indeks
                 </a>
                 <div
-                  className="dropdown-menu"
+                  className="dropdown-menu container px-4"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
-                  <div className="container dropdown-item">
-                    <div className="row gap-2">
-                      {alphabet.map((letter, index) => {
-                        return (
-                          <button
-                            type="button"
-                            className="col-1 btn btn-outline-dark rounded-circle fw-bold"
-                            key={index}
-                          >
-                            {letter}
-                          </button>
-                        );
-                      })}
-                    </div>
+                  <div className="row gap-2">
+                    {alphabet.map((letter, index) => {
+                      return (
+                        <button
+                          type="button"
+                          className="col-1 btn btn-outline-warning rounded-circle fw-bold"
+                          key={index}
+                        >
+                          {letter}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </li>
@@ -103,22 +101,22 @@ function PublicNavbar() {
                   aria-labelledby="navbarDropdownMenuLink"
                 >
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item category-item" href="#">
                       Internet
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item category-item" href="#">
                       Pemrograman
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item category-item" href="#">
                       Jaringan
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item category-item" href="#">
                       dll.
                     </a>
                   </li>
