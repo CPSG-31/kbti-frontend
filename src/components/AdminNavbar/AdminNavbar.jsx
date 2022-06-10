@@ -13,6 +13,10 @@ import './AdminNavbar.scss';
 const AdminNavbar = ({ toggleClass, onClose }) => {
   const location = useLocation();
   
+  const getActiveNavLink = (path) => {
+    return location.pathname === path ? 'active-item' : '';
+  };
+  
   const toggleClassHandler = () => {
     onClose();
   };
@@ -27,7 +31,7 @@ const AdminNavbar = ({ toggleClass, onClose }) => {
       </div>
       <ul className="nv__list">
         <li className="nv__list-item">
-          <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
+          <NavLink to="/dashboard" className={getActiveNavLink('/dashboard')}>
             <GridIcon />
             Dashboard
           </NavLink>
@@ -39,18 +43,18 @@ const AdminNavbar = ({ toggleClass, onClose }) => {
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li className="nv__list-item">
-                <NavLink to="/dashboard/definitions" className={({ isActive }) => isActive ? 'active' : ''}>Data Definisi</NavLink>
+                <NavLink to="/dashboard/definitions" className={getActiveNavLink('/dashboard/definitions')}>Data Definisi</NavLink>
               </li>
               <li className="nv__list-item">
-                <NavLink to="/dashboard/review-definitions" className={({ isActive }) => isActive ? 'active' : ''}>Tinjau Definisi Baru</NavLink>
+                <NavLink to="/dashboard/definitions/review" className={getActiveNavLink('/dashboard/definitions/review')}>Tinjau Definisi Baru</NavLink>
               </li>
               <li className="nv__list-item">
-                <NavLink to="/dashboard/deleted-definitions" className={({ isActive }) => isActive ? 'active' : ''}>Definisi yang dihapus</NavLink>
+                <NavLink to="/dashboard/definitions/deleted" className={getActiveNavLink('/dashboard/definitions/deleted')}>Definisi yang dihapus</NavLink>
               </li>
             </ul>
         </li>
         <li className="nv__list-item">
-          <NavLink to="/dashboard/users" className={({ isActive }) => isActive ? 'active' : ''}>
+          <NavLink to="/dashboard/users" className={getActiveNavLink('/dashboard/users')}>
             <UserIcon />
             Kelola Pengguna
           </NavLink>

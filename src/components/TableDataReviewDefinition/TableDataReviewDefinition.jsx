@@ -34,7 +34,7 @@ const TableDataReviewDefinition = ({ items, currentPage }) => {
                 <span>{date}</span>
               </td>
               <td className="table__data-action">
-                  <Link to={`/dashboard/review-definitions/${id}`} className="btn table__data-action__review">
+                  <Link to={`/dashboard/definitions/${id}/review`} className="btn table__data-action__review">
                     <ReviewIcon />
                     Review
                   </Link>

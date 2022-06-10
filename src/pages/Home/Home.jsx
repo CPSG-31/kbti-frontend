@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import { TermPill, TermCard } from '../../components';
 import './Home.css';
 import { PlusSvg, SearchSvg } from '../../icons';
-import DashboardUser from '../DashboardUser/DashboardUser';
 
 function Home() {
   const newTerms = [
@@ -16,8 +15,6 @@ function Home() {
   ];
 
   return (
-    <>
-    <DashboardUser />
     <div className="homepage">
       <form className="d-flex mt-2 mb-md-4">
         <input
@@ -37,7 +34,7 @@ function Home() {
               })}
             </div>
             <a
-              className="add-term__button btn btn-primary rounded-pill pt4 my-1 me-3 align-middle lh-lg"
+              className="add-term__button btn btn-kbti w-100 rounded-pill pt4 my-1 me-3 align-middle lh-lg"
               href="#"
               role="button"
             >
@@ -53,7 +50,6 @@ function Home() {
         </div>
       </div>
     </div>
-    </>
   );
 }
 

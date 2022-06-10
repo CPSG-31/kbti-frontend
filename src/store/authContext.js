@@ -11,13 +11,13 @@ export const AuthContext = createContext({
 
 const AuthContextProvider = ({ children }) => {
   const authenticationData = JSON.parse(localStorage.getItem('authentication'));
-  const [token, setToken] = useState(authenticationData.token || '');
+  const [token, setToken] = useState(authenticationData?.token || '');
 
   const loginHandler = (authenticationResponse) => {
     setToken(authenticationResponse);
     localStorage.setItem('authentication', JSON.stringify({
-      token: authenticationResponse.token,
-      role: authenticationResponse.role,
+      token: authenticationResponse?.token,
+      role: authenticationResponse?.role,
     }));
   };
   
@@ -28,7 +28,7 @@ const AuthContextProvider = ({ children }) => {
   const contextValue = {
     isLoggedIn: !!token,
     token,
-    role: authenticationData.role,
+    role: authenticationData?.role,
     Login: loginHandler,
     logout: logoutHandler,
   };
