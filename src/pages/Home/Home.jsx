@@ -1,10 +1,13 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import { Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TermPill, TermCard } from '../../components';
 import './Home.css';
 import { PlusSvg, SearchSvg } from '../../icons';
+import useAuth from '../../hooks/useAuth';
 
 function Home() {
+  const { isLoggedIn } = useAuth();
+  
   const newTerms = [
     'Blockchain',
     'Cloud Computing',
@@ -33,14 +36,14 @@ function Home() {
                 return <TermPill index={index} term={newTerm} />;
               })}
             </div>
-            <a
+            <Link
+              to={isLoggedIn ? '/definitions/create' : '/login'}
               className="add-term__button btn btn-kbti w-100 rounded-pill pt4 my-1 me-3 align-middle lh-lg"
-              href="#"
               role="button"
             >
               <PlusSvg className="me-2" />
               <span className="btn-text">Tambah istilah baru</span>
-            </a>
+            </Link>
           </div>
           <div className="random-term___container col-12 col-lg-8 mt-4">
             <TermCard />
