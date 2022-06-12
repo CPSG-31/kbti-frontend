@@ -4,9 +4,10 @@ import {
  EditSvg, ThumbsUpSvg, ThumbsDownSvg, TrashSvg, 
 } from '../../icons';
 import STATUS from '../../globals/const';
+import formatDate from '../../utils/formatDate';
 
 const UserTermCard = ({
-  id, statusDefinition, term, createdat, definition, upvote, downvote,
+  id, statusDefinition, term, date, definition, upvote, downvote,
 }) => {
   let statusElement = '';
 
@@ -50,6 +51,7 @@ const UserTermCard = ({
     );
   }
 
+  console.log(date);
   return (
     <div className="card mb-3">
       <div className="card-body">
@@ -58,7 +60,7 @@ const UserTermCard = ({
         </div>
         <h2 className="card-title mb-0 mt-4">{term}</h2>
         <div className="term__info">
-          <small className="text-muted">{createdat}</small>
+          <small className="text-muted">{formatDate(date)}</small>
         </div>
         <p className="card-text mt-2 mb-0">{definition}</p>
         <a href="#" className="">

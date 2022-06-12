@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-duplicate-props */
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -40,7 +41,11 @@ function Home() {
     firstTimeFetchData();
   }, []);
 
-  console.log(newTerms);
+
+    const randomTermElements = randomTerms && randomTerms.map((definition) => {
+      return <TermCard key={definition.id} dataDefinition={definition} />;
+    });
+
   return (
     <div className="homepage">
       <form className="d-flex mt-2 mb-md-4">
@@ -57,7 +62,7 @@ function Home() {
             <p>Istilah yang baru ditambahkan</p>
             <div className="new-term__pils">
               {newTerms.map((newTerm, index) => {
-                return <TermPill key={newTerm} term={newTerm.term} />;
+                return <TermPill key={`${index}newTerms`} term={newTerm.term} />;
               })}
             </div>
             <Link
@@ -70,9 +75,7 @@ function Home() {
             </Link>
           </div>
           <div className="random-term___container col-12 col-lg-8 mt-4">
-            <TermCard />
-            <TermCard />
-            <TermCard />
+           {randomTermElements}
           </div>
         </div>
       </div>

@@ -38,12 +38,12 @@ const DashboardUser = () => {
   };
   
 
-  const termCardElements = (termData) => termData.map(({ id, statusDefinition, term, createdat, definition, up_votes = null, down_votes = null }) => (
+  const termCardElements = (termData) => termData.map(({ id, statusDefinition, term, updatedAt, definition, up_votes = null, down_votes = null }) => (
     <UserTermCard
       key={`${id}UserTerms`}
       statusDefinition={statusDefinition}
       term={term}
-      date={createdat}
+      date={updatedAt}
       definition={definition}
       upvote={up_votes}
       downvote={down_votes}
@@ -97,7 +97,11 @@ const DashboardUser = () => {
             style={{ width: '18rem' }}
           >
             <div className="card-body">
-              <h2 className="card-title">Halo, Egi</h2>
+              <h2 className="card-title">
+                Halo, 
+                {' '}
+                { userData.username}
+              </h2>
               <h6 className="card-subtitle mt-5 text-muted">
                 status definisi yang kamu buat
               </h6>

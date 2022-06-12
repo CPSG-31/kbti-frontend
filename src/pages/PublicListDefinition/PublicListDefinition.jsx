@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { SearchBar, TermCard } from '../../components';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import useRequest from '../../hooks/useRequest';
 import { PlusSvg } from '../../icons';
+import useAuth from '../../hooks/useAuth';
 
 const PublicListDefinition = () => {
   let searchResult;
   const [searchParams] = useSearchParams();
+  const { isLoggedIn } = useAuth();
   const term = searchParams.get('term');
   const categoryId = searchParams.get('categoryId');
   const { sendRequest, status, data: resultData } = useRequest();
@@ -43,10 +45,14 @@ const PublicListDefinition = () => {
 
       <div className="row row-cols-2">
         <div className="col-12 col-lg-4 mt-5 mb-4">
-          <a className="add-term__button btn btn-primary rounded-pill mt-1" href="#" role="button">
-            <PlusSvg />
-            Tambah istilah baru
-          </a>
+        <Link
+          to={isLoggedIn ? '/definitions/create' : '/login'}
+          className="add-term__button btn btn-kbti w-100 rounded-pill pt4 my-1 me-3 align-middle lh-lg"
+          role="button"
+        >
+              <PlusSvg className="me-2" />
+              <span className="btn-text">Tambah istilah baru</span>
+        </Link>
         </div>
         <div className="random-term___container col-12 col-lg-8 mt-4">
           <h3 className="my-4 fs-3 text-center">

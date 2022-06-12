@@ -7,6 +7,7 @@ import {
 import useAuth from '../../hooks/useAuth';
 import useRequest from '../../hooks/useRequest';
 import API_ENDPOINT from '../../globals/apiEndpoint';
+import formatDate from '../../utils/formatDate';
 
 const TermCard = ({ index, dataDefinition }) => {
   const { id, term, category, definition, down_votes: downVotes, up_votes: upVotes, username, updated_at: updatedAt } = dataDefinition;
@@ -14,6 +15,7 @@ const TermCard = ({ index, dataDefinition }) => {
   const [isVoted, setIsVoted] = useState({ upVotes: false, downVotes: false });
   const { isLoggedIn, token } = useAuth();
   const navigate = useNavigate();
+
 
   const { sendRequest } = useRequest();
 
@@ -70,7 +72,7 @@ const TermCard = ({ index, dataDefinition }) => {
                 {username}
               </a>
               <span className="mx-1 text-muted">&#8226;</span>
-              <small className="text-muted">{updatedAt}</small>
+              <small className="text-muted">{ formatDate(updatedAt) }</small>
             </div>
             <p className="card-text my-3">{definition}</p>
             <div className="term__action d-flex justify-content-end mt-1">
