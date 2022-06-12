@@ -5,10 +5,11 @@ import useAuth from '../../hooks/useAuth';
 import './PublicNavbar.css';
 
 function PublicNavbar() {
-  const { isLoggedIn, role } = useAuth();
+  const { isLoggedIn, role_id: roleId, token, logout } = useAuth();
+  const role = roleId === 1 ? 'admin' : 'user';
 
   let actionNavbar;
-  if (!isLoggedIn || (role !== 'admin' && role !== 'user')) {
+  if ((!token && !isLoggedIn) || (role !== 'admin' && role !== 'user')) {
     actionNavbar = (
       <>
         <li>
@@ -19,14 +20,14 @@ function PublicNavbar() {
         </li>
       </>
     );
-  } else if ((role === 'admin' || role === 'user') && isLoggedIn) {
+  } else if (token && (role === 'admin' || role === 'user') && isLoggedIn) {
     actionNavbar = (
       <>
         <li>
           <Link to="/dashboard">Dashboard</Link>
         </li>
         <li>
-          <button>Logout</button>
+          <button onClick={logout}>Logout</button>
         </li>
       </>
     );
@@ -127,22 +128,23 @@ function PublicNavbar() {
             </div>
             <div className="nav__action d-flex my-3 my-md-0 mt-4 mt-md-0">
               <li className="nav-item me-3 rounded-circle">
-                <a
-                  className="btn btn-outline-light rounded-pill fw-bold pt-2"
-                  href="#"
-                  role="button"
-                >
-                  Masuk
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="btn btn-light rounded-pill fw-bold pt-2"
-                  href="#"
-                  role="button"
-                >
-                  Daftar
-                </a>
+                {actionNavbar}
+              {/*  <a*/}
+              {/*    className="btn btn-outline-light rounded-pill fw-bold pt-2"*/}
+              {/*    href="#"*/}
+              {/*    role="button"*/}
+              {/*  >*/}
+              {/*    Masuk*/}
+              {/*  </a>*/}
+              {/*</li>*/}
+              {/*<li className="nav-item">*/}
+              {/*  <a*/}
+              {/*    className="btn btn-light rounded-pill fw-bold pt-2"*/}
+              {/*    href="#"*/}
+              {/*    role="button"*/}
+              {/*  >*/}
+              {/*    Daftar*/}
+              {/*  </a>*/}
               </li>
             </div>
           </ul>

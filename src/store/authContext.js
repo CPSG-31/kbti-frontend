@@ -14,22 +14,28 @@ const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(authenticationData?.token || '');
 
   const loginHandler = (authenticationResponse) => {
-    setToken(authenticationResponse);
+    const response = {
+      token: authenticationResponse?.data?.access_token?.token,
+      role_id: authenticationResponse?.data?.role_id,
+    };
+    
+    setToken(response.token);
     localStorage.setItem('authentication', JSON.stringify({
-      token: authenticationResponse?.token,
-      role: authenticationResponse?.role,
+      token: response.token,
+      role_id: response.role_id,
     }));
   };
   
   const logoutHandler = () => {
+    setToken('');
     localStorage.removeItem('authentication');
   };
   
   const contextValue = {
     isLoggedIn: !!token,
     token,
-    role: authenticationData?.role,
-    Login: loginHandler,
+    role_id: authenticationData?.role_id,
+    login: loginHandler,
     logout: logoutHandler,
   };
   

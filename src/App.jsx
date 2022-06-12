@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import useAuth from './hooks/useAuth';
 
 import { AdminLayout, PublicLayout } from './layouts';
@@ -23,7 +23,9 @@ import {
 import './styles/global.css';
 
 const App = () => {
-  const { role, isLoggedIn } = useAuth();
+  const { role_id: roleId, isLoggedIn } = useAuth();
+  
+  const role = roleId === 1 ? 'admin' : 'user';
 
   return (
     <Routes>
@@ -39,10 +41,12 @@ const App = () => {
           <Route path="register" element={<Register />} />
         </Route>
       )}
-    
+      
       {isLoggedIn && (
         <Route element={<PublicLayout />}>
           <Route path="definitions/create" element={<CreateDefinition />} />
+          <Route path="login" element={<Navigate to="/" />} />
+          <Route path="register" element={<Navigate to="/" />} />
         </Route>
       )}
     
