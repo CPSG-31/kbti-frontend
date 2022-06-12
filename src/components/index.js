@@ -12,3 +12,4 @@ export { default as Footer } from './Footer/Footer';
 export { default as TermPill } from './TermPill/TermPill';
 export { default as TermCard } from './TermCard/TermCard';
 export { default as UserTermCard } from './UserTermCard/UserTermCard';
+export { default as SearchBar } from './SearchBar/SearchBar';
