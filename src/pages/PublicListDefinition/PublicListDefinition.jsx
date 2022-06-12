@@ -1,15 +1,45 @@
-import { useParams } from 'react-router-dom';
-import { TermCard } from '../../components';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { SearchBar, TermCard } from '../../components';
+import API_ENDPOINT from '../../globals/apiEndpoint';
+import useRequest from '../../hooks/useRequest';
 import { PlusSvg } from '../../icons';
 
 const PublicListDefinition = () => {
-  const { term } = useParams();
+  let searchResult;
+  const [searchParams] = useSearchParams();
+  const term = searchParams.get('term');
+  const categoryId = searchParams.get('categoryId');
+  const { sendRequest, status, data: resultData } = useRequest();
+
+  useEffect(() => {
+    const getSearchResult = async () => {
+      if (term) {
+        await sendRequest({
+          requestUrl: API_ENDPOINT.GET_DEFINITIONS_BY_TERM(term),
+          method: 'GET',
+        });
+      }
+      if (categoryId) {
+        await sendRequest({
+          requestUrl: API_ENDPOINT.GET_DEFINITIONS_BY_CATEGORY_ID(categoryId),
+          method: 'GET',
+        });
+      }
+    };
+
+    getSearchResult();
+  }, [sendRequest]);
+
+  if (status === 'completed') {
+    searchResult = resultData.data.map((definition) => {
+      return <TermCard key={definition.id} dataDefinition={definition} />;
+    });
+  }
 
   return (
     <div className="homepage">
-      <form className="d-flex mt-2 mb-md-4">
-        <input className="search-form form-control px-4 rounded-pill" type="search" placeholder="Cari istilah" aria-label="Search" />
-      </form>
+      <SearchBar />
 
       <div className="row row-cols-2">
         <div className="col-12 col-lg-4 mt-5 mb-4">
@@ -21,12 +51,14 @@ const PublicListDefinition = () => {
         <div className="random-term___container col-12 col-lg-8 mt-4">
           <h3 className="my-4 fs-3 text-center">
             Definisi dari
-            <span> &quot;Blockchain&quot;</span>
+            <span>
+              {' '}
+              &quot;
+              {term}
+              &quot;
+            </span>
           </h3>
-
-          <TermCard />
-          <TermCard />
-          <TermCard />
+          {searchResult}
         </div>
       </div>
     </div>

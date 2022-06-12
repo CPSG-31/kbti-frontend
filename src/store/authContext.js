@@ -34,7 +34,7 @@ const AuthContextProvider = ({ children }) => {
   const contextValue = {
     isLoggedIn: !!token,
     token,
-    role_id: authenticationData?.role,
+    role_id: authenticationData?.role_id,
     login: loginHandler,
     logout: logoutHandler,
   };
