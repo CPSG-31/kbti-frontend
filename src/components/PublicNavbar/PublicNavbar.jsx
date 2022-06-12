@@ -40,9 +40,12 @@ function PublicNavbar() {
   return (
     <nav className="navbar navbar-dark navbar-expand-md">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link
+          className="navbar-brand"
+          to="/"
+        >
           <img src={Logo} alt="logo" />
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"

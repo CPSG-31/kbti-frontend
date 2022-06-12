@@ -1,84 +1,65 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
 import './DashboardUser.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
 import { UserTermCard } from '../../components';
 import { PlusSvg, InfoSvg } from '../../icons';
 import emptyListImg from '../../assets/images/empty-list.png';
 import STATUS from '../../globals/const';
 
 const DashboardUser = () => {
-  const userTerms = [
-    {
-      status: 'pending',
-      term: 'Blockchain',
-      date: '22 Mei 2022',
-      shortDescription:
-        'Teknologi yang digunakan sebagai sistem penyimpanan atau bank data secara digital yang terhubung dengan kriptografi.',
-    },
-    {
-      status: 'approved',
-      term: 'Blockchain',
-      date: '22 Mei 2022',
-      shortDescription:
-        'Teknologi yang digunakan sebagai sistem penyimpanan atau bank data secara digital yang terhubung dengan kriptografi.',
-    },
-    {
-      status: 'rejected',
-      term: 'Blockchain',
-      date: '22 Mei 2022',
-      shortDescription:
-        'Teknologi yang digunakan sebagai sistem penyimpanan atau bank data secara digital yang terhubung dengan kriptografi.',
-    },
-    // <UserTermCard
-    //   status="rejected"
-    //   term="Blockchain"
-    //   date="22 Mei 2022"
-    //   shortDescription="Teknologi yang digunakan sebagai sistem penyimpanan atau bank data secara digital yang terhubung dengan kriptografi."
-    // />,
-  ];
-  const [termList, setTermList] = useState(userTerms);
+  const { isLoggedIn } = useAuth();
+  const { token } = useAuth();
+  const [termList, setTermList] = useState([]);  
+  const [userData, setuserData] = useState(termList); 
+  const totalTerms = userData.total_approved + userData.total_reject + userData.total_review;
 
-  const approvedTerms = userTerms.filter(
-    (userTerm) => userTerm.status === STATUS.approved,
+  const approvedTerms = userData.definitions && userData.definitions.filter(
+    (userTerm) => userTerm.statusDefinition === STATUS.approved,
   );
-  const pendingTerms = userTerms.filter(
-    (userTerm) => userTerm.status === STATUS.pending,
+  const pendingTerms = userData.definitions && userData.definitions.filter(
+    (userTerm) => userTerm.statusDefinition === STATUS.pending,
   );
-  const rejectedTerms = userTerms.filter(
-    (userTerm) => userTerm.status === STATUS.rejected,
-  );
+  const rejectedTerms = userData.definitions && userData.definitions.filter(
+    (userTerm) => userTerm.statusDefinition === STATUS.rejected,
+  ); 
 
+  const fetchUserData = async () => {
+    const response = await axios.get('https://kbti-api.herokuapp.com/dashboard', { headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    });
 
-  const createTermCardElements = (termData) => termData.map(({ status, term, date, shortDescription }) => (
+    return response.data;
+  };
+  
+
+  const termCardElements = (termData) => termData.map(({ id, statusDefinition, term, createdat, definition, up_votes = null, down_votes = null }) => (
     <UserTermCard
-      status={status}
+      key={`${id}UserTerms`}
+      statusDefinition={statusDefinition}
       term={term}
-      date={date}
-      shortDescription={shortDescription}
+      date={createdat}
+      definition={definition}
+      upvote={up_votes}
+      downvote={down_votes}
     />
   ));
-  const TermCardElements = createTermCardElements(termList);
 
-  const approvedButtonHandler = () => {
-    setTermList(approvedTerms);
-    createTermCardElements(approvedTerms);
-  };
+  useEffect(() => {
+    const firstTimeFetchData = async () => {
+      const response = await fetchUserData();
+      setuserData(response.data);
+      setTermList(response.data.definitions);
+    };
+    
+    firstTimeFetchData();
+  }, []);
 
-  const pendingButtonHandler = () => {
-    setTermList(pendingTerms);
-    createTermCardElements(pendingTerms);
-  };
-
-  const rejecteddButtonHandler = () => {
-    setTermList(rejectedTerms);
-    createTermCardElements(rejectedTerms);
-  };
-
-  const seeAllButtonHandler = () => {
-    setTermList(userTerms);
-    createTermCardElements(userTerms);
-  };
 
   const emptyListState = (
     <div className="empty-list d-flex flex-column justify-content-center">
@@ -99,14 +80,14 @@ const DashboardUser = () => {
       <div className="row gx-5 row-cols-2">
         <div className="dashboard__aside-container col-12 col-lg-4 mt-4 mb-4">
           <div className="dashboard__user-action d-flex">
-            <a
-              className="btn-kbti btn w-100 rounded-pill pt4 my-1 me-2 align-middle lh-lg"
-              href="#"
-              role="button"
-            >
+          <Link
+            to={isLoggedIn ? '/definitions/create' : '/login'}
+            className="add-term__button btn btn-kbti w-100 rounded-pill pt4 my-1 me-3 align-middle lh-lg"
+            role="button"
+          >
               <PlusSvg className="me-2" />
               <span className="btn-text">Tambah istilah baru</span>
-            </a>
+          </Link>
             <button type="button" className="info-btn p-0 m-0 rounded-circle">
               <InfoSvg className="info-btn__icon" />
             </button>
@@ -124,11 +105,11 @@ const DashboardUser = () => {
                 <div className="row px-3">
                   <button
                     type="button"
-                    onClick={() => approvedButtonHandler()}
+                    onClick={() => setTermList(approvedTerms)}
                     className="btn btn-link col-4 m-0 p-0 d-flex flex-column"
                   >
                     <span className="status-count text-center w-100">
-                    {approvedTerms.length}
+                    {userData.total_approved}
                     </span>
                     <span className="status-text text-center w-100">
                       disetujui
@@ -136,23 +117,23 @@ const DashboardUser = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={() => pendingButtonHandler()}
+                    onClick={() => setTermList(pendingTerms)}
                     className="btn btn-link col-4 m-0 p-0 d-flex flex-column"
                   >
                     <span className="status-count text-center w-100">
-                      {pendingTerms.length}
+                    {userData.total_review}
                     </span>
                     <span className="status-text text-center w-100">
-                      sedang ditinjau
+                      direview
                     </span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => rejecteddButtonHandler()}
+                    onClick={() => setTermList(rejectedTerms)}
                     className="btn btn-link col-4 m-0 p-0 d-flex flex-column"
                   >
                     <span className="status-count text-center w-100">
-                      {rejectedTerms.length}
+                    {userData.total_reject}
                     </span>
                     <span className="status-text text-center w-100">
                       ditolak
@@ -164,22 +145,22 @@ const DashboardUser = () => {
           </div>
         </div>
         <div className="dashboard__terms-container col-12 col-lg-8 mt-4">
-          {termList.length !== userTerms.length 
+          {termList.length !== totalTerms
             ? (
             <div
               className="dashboard__terms-header d-flex justify-content-end"
             >
               <button
                 type="button" 
-                onClick={() => seeAllButtonHandler()}
+                onClick={() => setTermList(userData.definitions)}
                 className="btn btn-link mb-4"
               >
               Lihat semua
               </button>
             </div>
             ) : ''}
-          {TermCardElements.length > 0
-            ? TermCardElements
+          {termCardElements(termList).length > 0
+            ? termCardElements(termList)
             : emptyListState}
         </div>
       </div>

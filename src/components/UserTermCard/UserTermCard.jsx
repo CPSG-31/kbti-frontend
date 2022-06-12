@@ -6,46 +6,46 @@ import {
 import STATUS from '../../globals/const';
 
 const UserTermCard = ({
- status, term, date, shortDescription, 
+  id, statusDefinition, term, createdat, definition, upvote, downvote,
 }) => {
   let statusElement = '';
 
-  if (status === STATUS.deleted) {
+  if (statusDefinition === STATUS.deleted) {
     return '';
   }
 
-  if (status == STATUS.pending) {
+  if (statusDefinition == STATUS.pending) {
     statusElement = (
       <div className="term__status-pending rounded-pill">
-        <p className="term___status-text">Sedang Ditinjau</p>
+        <p className="term___status-text">{STATUS.pending}</p>
       </div>
     );
-  } else if (status === STATUS.approved) {
+  } else if (statusDefinition === STATUS.approved) {
     statusElement = (
       <>
         <div className="term__status-approved rounded-pill align-self-center">
-          <p className="term___status-text">Disetujui</p>
+          <p className="term___status-text">{STATUS.approved}</p>
         </div>
         <div className="term__vote-container d-flex">
           <div className="term__upvote-container">
-            <div className="term__vote-inner d-flex ms-2 me-1">
+            <div className="term__vote-inner d-flex ms-2 me-1 my-1">
               <ThumbsUpSvg className="align-self-center me-1" />
-              <span className="term__vote-count">1004</span>
+              <span className="term__vote-count">{upvote}</span>
             </div>
           </div>
           <div className="term__downvote-container">
-            <div className="term__vote-inner d-flex ms-1 me-2">
+            <div className="term__vote-inner d-flex ms-1 me-2 my-1">
               <ThumbsDownSvg className="align-self-center me-1" />
-              <span className="term__vote-count">20</span>
+              <span className="term__vote-count">{downvote}</span>
             </div>
           </div>
         </div>
       </>
     );
-  } else if (status === STATUS.rejected) {
+  } else if (statusDefinition === STATUS.rejected) {
     statusElement = (
       <div className="term__status-rejected rounded-pill">
-        <p className="term___status-text">Ditolak</p>
+        <p className="term___status-text">{STATUS.rejected}</p>
       </div>
     );
   }
@@ -58,9 +58,9 @@ const UserTermCard = ({
         </div>
         <h2 className="card-title mb-0 mt-4">{term}</h2>
         <div className="term__info">
-          <small className="text-muted">{date}</small>
+          <small className="text-muted">{createdat}</small>
         </div>
-        <p className="card-text mt-2 mb-0">{shortDescription}</p>
+        <p className="card-text mt-2 mb-0">{definition}</p>
         <a href="#" className="">
           Baca Selengkapnya
         </a>

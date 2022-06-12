@@ -1,4 +1,6 @@
 /* eslint-disable react/jsx-no-duplicate-props */
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { TermPill, TermCard } from '../../components';
 import './Home.css';
@@ -7,16 +9,38 @@ import useAuth from '../../hooks/useAuth';
 
 function Home() {
   const { isLoggedIn } = useAuth();
+  const [randomTerms, setRandomTerms] = useState([]);
+  const [newTerms, setNewTerms] = useState([]);
+    
+  const fetchRandomTerms = async () => {
+    const response = await axios.get('https://kbti-api.herokuapp.com/terms/random');
+    return response.data;
+  };
   
-  const newTerms = [
-    'Blockchain',
-    'Cloud Computing',
-    'Machine Learning',
-    'BaaS',
-    'React',
-    'Backend',
-  ];
+  useEffect(() => {
+    const firstTimeFetchData = async () => {
+      const response = await fetchRandomTerms();
+      setRandomTerms(response.data);
+    };
+    
+    firstTimeFetchData();
+  }, []);
 
+  const fetchNewTerms = async () => {
+    const response = await axios.get('https://kbti-api.herokuapp.com/terms/new');
+    return response.data;
+  };
+  
+  useEffect(() => {
+    const firstTimeFetchData = async () => {
+      const response = await fetchNewTerms();
+      setNewTerms(response.data);
+    };
+    
+    firstTimeFetchData();
+  }, []);
+
+  console.log(newTerms);
   return (
     <div className="homepage">
       <form className="d-flex mt-2 mb-md-4">
@@ -33,7 +57,7 @@ function Home() {
             <p>Istilah yang baru ditambahkan</p>
             <div className="new-term__pils">
               {newTerms.map((newTerm, index) => {
-                return <TermPill index={index} term={newTerm} />;
+                return <TermPill key={newTerm} term={newTerm.term} />;
               })}
             </div>
             <Link
