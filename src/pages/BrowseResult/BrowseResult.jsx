@@ -1,22 +1,46 @@
-import { TermPill } from '../../components';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { SearchBar, TermPill } from '../../components';
+import API_ENDPOINT from '../../globals/apiEndpoint';
+import useRequest from '../../hooks/useRequest';
 
 const BrowseResult = () => {
-  const searchResult = ['Blockhain', 'Backend', 'Background', 'BaaS', 'Bulk', 'Bulma'];
+  let searchResult;
+  const { sendRequest, status, data: browseData } = useRequest();
+  const [searchParams] = useSearchParams();
+  const searchValue = searchParams.get('q');
+
+  useEffect(() => {
+    const getSearchResult = async () => {
+      await sendRequest({
+        requestUrl: API_ENDPOINT.SEARCH(searchValue),
+        method: 'GET',
+      });
+    };
+
+    getSearchResult();
+  }, [sendRequest]);
+
+  if (status === 'completed') {
+    searchResult = browseData.data.map((data) => {
+      return <TermPill key={data.term} term={data.term} />;
+    });
+  }
+
   return (
     <div className="homepage">
-      <form className="d-flex mt-2 mb-md-4">
-        <input className="search-form form-control px-4 rounded-pill" type="search" placeholder="Cari istilah" aria-label="Search" />
-      </form>
-
+      <SearchBar />
       <h3 className="my-4 fs-4">
         Hasil pencarian dari
-        <span> &quot;Block&quot;</span>
+        <span>
+          {' '}
+          &quot;
+          {searchValue}
+          &quot;
+        </span>
       </h3>
-
-      <div className="new-term__pils mb-3 px-2 mx-auto ">
-        {searchResult.map((term, index) => {
-          return <TermPill key={term} term={term} />;
-        })}
+      <div className="new-term__pils mb-3 px-2 mx-auto">
+        {searchResult}
       </div>
     </div>
   );
