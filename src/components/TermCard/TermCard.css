@@ -3,8 +3,21 @@
   border-radius: 5px;
 }
 
+.term__category {
+  background-color: #F2F7FF;
+  color: #1D2A57;
+  margin-bottom: 24px;
+}
+
 .card-title {
-   color: #1D2A57
+   color: #1D2A57;
+}
+
+.term__username{
+  font-style: italic;
+  font-weight: 400;
+  text-decoration-line: underline;
+  color: #184C92;
 }
 
 .term__action-button {
