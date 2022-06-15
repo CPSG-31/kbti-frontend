@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import useRequest from '../../hooks/useRequest';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import '../../index.css';
@@ -8,7 +9,6 @@ import '../../styles/Form.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { sendRequest, status, error } = useRequest();
   const usernameInput = useRef();
   const emailInput = useRef();
   const passwordInput = useRef();
@@ -22,37 +22,25 @@ const Register = () => {
       password: passwordInput.current.value,
     };
     
-    await sendRequest({
-      requestUrl: API_ENDPOINT.REGISTER,
-      method: 'POST',
-      data: sendDataRequest,
-    });
-  };
-  
-  useEffect(() => {
-    if (status === 'completed') {
-      Swal.fire({
+    try {
+      await axios.post(API_ENDPOINT.REGISTER, sendDataRequest);
+      await Swal.fire({
         title: 'Berhasil Register',
-        text: 'Berhasil register, silahkan login untuk melanjutkan',
+        text: 'Berhasil register, silahkan menikmati fitur yang ada ya',
         icon: 'success',
         showConfirmButton: false,
         timer: 2000,
       });
-      
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      navigate('/login');
+    } catch (error) {
+      const errorMessage = error?.response?.data?.message.errors;
+      Swal.fire({
+        title: 'Gagal Daftar',
+        text: `${errorMessage[0]?.message}`,
+        icon: 'error',
+      });
     }
-  }, [status]);
-  
-  if (error) {
-    const errorMessage = error?.response?.data?.message.errors;
-    Swal.fire({
-      title: 'Gagal Daftar',
-      text: `${errorMessage[0].message} or ${errorMessage[1].message}`,
-      icon: 'error',
-    });
-  }
+  };
   
   return (
     <>

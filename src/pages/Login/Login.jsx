@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
-import useRequest from '../../hooks/useRequest';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import '../../index.css';
 import '../../styles/global.css';
@@ -12,7 +12,6 @@ const Login = () => {
   const passwordInput = useRef();
   const navigate = useNavigate();
   const { login } = useAuth();
-  const { sendRequest, status, data, error } = useRequest();
   
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -22,37 +21,26 @@ const Login = () => {
       password: passwordInput.current.value,
     };
     
-    await sendRequest({
-      requestUrl: API_ENDPOINT.LOGIN,
-      method: 'POST',
-      data: sendDataRequest,
-    });
-  };
-  
-  useEffect(() => {
-    if (status === 'completed') {
-      Swal.fire({
+    try {
+      const response = await axios.post(API_ENDPOINT.LOGIN, sendDataRequest);
+      await Swal.fire({
         title: 'Berhasil Login',
         text: 'Berhasil login, silahkan menikmati fitur yang ada ya',
         icon: 'success',
         showConfirmButton: false,
         timer: 2000,
       });
-      setTimeout(() => {
-        login(data);
-        navigate('/');
-      }, 2000);
+      login(response.data);
+      navigate('/');
+    } catch (error) {
+      const errorMessage = error?.response?.data?.message;
+      Swal.fire({
+        title: 'Gagal Login',
+        text: `${errorMessage}`,
+        icon: 'error',
+      });
     }
-  }, [status]);
-  
-  if (error) {
-    const errorMessage = error?.response?.data?.message;
-    Swal.fire({
-      title: 'Gagal Login',
-      text: `${errorMessage}`,
-      icon: 'error',
-    });
-  }
+  };
   
   return (
     <>
