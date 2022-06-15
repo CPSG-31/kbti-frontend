@@ -8,7 +8,7 @@ import '../../styles/Form.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { sendRequest, status } = useRequest();
+  const { sendRequest, status, error } = useRequest();
   const usernameInput = useRef();
   const emailInput = useRef();
   const passwordInput = useRef();
@@ -31,9 +31,28 @@ const Register = () => {
   
   useEffect(() => {
     if (status === 'completed') {
-      navigate('/login');
+      Swal.fire({
+        title: 'Berhasil Register',
+        text: 'Berhasil register, silahkan login untuk melanjutkan',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     }
   }, [status]);
+  
+  if (error) {
+    const errorMessage = error?.response?.data?.message.errors;
+    Swal.fire({
+      title: 'Gagal Daftar',
+      text: `${errorMessage[0].message} or ${errorMessage[1].message}`,
+      icon: 'error',
+    });
+  }
   
   return (
     <>

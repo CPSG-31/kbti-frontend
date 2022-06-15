@@ -12,7 +12,7 @@ const Login = () => {
   const passwordInput = useRef();
   const navigate = useNavigate();
   const { login } = useAuth();
-  const { sendRequest, status, data } = useRequest();
+  const { sendRequest, status, data, error } = useRequest();
   
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -31,13 +31,28 @@ const Login = () => {
   
   useEffect(() => {
     if (status === 'completed') {
-      login(data);
-      
-      navigate('/', {
-        replace: true,
+      Swal.fire({
+        title: 'Berhasil Login',
+        text: 'Berhasil login, silahkan menikmati fitur yang ada ya',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
       });
+      setTimeout(() => {
+        login(data);
+        navigate('/');
+      }, 2000);
     }
   }, [status]);
+  
+  if (error) {
+    const errorMessage = error?.response?.data?.message;
+    Swal.fire({
+      title: 'Gagal Login',
+      text: `${errorMessage}`,
+      icon: 'error',
+    });
+  }
   
   return (
     <>
