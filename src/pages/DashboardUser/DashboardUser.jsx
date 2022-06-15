@@ -36,19 +36,6 @@ const DashboardUser = () => {
 
     return response.data;
   };
-  
-
-  const termCardElements = (termData) => termData.map(({ id, statusDefinition, term, updatedAt, definition, up_votes = null, down_votes = null }) => (
-    <UserTermCard
-      key={`${id}UserTerms`}
-      statusDefinition={statusDefinition}
-      term={term}
-      date={updatedAt}
-      definition={definition}
-      upvote={up_votes}
-      downvote={down_votes}
-    />
-  ));
 
   useEffect(() => {
     const firstTimeFetchData = async () => {
@@ -60,7 +47,22 @@ const DashboardUser = () => {
     firstTimeFetchData();
   }, []);
 
+  const handleDeteleButton = async (termId) => {
+   const response = await axios.delete(`https://kbti-api.herokuapp.com/definitions/${termId}`, { headers: {
+      Authorization: `Bearer ${token}`,
+    } });
+    window.location.reload();
+};
 
+  const termCardElements = (termData) => termData && termData.map((definition) => {
+    return (
+      <UserTermCard
+        key={`${definition.id}UserTerms`}
+        dataDefinition={definition}
+        deleteButtonHandler={handleDeteleButton}
+      />
+    );
+  });
   const emptyListState = (
     <div className="empty-list d-flex flex-column justify-content-center">
       <p className="empty-list-text text-center">
