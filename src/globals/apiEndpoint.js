@@ -14,6 +14,7 @@ const API_ENDPOINT = {
   ADMIN_DEFINITIONS: (page) => `${CONFIG.BASE_URL}/admin/definitions?page=${page}`,
   USERS: `${CONFIG.BASE_URL}/users`,
   DELETE_USER: (id) => `${CONFIG.BASE_URL}/users/${id}`,
+  ADMIN_DEFINITIONS_REVIEW: (page) => `${CONFIG.BASE_URL}/admin/definitions/review?page=${page}`,
 };
 
 export default API_ENDPOINT;
