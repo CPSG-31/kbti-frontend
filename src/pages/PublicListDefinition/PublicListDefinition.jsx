@@ -5,6 +5,7 @@ import API_ENDPOINT from '../../globals/apiEndpoint';
 import useRequest from '../../hooks/useRequest';
 import { PlusSvg } from '../../icons';
 import useAuth from '../../hooks/useAuth';
+import './PublicListDefinition.css';
 
 const PublicListDefinition = () => {
   let searchResult;
@@ -40,22 +41,10 @@ const PublicListDefinition = () => {
   }
 
   return (
-    <div className="homepage">
+    <div className="definitionList">
       <SearchBar />
-
-      <div className="row row-cols-2">
-        <div className="col-12 col-lg-4 mt-5 mb-4">
-        <Link
-          to={isLoggedIn ? '/definitions/create' : '/login'}
-          className="add-term__button btn btn-kbti w-100 rounded-pill pt4 my-1 me-3 align-middle lh-lg"
-          role="button"
-        >
-              <PlusSvg className="me-2" />
-              <span className="btn-text">Tambah istilah baru</span>
-        </Link>
-        </div>
-        <div className="random-term___container col-12 col-lg-8 mt-4">
-          <h3 className="my-4 fs-3 text-center">
+        <div className="random-term___container">
+          <h3 className="mt-5 mb-3">
             Definisi dari
             <span>
               {' '}
@@ -66,7 +55,6 @@ const PublicListDefinition = () => {
           </h3>
           {searchResult}
         </div>
-      </div>
     </div>
   );
 };

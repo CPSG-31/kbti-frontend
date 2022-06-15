@@ -28,7 +28,7 @@ const BrowseResult = () => {
   }
 
   return (
-    <div className="homepage">
+    <div className="definitionList">
       <SearchBar />
       <h3 className="my-4 fs-4">
         Hasil pencarian dari
