@@ -12,7 +12,8 @@ h4 {
 
 a,
 button,
-input {
+input,
+Link {
   min-height: 44px !important;
   min-width: 44px !important;
 }

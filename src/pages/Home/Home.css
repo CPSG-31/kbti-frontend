@@ -18,11 +18,6 @@
     border-radius: 30px 0 0 30px;
 }
 
-.add-term__button{
-    width: 100%;
-    background-color: #184C92;
-}
-
 @media (min-width: 768px) {
   .homepage {
     padding: 2% 18%;
