@@ -1,7 +1,7 @@
 import './Table.scss';
 
-const Table = ({ items, currentPage, totalItems, component }) => {
-  const totalItemsInTable = currentPage === 1 ? currentPage + items.length - 1 : ((currentPage - 1) * 10) + items.length;
+const Table = ({ items, currentPage = 0, totalItems, component }) => {
+  const totalItemsInTable = currentPage === 1 ? currentPage + items.data.length - 1 : ((currentPage - 1) * 10) + items.data.length;
   
   return (
     <div className="table-responsive">
