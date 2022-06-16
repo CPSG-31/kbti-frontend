@@ -6,11 +6,13 @@ const API_ENDPOINT = {
   DELETE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   CATEGORY: `${CONFIG.BASE_URL}/categories`,
   CREATE_DEFINITION: `${CONFIG.BASE_URL}/definitions`,
-
   SEARCH: (query) => `${CONFIG.BASE_URL}/search?q=${query}`,
   GET_DEFINITIONS_BY_TERM: (term) => `${CONFIG.BASE_URL}/definitions?term=${term}`,
   GET_DEFINITIONS_BY_CATEGORY_ID: (categoryId) => `${CONFIG.BASE_URL}/definitions?categoryId=${categoryId}`,
   VOTE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}/vote`,
+  ADMIN_DEFINITIONS: (page) => `${CONFIG.BASE_URL}/admin/definitions?page=${page}`,
+  USERS: `${CONFIG.BASE_URL}/users`,
+  DELETE_USER: (id) => `${CONFIG.BASE_URL}/users/${id}`,
 };
 
 export default API_ENDPOINT;

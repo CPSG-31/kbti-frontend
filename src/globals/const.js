@@ -1,8 +1,7 @@
 const STATUS = {
-  pending: 'pending',
-  approved: 'approved',
-  rejected: 'rejected',
-  deleted: 'deleted',
+  pending: 'Direview',
+  approved: 'Disetujui',
+  rejected: 'Ditolak',
 };
 
 export default STATUS;

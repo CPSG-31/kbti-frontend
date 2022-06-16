@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { SearchBar, TermCard } from '../../components';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import useRequest from '../../hooks/useRequest';
 import { PlusSvg } from '../../icons';
+import useAuth from '../../hooks/useAuth';
+import './PublicListDefinition.css';
 
 const PublicListDefinition = () => {
   let searchResult;
   const [searchParams] = useSearchParams();
+  const { isLoggedIn } = useAuth();
   const term = searchParams.get('term');
   const categoryId = searchParams.get('categoryId');
   const { sendRequest, status, data: resultData } = useRequest();
@@ -38,18 +41,10 @@ const PublicListDefinition = () => {
   }
 
   return (
-    <div className="homepage">
+    <div className="definitionList">
       <SearchBar />
-
-      <div className="row row-cols-2">
-        <div className="col-12 col-lg-4 mt-5 mb-4">
-          <a className="add-term__button btn btn-primary rounded-pill mt-1" href="#" role="button">
-            <PlusSvg />
-            Tambah istilah baru
-          </a>
-        </div>
-        <div className="random-term___container col-12 col-lg-8 mt-4">
-          <h3 className="my-4 fs-3 text-center">
+        <div className="random-term___container">
+          <h3 className="mt-5 mb-3">
             Definisi dari
             <span>
               {' '}
@@ -60,7 +55,6 @@ const PublicListDefinition = () => {
           </h3>
           {searchResult}
         </div>
-      </div>
     </div>
   );
 };

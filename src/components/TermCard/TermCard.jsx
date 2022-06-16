@@ -2,16 +2,24 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TermCard.css';
-import {
-  UpvoteSvg, DownvoteSvg, FlagSvg, ShareSvg,
-} from '../../icons';
+import { UpvoteSvg, DownvoteSvg, FlagSvg, ShareSvg } from '../../icons';
 import useAuth from '../../hooks/useAuth';
 import API_ENDPOINT from '../../globals/apiEndpoint';
+import formatDate from '../../utils/formatDate';
 
 const TermCard = ({ index, dataDefinition }) => {
-  const { id, term, category, definition, down_votes: downVotes, up_votes: upVotes, username, updated_at: updatedAt } = dataDefinition;
-  const [totalVotes, setTotalVotes] = useState(upVotes - downVotes);
+  const {
+    id,
+    term,
+    category,
+    definition,
+    down_votes: downVotes,
+    up_votes: upVotes,
+    username,
+    updated_at: updatedAt,
+  } = dataDefinition;
   const [isVoted, setIsVoted] = useState({ upVotes: false, downVotes: false });
+  const [totalVotes, setTotalVotes] = useState(upVotes - downVotes);
   const { isLoggedIn, token } = useAuth();
   const navigate = useNavigate();
 
@@ -42,26 +50,41 @@ const TermCard = ({ index, dataDefinition }) => {
       <div className="row g-0">
         <div className="vote__container col-2 text-center py-1">
           <div className="vote__inner">
-            <button type="button" className="btn pb-0" disabled={isVoted.upVotes} onClick={voteHandler.bind(null, true)}>
+            <button
+              type="button"
+              className="btn pb-0"
+              disabled={isVoted.upVotes}
+              onClick={voteHandler.bind(null, true)}
+            >
               <UpvoteSvg />
             </button>
-            <div className="vote__count fs-6 lh-2">{totalVotes}</div>
-            <button type="button" className="btn pt-0" disabled={isVoted.downVotes} onClick={voteHandler.bind(null, false)}>
+            <div className="vote__count fs-6 lh-2">
+              {totalVotes}
+            </div>
+            <button
+              type="button"
+              className="btn pt-0"
+              disabled={isVoted.downVotes}
+              onClick={voteHandler.bind(null, false)}
+            >
               <DownvoteSvg />
             </button>
           </div>
         </div>
         <div className="col-10">
           <div className="card-body">
-            <h2 className="card-title mb-0">{term}</h2>
-            <div className="term__info">
-              <a href="#" className="link-primary">
+            <div className="term__category rounded d-inline-block p-1">
+              <p className="term___category-text m-0">{category}</p>
+            </div>
+            <h2 className="card-title mb-0 lh-1">{term}</h2>
+            <div className="term__info mb-2">
+              <a href="#" className="term__username">
                 {username}
               </a>
               <span className="mx-1 text-muted">&#8226;</span>
-              <small className="text-muted">{updatedAt}</small>
+              <small className="text-muted">{formatDate(updatedAt)}</small>
             </div>
-            <p className="card-text my-3">{definition}</p>
+            <p className="card-text mb-3">{definition}</p>
             <div className="term__action d-flex justify-content-end mt-1">
               <button type="button" className="term__action-button btn">
                 <FlagSvg />
