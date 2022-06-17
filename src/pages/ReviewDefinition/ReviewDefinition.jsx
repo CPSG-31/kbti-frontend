@@ -10,11 +10,8 @@ import useAuth from '../../hooks/useAuth';
 import './ReviewDefinition.scss';
 
 const ReviewDefinition = () => {
-  const [items, setItems] = useState([]);
-  const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(null);
-  const [totalItems, setTotalItems] = useState(0);
   const { token } = useAuth();
   
   const fetchData = useCallback(async (queryCurrentPage = 1) => {
@@ -24,7 +21,8 @@ const ReviewDefinition = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-    
+      
+      await setCurrentPage(queryCurrentPage);
       await setData(response.data);
     } catch (error) {
       console.warn(error);
@@ -34,18 +32,12 @@ const ReviewDefinition = () => {
   const paginateChangeHandler = async (page) => {
     const currentPagePaginate = page.selected + 1;
     
-    // const fetchNewData = await fetchData(currentPagePaginate);
-    // setItems(fetchNewData);
-    // setCurrentPage(currentPagePaginate);
     await fetchData(currentPagePaginate);
-    setCurrentPage(currentPagePaginate);
   };
   
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  
-  
   
   return (
     <section className="review__definition-admin">

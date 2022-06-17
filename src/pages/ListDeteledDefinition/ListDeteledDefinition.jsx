@@ -33,7 +33,7 @@ const ListDeletedDefinition = () => {
     
     await fetchData(currentPagePaginate);
   };
-    console.log(data?.data);
+  
   const deleteDefinitionHandler = async (id) => {
     await Swal.fire({
       title: 'Apakah Anda yakin?',
@@ -74,8 +74,6 @@ const ListDeletedDefinition = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  
-  
   
   return (
     <section className="deleted__definition-admin">

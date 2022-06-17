@@ -25,6 +25,7 @@ const ListDefinition = () => {
         },
       });
       
+      await setCurrentPage(queryCurrentPage);
       await setData(response.data);
     } catch (error) {
       console.warn(error);
@@ -34,8 +35,7 @@ const ListDefinition = () => {
   const paginateChangeHandler = async (page) => {
     const currentPagePaginate = page.selected + 1;
     
-    fetchData(currentPagePaginate);
-    setCurrentPage(currentPagePaginate);
+    await fetchData(currentPagePaginate);
   };
   
   const deleteDefinitionHandler = async (id) => {
@@ -62,7 +62,7 @@ const ListDefinition = () => {
             icon: 'success',
             timer: 2000,
           });
-          fetchData();
+          await fetchData(data.data.length === 1 ? currentPage - 1 : currentPage);
         } catch (error) {
           Swal.fire({
             title: 'Gagal!',
