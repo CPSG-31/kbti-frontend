@@ -17,6 +17,8 @@ const API_ENDPOINT = {
   ADMIN_DEFINITIONS_REVIEW: (page) => `${CONFIG.BASE_URL}/admin/definitions/review?page=${page}`,
   ADMIN_DETAIL_DEFINITION_REVIEW: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   ADMIN_ACTION_DEFINITION_REVIEW: (id) => `${CONFIG.BASE_URL}/admin/definitions/${id}/review`,
+  ADMIN_DEFINITIONS_DELETED: (page) => `${CONFIG.BASE_URL}/admin/definitions/deleted?page=${page}`,
+  ADMIN_ACTION_DEFINITION_DELETE: (id) => `${CONFIG.BASE_URL}/admin/definitions/${id}/delete`,
 };
 
 export default API_ENDPOINT;
