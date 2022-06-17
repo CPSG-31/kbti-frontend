@@ -18,12 +18,11 @@ const UpdateRole = () => {
     };
     
     try {
-      const response = await axios.put(API_ENDPOINT.ADMIN_ACTION_UPDATE_USER(idUser), sendBodyRequest, {
+      await axios.put(API_ENDPOINT.ADMIN_ACTION_UPDATE_USER(idUser), sendBodyRequest, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
       
       await Swal.fire({
         title: 'Berhasil!',
