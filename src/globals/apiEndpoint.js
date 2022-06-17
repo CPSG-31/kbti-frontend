@@ -11,8 +11,15 @@ const API_ENDPOINT = {
   GET_DEFINITIONS_BY_CATEGORY_ID: (categoryId) => `${CONFIG.BASE_URL}/definitions?categoryId=${categoryId}`,
   VOTE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}/vote`,
   ADMIN_DEFINITIONS: (page) => `${CONFIG.BASE_URL}/admin/definitions?page=${page}`,
-  USERS: `${CONFIG.BASE_URL}/users`,
+  USERS: (page) => `${CONFIG.BASE_URL}/users?page=${page}`,
   DELETE_USER: (id) => `${CONFIG.BASE_URL}/users/${id}`,
+  ADMIN_DEFINITIONS_REVIEW: (page) => `${CONFIG.BASE_URL}/admin/definitions/review?page=${page}`,
+  ADMIN_DETAIL_DEFINITION_REVIEW: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
+  ADMIN_ACTION_DEFINITION_REVIEW: (id) => `${CONFIG.BASE_URL}/admin/definitions/${id}/review`,
+  ADMIN_DEFINITIONS_DELETED: (page) => `${CONFIG.BASE_URL}/admin/definitions/deleted?page=${page}`,
+  ADMIN_ACTION_DEFINITION_DELETE: (id) => `${CONFIG.BASE_URL}/admin/definitions/${id}/delete`,
+  ADMIN_DETAIL_USER: (id) => `${CONFIG.BASE_URL}/users/${id}`,
+  ADMIN_ACTION_UPDATE_USER: (id) => `${CONFIG.BASE_URL}/users/${id}/role`,
 };
 
 export default API_ENDPOINT;

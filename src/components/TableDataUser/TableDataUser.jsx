@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { DeleteIcon, EditIcon } from '../../assets/icons';
 import './TableDataUser.scss';
 
-const TableDataUser = ({ items, currentPage }) => {
+const TableDataUser = ({ items, currentPage, onDeleteUser }) => {
   return (
     <>
       <thead>
@@ -15,8 +15,8 @@ const TableDataUser = ({ items, currentPage }) => {
       </thead>
       <tbody>
         {
-          items.map((user, index) => {
-            const { id, username, role } = user;
+          items?.data?.map((user, index) => {
+            const { id, username, role_name } = user;
       
             const rowIndex = currentPage === 1 ? index + 1 : ((currentPage - 1) * 10) + index + 1;
       
@@ -24,12 +24,12 @@ const TableDataUser = ({ items, currentPage }) => {
               <tr key={id} className="table__data">
                 <td>{rowIndex}</td>
                 <td>{username}</td>
-                <td>{role}</td>
+                <td>{role_name}</td>
                 <td className="table__data-action table__data-action-user">
                   <Link to={`/dashboard/users/${id}`}>
                     <EditIcon />
                   </Link>
-                  <button className="btn">
+                  <button className="btn" onClick={onDeleteUser.bind(null, id)}>
                     <DeleteIcon />
                   </button>
                 </td>
