@@ -1,3 +1,4 @@
+import formatDate from '../../utils/formatDate';
 import { DeleteIcon } from '../../assets/icons';
 import './TableDataDeletedDefinition.scss';
 
@@ -17,7 +18,7 @@ const TableDataDeletedDefinition = ({ items, currentPage, onDeleteDefinition }) 
       <tbody>
       {
         items.data.map((definition, index) => {
-          const { id, term, definition: detailDefinition, username, deleted_at } = definition;
+          const { id, term, definition: detailDefinition, username, deleted_at: deletedAt } = definition;
       
           const rowIndex = currentPage === 1 ? index + 1 : ((currentPage - 1) * 10) + index + 1;
       
@@ -28,9 +29,11 @@ const TableDataDeletedDefinition = ({ items, currentPage, onDeleteDefinition }) 
               <td className="table__data-description text-start">
                 <p>{detailDefinition}</p>
               </td>
-              <td className="table__data-author">{username}</td>
+              <td className="table__data-author">
+                <span>{username}</span>
+              </td>
               <td className="table__data-date">
-                <span>{deleted_at}</span>
+                <span>{formatDate(deletedAt)}</span>
               </td>
               <td className="table__data-action">
                 <button className="btn table__data-action__delete" onClick={onDeleteDefinition.bind(null, id)}>
