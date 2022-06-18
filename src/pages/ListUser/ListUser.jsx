@@ -30,18 +30,10 @@ const ListUser = () => {
       await setData(response.data);
       await setIsLoading(false);
     } catch (error) {
-      const statusErrorMessage = error.response.data.code;
-      const responseErrorMessage = error.response.data.message;
-      
+      const statusErrorMessage = error.response.status;
+  
       if (statusErrorMessage === 401) {
-        await Swal.fire({
-          title: 'Error',
-          text: `${responseErrorMessage}, mohon login ulang!`,
-          icon: 'error',
-          timer: 2000,
-        });
-        
-        logout();
+        return logout('Authorization gagal, mohon login ulang!');
       }
       
       setIsLoading(false);
@@ -82,18 +74,10 @@ const ListUser = () => {
 
           await fetchData(data.data.length === 1 ? currentPage - 1 : currentPage);
         } catch (error) {
-          const statusErrorMessage = error.response.data.code;
-          const responseErrorMessage = error.response.data.message;
+          const statusErrorMessage = error.response.status;
           
           if (statusErrorMessage === 401) {
-            await Swal.fire({
-              title: 'Error',
-              text: `${responseErrorMessage}, mohon login ulang!`,
-              icon: 'error',
-              timer: 2000,
-            });
-            
-            logout();
+            return logout('Authorization gagal, mohon login ulang!');
           } else {
             Swal.fire({
               title: 'Gagal!',

@@ -11,7 +11,7 @@ import {
 
 const UpdateRole = () => {
   const { idUser } = useParams();
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
   const [data, setData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,18 +38,11 @@ const UpdateRole = () => {
       });
       navigate('/dashboard/users');
     } catch (error) {
-      const statusErrorMessage = error.response.data.code;
+      const statusErrorMessage = error.response.status;
       const responseErrorMessage = error.response.data.message;
   
       if (statusErrorMessage === 401) {
-        await Swal.fire({
-          title: 'Error',
-          text: `${responseErrorMessage}, mohon login ulang!`,
-          icon: 'error',
-          timer: 2000,
-        });
-    
-        logout();
+        return logout('Authorization gagal, mohon login ulang!');
       } else {
         await Swal.fire({
           title: 'Error',
@@ -80,18 +73,11 @@ const UpdateRole = () => {
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
-        const statusErrorMessage = error.response.data.code;
+        const statusErrorMessage = error.response.status;
         const responseErrorMessage = error.response.data.message;
   
         if (statusErrorMessage === 401) {
-          await Swal.fire({
-            title: 'Error',
-            text: `${responseErrorMessage}, mohon login ulang!`,
-            icon: 'error',
-            timer: 2000,
-          });
-    
-          logout();
+          return logout('Authorization gagal, mohon login ulang!');
         }
   
         setIsLoading(false);
