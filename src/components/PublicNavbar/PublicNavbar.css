@@ -10,7 +10,7 @@
   width: 120px;
 }
 
-.dropdown-menu {
+.navbar .dropdown-menu {
   min-width: 230px;
   background-color: #1d2a57;
 }
