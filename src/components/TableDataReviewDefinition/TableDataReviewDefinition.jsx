@@ -30,7 +30,9 @@ const TableDataReviewDefinition = ({ items, currentPage }) => {
               <td className="table__data-description text-start">
                 <p>{detailDefinition}</p>
               </td>
-              <td className="table__data-author">{username}</td>
+              <td className="table__data-author">
+                <span>{username}</span>
+              </td>
               <td className="table__data-date">
                 <span>{formatDate(createdAt)}</span>
               </td>
