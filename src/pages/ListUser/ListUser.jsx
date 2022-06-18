@@ -4,18 +4,22 @@ import {
   Paginate,
   Table,
   TableDataUser,
+  Loading,
+  EmptyMessage,
 } from '../../components';
 import './ListUser.scss';
-import useRequest from '../../hooks/useRequest';
 import useAuth from '../../hooks/useAuth';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 
 const ListUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(null);
-  const { token } = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { token, logout } = useAuth();
   
   const fetchData = useCallback(async (queryCurrentPage = 1) => {
+    setIsLoading(true);
     try {
       const response = await axios.get(API_ENDPOINT.USERS(queryCurrentPage), {
         headers: {
@@ -24,8 +28,24 @@ const ListUser = () => {
       });
       await setCurrentPage(queryCurrentPage);
       await setData(response.data);
+      await setIsLoading(false);
     } catch (error) {
-      console.warn(error);
+      const statusErrorMessage = error.response.data.code;
+      const responseErrorMessage = error.response.data.message;
+      
+      if (statusErrorMessage === 401) {
+        await Swal.fire({
+          title: 'Error',
+          text: `${responseErrorMessage}, mohon login ulang!`,
+          icon: 'error',
+          timer: 2000,
+        });
+        
+        logout();
+      }
+      
+      setIsLoading(false);
+      setErrorMessage(responseErrorMessage);
     }
   }, []);
   
@@ -62,12 +82,26 @@ const ListUser = () => {
 
           await fetchData(data.data.length === 1 ? currentPage - 1 : currentPage);
         } catch (error) {
-          Swal.fire({
-            title: 'Gagal!',
-            text: `${error.response.data.message}!`,
-            icon: 'error',
-            timer: 2000,
-          });
+          const statusErrorMessage = error.response.data.code;
+          const responseErrorMessage = error.response.data.message;
+          
+          if (statusErrorMessage === 401) {
+            await Swal.fire({
+              title: 'Error',
+              text: `${responseErrorMessage}, mohon login ulang!`,
+              icon: 'error',
+              timer: 2000,
+            });
+            
+            logout();
+          } else {
+            Swal.fire({
+              title: 'Gagal!',
+              text: `${error.response.data.message}!`,
+              icon: 'error',
+              timer: 2000,
+            });
+          }
         }
       }
     });
@@ -81,6 +115,8 @@ const ListUser = () => {
     <section className="list__user-admin">
       <h1>Kelola Pengguna</h1>
   
+      {isLoading && <Loading />}
+      {errorMessage && <EmptyMessage message="Tidak dapat menemukan user"/>}
       {data && (
         <>
           <Table
@@ -91,7 +127,7 @@ const ListUser = () => {
           />
   
           <Paginate
-            pageCount={Math.ceil(data?.meta?.total / 10)}
+            pageCount={Math.ceil(data.meta.total / 10)}
             paginateChangeHandler={paginateChangeHandler}
           />
         </>

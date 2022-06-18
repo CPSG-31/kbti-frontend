@@ -1,23 +1,28 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_ENDPOINT from '../../globals/apiEndpoint';
+import useAuth from '../../hooks/useAuth';
 import { PlusSvg } from '../../assets/icons';
 import {
   Table,
   Paginate,
   TableDataDefinition,
+  Loading,
+  EmptyMessage,
 } from '../../components';
 
 import './ListDefinition.scss';
-import API_ENDPOINT from '../../globals/apiEndpoint';
-import useAuth from '../../hooks/useAuth';
 
 const ListDefinition = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(null);
-  const { token } = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { token, logout } = useAuth();
   
   const fetchData = useCallback(async (queryCurrentPage = 1) => {
+    setIsLoading(true);
     try {
       const response = await axios.get(API_ENDPOINT.ADMIN_DEFINITIONS(queryCurrentPage), {
         headers: {
@@ -25,10 +30,26 @@ const ListDefinition = () => {
         },
       });
       
-      await setCurrentPage(queryCurrentPage);
-      await setData(response.data);
+      setCurrentPage(queryCurrentPage);
+      setData(response.data);
+      setIsLoading(false);
     } catch (error) {
-      console.warn(error);
+      const statusErrorMessage = error.response.data.code;
+      const responseErrorMessage = error.response.data.message;
+  
+      if (statusErrorMessage === 401) {
+        await Swal.fire({
+          title: 'Error',
+          text: `${responseErrorMessage}, mohon login ulang!`,
+          icon: 'error',
+          timer: 2000,
+        });
+    
+        logout();
+      }
+      
+      setIsLoading(false);
+      setErrorMessage(responseErrorMessage);
     }
   }, []);
   
@@ -64,12 +85,26 @@ const ListDefinition = () => {
           });
           await fetchData(data.data.length === 1 ? currentPage - 1 : currentPage);
         } catch (error) {
-          Swal.fire({
-            title: 'Gagal!',
-            text: `${error.response.data.message}!`,
-            icon: 'error',
-            timer: 2000,
-          });
+          const statusErrorMessage = error.response.data.code;
+          const responseErrorMessage = error.response.data.message;
+          
+          if (statusErrorMessage === 401) {
+            await Swal.fire({
+              title: 'Error',
+              text: `${responseErrorMessage}, mohon login ulang!`,
+              icon: 'error',
+              timer: 2000,
+            });
+  
+            logout();
+          } else {
+            await Swal.fire({
+              title: 'Error',
+              text: statusErrorMessage,
+              icon: 'error',
+              timer: 2000,
+            });
+          }
         }
       }
     });
@@ -86,6 +121,9 @@ const ListDefinition = () => {
         <PlusSvg />
         Tambah Definisi
       </Link>
+  
+      {isLoading && <Loading />}
+      {errorMessage && <EmptyMessage message="Tidak ada list definisi"/>}
       {data && (
         <>
           <Table

@@ -4,11 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import API_ENDPOINT from '../../globals/apiEndpoint';
+import {
+  Loading,
+  EmptyMessage,
+} from '../../components';
 
 const UpdateRole = () => {
   const { idUser } = useParams();
   const { token } = useAuth();
   const [data, setData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const getRoleInput = useRef();
   const navigate = useNavigate();
   
@@ -32,13 +38,26 @@ const UpdateRole = () => {
       });
       navigate('/dashboard/users');
     } catch (error) {
-      const errorMessage = error.response.data.message;
-      Swal.fire({
-        title: 'Gagal!',
-        text: `${errorMessage}!`,
-        icon: 'error',
-        timer: 2000,
-      });
+      const statusErrorMessage = error.response.data.code;
+      const responseErrorMessage = error.response.data.message;
+  
+      if (statusErrorMessage === 401) {
+        await Swal.fire({
+          title: 'Error',
+          text: `${responseErrorMessage}, mohon login ulang!`,
+          icon: 'error',
+          timer: 2000,
+        });
+    
+        logout();
+      } else {
+        await Swal.fire({
+          title: 'Error',
+          text: responseErrorMessage,
+          icon: 'error',
+          timer: 2000,
+        });
+      }
     }
   };
   
@@ -50,6 +69,7 @@ const UpdateRole = () => {
   
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(API_ENDPOINT.ADMIN_DETAIL_USER(idUser), {
           headers: {
@@ -57,9 +77,25 @@ const UpdateRole = () => {
           },
         });
         
-        await setData(response.data);
+        setData(response.data);
+        setIsLoading(false);
       } catch (error) {
-        console.warn(error);
+        const statusErrorMessage = error.response.data.code;
+        const responseErrorMessage = error.response.data.message;
+  
+        if (statusErrorMessage === 401) {
+          await Swal.fire({
+            title: 'Error',
+            text: `${responseErrorMessage}, mohon login ulang!`,
+            icon: 'error',
+            timer: 2000,
+          });
+    
+          logout();
+        }
+  
+        setIsLoading(false);
+        setErrorMessage(responseErrorMessage);
       }
     };
     
@@ -69,7 +105,8 @@ const UpdateRole = () => {
   return (
     <section className="form-admin">
       <h1 className="text-center">Update Role</h1>
-  
+      {isLoading && <Loading />}
+      {errorMessage && <EmptyMessage message="User tidak ditemukan" />}
       {data && (
         <form className="form-admin__container" onSubmit={submitHandler}>
           <div className="form-admin__group">

@@ -5,6 +5,8 @@ import {
   Paginate,
   Table,
   TableDataDeletedDefinition,
+  Loading,
+  EmptyMessage,
 } from '../../components';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import useAuth from '../../hooks/useAuth';
@@ -12,19 +14,39 @@ import useAuth from '../../hooks/useAuth';
 const ListDeletedDefinition = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(null);
-  const { token } = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { token, logout } = useAuth();
   
   const fetchData = useCallback(async (queryCurrentPage = 1) => {
+    setIsLoading(true);
     try {
       const response = await axios.get(API_ENDPOINT.ADMIN_DEFINITIONS_DELETED(queryCurrentPage), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      await setCurrentPage(queryCurrentPage);
-      await setData(response.data);
+      
+      setCurrentPage(queryCurrentPage);
+      setData(response.data);
+      setIsLoading(false);
     } catch (error) {
-      console.warn(error);
+      const statusErrorMessage = error.response.data.code;
+      const responseErrorMessage = error.response.data.message;
+      
+      if (statusErrorMessage === 401) {
+        await Swal.fire({
+          title: 'Error',
+          text: `${responseErrorMessage}, mohon login ulang!`,
+          icon: 'error',
+          timer: 2000,
+        });
+        
+        logout();
+      }
+      
+      setIsLoading(false);
+      setErrorMessage(responseErrorMessage);
     }
   }, []);
   
@@ -60,12 +82,26 @@ const ListDeletedDefinition = () => {
           });
           await fetchData(data.data.length === 1 ? currentPage - 1 : currentPage);
         } catch (error) {
-          Swal.fire({
-            title: 'Gagal!',
-            text: `${error.response.data.message}!`,
-            icon: 'error',
-            timer: 2000,
-          });
+          const statusErrorMessage = error.response.data.code;
+          const responseErrorMessage = error.response.data.message;
+          
+          if (statusErrorMessage === 401) {
+            await Swal.fire({
+              title: 'Error',
+              text: `${responseErrorMessage}, mohon login ulang!`,
+              icon: 'error',
+              timer: 2000,
+            });
+            
+            logout();
+          } else {
+            await Swal.fire({
+              title: 'Error',
+              text: responseErrorMessage,
+              icon: 'error',
+              timer: 2000,
+            });
+          }
         }
       }
     });
@@ -79,6 +115,8 @@ const ListDeletedDefinition = () => {
     <section className="deleted__definition-admin">
       <h1>Definisi yang Dihapus</h1>
   
+      {isLoading && <Loading />}
+      {errorMessage && <EmptyMessage message="Tidak ada list definisi yang bisa dihapus" />}
       {data && (
         <>
           <Table

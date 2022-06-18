@@ -2,7 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   Paginate,
-  Table, TableDataReviewDefinition,
+  Table,
+  TableDataReviewDefinition,
+  Loading,
+  EmptyMessage,
 } from '../../components';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import useAuth from '../../hooks/useAuth';
@@ -12,9 +15,12 @@ import './ReviewDefinition.scss';
 const ReviewDefinition = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(null);
-  const { token } = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { token, logout } = useAuth();
   
   const fetchData = useCallback(async (queryCurrentPage = 1) => {
+    setIsLoading(true);
     try {
       const response = await axios.get(API_ENDPOINT.ADMIN_DEFINITIONS_REVIEW(queryCurrentPage), {
         headers: {
@@ -22,10 +28,26 @@ const ReviewDefinition = () => {
         },
       });
       
-      await setCurrentPage(queryCurrentPage);
-      await setData(response.data);
+      setCurrentPage(queryCurrentPage);
+      setData(response.data);
+      setIsLoading(false);
     } catch (error) {
-      console.warn(error);
+      const statusErrorMessage = error.response.data.code;
+      const responseErrorMessage = error.response.data.message;
+      
+      if (statusErrorMessage === 401) {
+        await Swal.fire({
+          title: 'Error',
+          text: `${responseErrorMessage}, mohon login ulang!`,
+          icon: 'error',
+          timer: 2000,
+        });
+        
+        logout();
+      }
+      
+      setIsLoading(false);
+      setErrorMessage(responseErrorMessage);
     }
   }, []);
   
@@ -42,6 +64,8 @@ const ReviewDefinition = () => {
   return (
     <section className="review__definition-admin">
       <h1>Tinjau Definisi Baru</h1>
+      {isLoading && <Loading />}
+      {errorMessage && <EmptyMessage message="Tidak ada definisi yang bisa direview"/>}
       {data && (
         <>
           <Table

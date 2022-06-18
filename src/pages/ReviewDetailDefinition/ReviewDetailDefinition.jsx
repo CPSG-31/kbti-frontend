@@ -4,11 +4,17 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import useAuth from '../../hooks/useAuth';
+import {
+  Loading,
+  EmptyMessage,
+} from '../../components';
 
 const ReviewDetailDefinition = () => {
   const { idDefinition } = useParams();
   const { token } = useAuth();
   const [data, setData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const reviewDefinitionHandler = async (status) => {
@@ -33,13 +39,26 @@ const ReviewDetailDefinition = () => {
       });
       navigate('/dashboard/definitions/review');
     } catch (error) {
-      const errorMessage = error?.response?.data?.message;
-      Swal.fire({
-        title: 'Gagal!',
-        text: `${errorMessage}!`,
-        icon: 'error',
-        timer: 2000,
-      });
+      const statusErrorMessage = error.response.data.code;
+      const responseErrorMessage = error.response.data.message;
+  
+      if (statusErrorMessage === 401) {
+        await Swal.fire({
+          title: 'Error',
+          text: `${responseErrorMessage}, mohon login ulang!`,
+          icon: 'error',
+          timer: 2000,
+        });
+    
+        logout();
+      } else {
+        await Swal.fire({
+          title: 'Error',
+          text: responseErrorMessage,
+          icon: 'error',
+          timer: 2000,
+        });
+      }
     }
   };
   
@@ -53,6 +72,7 @@ const ReviewDetailDefinition = () => {
   
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(API_ENDPOINT.ADMIN_DETAIL_DEFINITION_REVIEW(idDefinition), {
           headers: {
@@ -61,8 +81,24 @@ const ReviewDetailDefinition = () => {
         });
         
         setData(response.data);
+        setIsLoading(false);
       } catch (error) {
-        console.warn(error);
+        const statusErrorMessage = error.response.data.code;
+        const responseErrorMessage = error.response.data.message;
+  
+        if (statusErrorMessage === 401) {
+          await Swal.fire({
+            title: 'Error',
+            text: `${responseErrorMessage}, mohon login ulang!`,
+            icon: 'error',
+            timer: 2000,
+          });
+    
+          logout();
+        }
+  
+        setIsLoading(false);
+        setErrorMessage(responseErrorMessage);
       }
     };
     
@@ -73,16 +109,18 @@ const ReviewDetailDefinition = () => {
     <section className="form-admin">
       <h1 className="text-center">Tinjau Definisi Baru</h1>
   
+      {isLoading && <Loading />}
+      {errorMessage && <EmptyMessage message="Definisi Tidak ditemukan" />}
       {data && (
         <form className="form-admin__container" onSubmit={submitHandler}>
           <div className="form-admin__group">
             <label htmlFor="term">Istilah</label>
-            <input type="text" className="form-control" id="term" defaultValue={data.data.term} readOnly/>
+            <input type="text" className="form-control text-muted" id="term" defaultValue={data.data.term} readOnly/>
           </div>
           <div className="form-admin__group">
             <label htmlFor="definition">Definisi</label>
             <textarea
-              className="form-control"
+              className="form-control text-muted"
               id="definition"
               defaultValue={data.data.definition}
               rows="9"
@@ -91,7 +129,7 @@ const ReviewDetailDefinition = () => {
           </div>
           <div className="form-admin__group">
             <label htmlFor="category">Kategori</label>
-            <select className="form-control" id="category" readOnly>
+            <select className="form-control text-muted" id="category" readOnly>
               <option>{data.data.category}</option>
             </select>
           </div>

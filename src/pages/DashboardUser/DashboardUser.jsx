@@ -14,8 +14,8 @@ import STATUS from '../../globals/const';
 const DashboardUser = () => {
   const { isLoggedIn } = useAuth();
   const { token } = useAuth();
-  const [termList, setTermList] = useState([]);  
-  const [userData, setuserData] = useState(termList); 
+  const [termList, setTermList] = useState([]);
+  const [userData, setuserData] = useState(termList);
   const totalTerms = userData.total_approved + userData.total_reject + userData.total_review;
 
   const approvedTerms = userData.definitions && userData.definitions.filter(
@@ -26,7 +26,7 @@ const DashboardUser = () => {
   );
   const rejectedTerms = userData.definitions && userData.definitions.filter(
     (userTerm) => userTerm.statusDefinition === STATUS.rejected,
-  ); 
+  );
 
   const fetchUserData = async () => {
     const response = await axios.get('https://kbti-api.herokuapp.com/dashboard', { headers: {
@@ -36,6 +36,15 @@ const DashboardUser = () => {
 
     return response.data;
   };
+  
+  const showInfoHandler = () => {
+    Swal.fire({
+      title: 'Info',
+      text: 'Terdapat 3 kategori definisi yang dapat Anda pilih:',
+      icon: 'info',
+    });
+  };
+  
 
   useEffect(() => {
     const firstTimeFetchData = async () => {
@@ -90,7 +99,7 @@ const DashboardUser = () => {
               <PlusSvg className="me-2" />
               <span className="btn-text">Tambah istilah baru</span>
           </Link>
-            <button type="button" className="info-btn p-0 m-0 rounded-circle">
+            <button type="button" className="info-btn p-0 m-0 rounded-circle" onClick={showInfoHandler}>
               <InfoSvg className="info-btn__icon" />
             </button>
           </div>
@@ -100,7 +109,7 @@ const DashboardUser = () => {
           >
             <div className="card-body">
               <h2 className="card-title">
-                Halo, 
+                Halo,
                 {' '}
                 { userData.username}
               </h2>
@@ -157,7 +166,7 @@ const DashboardUser = () => {
               className="dashboard__terms-header d-flex justify-content-end"
             >
               <button
-                type="button" 
+                type="button"
                 onClick={() => setTermList(userData.definitions)}
                 className="btn btn-link mb-4"
               >
