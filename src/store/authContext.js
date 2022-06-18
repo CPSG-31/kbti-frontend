@@ -28,13 +28,22 @@ const AuthContextProvider = ({ children }) => {
     }));
   };
   
-  const logoutHandler = async () => {
-    await Swal.fire({
-      title: 'Logout',
-      text: 'Kamu berhasil logout',
-      icon: 'success',
-      timer: 2000,
-    });
+  const logoutHandler = async (message = null) => {
+    if (message) {
+      await Swal.fire({
+        title: 'Logout',
+        text: message,
+        icon: 'warning',
+        timer: 2000,
+      });
+    } else {
+      await Swal.fire({
+        title: 'Logout',
+        text: 'Kamu berhasil logout',
+        icon: 'success',
+        timer: 2000,
+      });
+    }
     setToken('');
     localStorage.removeItem('authentication');
     navigate('/');
