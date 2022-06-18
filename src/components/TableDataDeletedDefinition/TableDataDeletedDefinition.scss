@@ -13,8 +13,17 @@
 		}
 	}
 
+	&-author span {
+		display: inline-block;
+		width: 150px;
+	}
+
+	&-date span {
+		display: inline-block;
+		width: 130px;
+	}
+
 	&-description {
 		width: 50%;
 	}
-
 }
