@@ -111,11 +111,11 @@ const UpdateRole = () => {
         <form className="form-admin__container" onSubmit={submitHandler}>
           <div className="form-admin__group">
             <label htmlFor="username">Username</label>
-            <input type="text" className="form-control" id="username" defaultValue={data.data.username} readOnly/>
+            <input type="text" className="form-control text-muted" id="username" defaultValue={data.data.username} readOnly/>
           </div>
           <div className="form-admin__group">
             <label htmlFor="email">Email</label>
-            <input type="email" className="form-control" id="email" defaultValue={data.data.email} readOnly/>
+            <input type="email" className="form-control text-muted" id="email" defaultValue={data.data.email} readOnly/>
           </div>
           <div className="form-admin__group">
             <label htmlFor="role">Role</label>
