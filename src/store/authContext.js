@@ -31,9 +31,9 @@ const AuthContextProvider = ({ children }) => {
   const logoutHandler = async (message = null) => {
     if (message) {
       await Swal.fire({
-        title: 'Logout',
+        title: 'Gagal',
         text: message,
-        icon: 'warning',
+        icon: 'error',
         timer: 2000,
       });
     } else {
