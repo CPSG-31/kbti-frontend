@@ -15,12 +15,15 @@ function PublicNavbar() {
   let actionNavbar;
 
   const fetchCategories = async () => {
-    const response = await axios.get('https://kbti-api.herokuapp.com/categories'); 
+    const response = await axios.get('https://kbti-api.herokuapp.com/categories');
     const categoryData = response.data;
 
     return categoryData;
   };
   
+  const logoutHandler = () => {
+    logout();
+  };
 
   useEffect(() => {
     const firstTimeFetchData = async () => {
@@ -63,7 +66,7 @@ function PublicNavbar() {
           <Link to="/dashboard" className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50">Dashboard</Link>
         </li>
         <li className="nav-item my-auto">
-          <button onClick={logout} className="btn btn-light rounded-pill fw-bold pt-2">Logout</button>
+          <button onClick={logoutHandler} className="btn btn-light rounded-pill fw-bold pt-2">Logout</button>
         </li>
       </>
     );
