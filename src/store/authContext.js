@@ -28,7 +28,13 @@ const AuthContextProvider = ({ children }) => {
     }));
   };
   
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
+    await Swal.fire({
+      title: 'Logout',
+      text: 'Kamu berhasil logout',
+      icon: 'success',
+      timer: 2000,
+    });
     setToken('');
     localStorage.removeItem('authentication');
     navigate('/');
