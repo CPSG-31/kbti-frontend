@@ -86,14 +86,7 @@ const ListDeletedDefinition = () => {
           const responseErrorMessage = error.response.data.message;
           
           if (statusErrorMessage === 401) {
-            await Swal.fire({
-              title: 'Error',
-              text: `${responseErrorMessage}, mohon login ulang!`,
-              icon: 'error',
-              timer: 2000,
-            });
-            
-            logout();
+            return logout('Authorization gagal, mohon login ulang!');
           } else {
             await Swal.fire({
               title: 'Error',

@@ -37,7 +37,7 @@ const ListUser = () => {
       }
       
       setIsLoading(false);
-      setErrorMessage(responseErrorMessage);
+      setErrorMessage(error);
     }
   }, []);
   
