@@ -1,3 +1,4 @@
+import formatDate from '../../utils/formatDate';
 import { DeleteIcon } from '../../assets/icons';
 import './TableDataDefinition.scss';
 
@@ -17,7 +18,7 @@ const TableDataDefinition = ({ items, currentPage, onDeleteDefinition }) => {
       <tbody>
       {
         items?.data?.map((definition, index) => {
-          const { id, term, definition: detailDefinition, status, created_at } = definition;
+          const { id, term, definition: detailDefinition, status, created_at: createdAt } = definition;
           
           const statusDefinition = status === 'Disetujui' ? 'bg-success' : 'bg-danger';
           const rowIndex = currentPage === 1 ? index + 1 : ((currentPage - 1) * 10) + index + 1;
@@ -33,7 +34,7 @@ const TableDataDefinition = ({ items, currentPage, onDeleteDefinition }) => {
                 <span className={statusDefinition}>{status}</span>
               </td>
               <td className="table__data-date">
-                <span>{created_at}</span>
+                <span>{formatDate(createdAt)}</span>
               </td>
               <td className="table__data-action">
                   <button className="btn table__data-action__delete-only" onClick={onDeleteDefinition.bind(null, id)}>

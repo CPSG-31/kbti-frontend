@@ -44,6 +44,8 @@
         "spaced-comment": "off",
         "linebreak-style": "off",
         "consistent-return": "off",
-        "object-shorthand": "off"
+        "object-shorthand": "off",
+        "no-undef": "off",
+        "no-else-return": "off"
     }
 }
