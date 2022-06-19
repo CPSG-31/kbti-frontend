@@ -12,7 +12,6 @@ import useAuth from '../../hooks/useAuth';
 
 const FormCreateDefinition = ({ categories, loading, error }) => {
   const navigate = useNavigate();
-  const { sendRequest, status } = useRequest();
   const termInput = useRef();
   const definitionInput = useRef();
   const categoryInput = useRef();
@@ -60,7 +59,6 @@ const FormCreateDefinition = ({ categories, loading, error }) => {
   return (
     <form className="col-12 col-md-8 col-lg-6" onSubmit={submitHandler}>
       <h1 className="form__title mb-5">Tambah Istilah Baru</h1>
-      {error && <ErrorMessage message="Ada kesalahan mohon coba beberapa saat lagi" />}
       <div className="row mb-3">
         <label htmlFor="termInput" className="form-label">
           Istilah
