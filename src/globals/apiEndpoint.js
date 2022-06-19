@@ -6,6 +6,8 @@ const API_ENDPOINT = {
   DELETE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   CATEGORY: `${CONFIG.BASE_URL}/categories`,
   CREATE_DEFINITION: `${CONFIG.BASE_URL}/definitions`,
+  UPDATE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
+  DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   SEARCH: (query) => `${CONFIG.BASE_URL}/search?q=${query}`,
   GET_DEFINITIONS_BY_TERM: (term) => `${CONFIG.BASE_URL}/definitions?term=${term}`,
   GET_DEFINITIONS_BY_CATEGORY_ID: (categoryId) => `${CONFIG.BASE_URL}/definitions?categoryId=${categoryId}`,
