@@ -38,9 +38,9 @@ function PublicNavbar() {
   const categoryElements = (categoryList) => categoryList && categoryList.map((categoryItem) => {
     return (
       <li key={categoryItem.id}>
-        <a className="dropdown-item category-item" href={`/definitions?categoryId=${categoryItem.id}`}>
+        <Link className="dropdown-item category-item" to={`/definitions?categoryId=${categoryItem.id}`}>
           {categoryItem.category}
-        </a>
+        </Link>
       </li>
     );
   });
@@ -116,14 +116,14 @@ function PublicNavbar() {
                   <div className="row gap-2">
                     {alphabet.map((letter, index) => {
                       return (
-                        <button
+                        <Link
+                          to={`/search?q=${letter}`}
                           type="button"
                           className="col-1 btn btn-outline-warning rounded-circle fw-bold"
                           key={index}
-                          onClick={() => { window.location.href = `/search?q=${letter}`; }}
                         >
                           {letter}
-                        </button>
+                        </Link>
                       );
                     })}
                   </div>
