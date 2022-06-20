@@ -38,15 +38,12 @@ function PublicNavbar() {
   const categoryElements = (categoryList) => categoryList && categoryList.map((categoryItem) => {
     return (
       <li key={categoryItem.id}>
-        <Link className="dropdown-item category-item" to={`/definitions?categoryId=${categoryItem.id}`}>
+        <Link className="dropdown-item category-item" to={`/definitions?categoryId=${categoryItem.id}&categoryName=${categoryItem.category}`}>
           {categoryItem.category}
         </Link>
       </li>
     );
   });
-
-  // const a = categoryElementList && console.log(categoryElementList);
-
 
   if ((!token && !isLoggedIn) || (role !== 'admin' && role !== 'user')) {
     actionNavbar = (
