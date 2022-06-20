@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 const SearhBar = () => {
   const searchInput = useRef();
   const navigate = useNavigate();
-
+  
   const submitHandler = (event) => {
     event.preventDefault();
-    navigate(`/search?q=${searchInput.current.value}`);
+    navigate({
+      pathname: '/search',
+      search: `?q=${searchInput.current.value}`,
+    });
   };
 
   return (
