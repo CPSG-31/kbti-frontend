@@ -3,65 +3,53 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { TermPill, TermCard } from '../../components';
+import { TermPill, TermCard, Loading, EmptyMessage, SearchBar } from '../../components';
 import './Home.css';
-import { PlusSvg, SearchSvg } from '../../icons';
+import { PlusSvg } from '../../icons';
 import useAuth from '../../hooks/useAuth';
 
 function Home() {
   const { isLoggedIn } = useAuth();
   const [randomTerms, setRandomTerms] = useState([]);
   const [newTerms, setNewTerms] = useState([]);
-    
-  const fetchRandomTerms = async () => {
-    const response = await axios.get('https://kbti-api.herokuapp.com/terms/random');
-    return response.data;
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   
   useEffect(() => {
     const firstTimeFetchData = async () => {
-      const response = await fetchRandomTerms();
-      setRandomTerms(response.data);
+      setIsLoading(true);
+      try {
+        const responseRandomTerms = await axios.get('https://kbti-api.herokuapp.com/terms/random');
+        const responseNewTerms = await axios.get('https://kbti-api.herokuapp.com/terms/new');
+        const [randomTermsRes, newTermsRes] = await axios.all([responseRandomTerms, responseNewTerms]);
+        setRandomTerms(randomTermsRes.data);
+        setNewTerms(newTermsRes.data);
+        setIsLoading(false);
+      } catch (error) {
+        const responseErrorMessage = error.response.data.message;
+        setErrorMessage(responseErrorMessage);
+        setIsLoading(false);
+      }
     };
     
     firstTimeFetchData();
   }, []);
-
-  const fetchNewTerms = async () => {
-    const response = await axios.get('https://kbti-api.herokuapp.com/terms/new');
-    return response.data;
-  };
   
-  useEffect(() => {
-    const firstTimeFetchData = async () => {
-      const response = await fetchNewTerms();
-      setNewTerms(response.data);
-    };
-    
-    firstTimeFetchData();
-  }, []);
-
-
-    const randomTermElements = randomTerms && randomTerms.map((definition) => {
-      return <TermCard key={definition.id} dataDefinition={definition} />;
-    });
+  const randomTermElements = randomTerms && randomTerms?.data?.map((definition) => {
+    return <TermCard key={definition.id} dataDefinition={definition} />;
+  });
 
   return (
     <div className="homepage">
-      <form className="d-flex mt-2 mb-md-4">
-        <input
-          className="search-form form-control px-4 rounded-pill"
-          type="search"
-          placeholder="Cari istilah"
-          aria-label="Search"
-        />
-      </form>
+      <SearchBar />
       <div className="term___container">
         <div className="row gx-5 row-cols-2">
           <div className="new-term__container col-12 col-lg-4 mt-4 mb-4">
             <p>Istilah yang baru ditambahkan</p>
+            {isLoading && newTerms && <Loading />}
+            {errorMessage && <p className="text-center fw-bold">{errorMessage}</p>}
             <div className="new-term__pils">
-              {newTerms.map((newTerm, index) => {
+              {newTerms && newTerms?.data?.map((newTerm, index) => {
                 return <TermPill key={`${index}newTerms`} term={newTerm.term} />;
               })}
             </div>
@@ -75,6 +63,8 @@ function Home() {
             </Link>
           </div>
           <div className="random-term___container col-12 col-lg-8 mt-4">
+            {isLoading && randomTerms && <Loading />}
+            {errorMessage && <EmptyMessage message={`${errorMessage}, terjadi kesalahan`} />}
            {randomTermElements}
           </div>
         </div>
