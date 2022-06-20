@@ -1,31 +1,35 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SearchBar, TermPill } from '../../components';
+import axios from 'axios';
+import { SearchBar, TermPill, EmptyMessage, Loading } from '../../components';
 import API_ENDPOINT from '../../globals/apiEndpoint';
-import useRequest from '../../hooks/useRequest';
 
 const BrowseResult = () => {
-  let searchResult;
-  const { sendRequest, status, data: browseData } = useRequest();
   const [searchParams] = useSearchParams();
+  const [data, setData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const searchValue = searchParams.get('q');
 
   useEffect(() => {
     const getSearchResult = async () => {
-      await sendRequest({
-        requestUrl: API_ENDPOINT.SEARCH(searchValue),
-        method: 'GET',
-      });
+      try {
+        const response = await axios.get(API_ENDPOINT.SEARCH(searchValue));
+        
+        setData(response.data);
+        setIsLoading(false);
+        setErrorMessage(null);
+      } catch (error) {
+        const errorMessageResponse = error.response.data.message;
+        setErrorMessage(errorMessageResponse);
+        setData(null);
+        setIsLoading(false);
+      }
     };
 
     getSearchResult();
-  }, [sendRequest]);
-
-  if (status === 'completed') {
-    searchResult = browseData.data.map((data) => {
-      return <TermPill key={data.term} term={data.term} />;
-    });
-  }
+  }, [searchValue]);
 
   return (
     <div className="definitionList">
@@ -40,7 +44,11 @@ const BrowseResult = () => {
         </span>
       </h3>
       <div className="new-term__pils mb-3 px-2 mx-auto">
-        {searchResult}
+        {isLoading && <Loading />}
+        {errorMessage && !data && <EmptyMessage message={`${errorMessage}, lakukan pencarian`} />}
+        {data && data.data.map((keyword) => {
+          return <TermPill key={keyword.term} term={keyword.term} />;
+        })}
       </div>
     </div>
   );
