@@ -1,111 +1,108 @@
 .nv {
-	width: 300px;
+    width: 300px;
 
-	&__header {
-		padding: 0 0 20px;
-		margin-left: 20px;
-		margin-top: 50px;
-	}
+    &__header {
+        padding: 0 0 20px;
+        margin-left: 20px;
+        margin-top: 50px;
+    }
 
-	svg {
-		margin-right: 10px;
-		margin-left: 15px;
-	}
+    svg {
+        margin-right: 10px;
+        margin-left: 15px;
+    }
 
-	&__close {
-		width: unset !important;
-		border-radius: 0 !important;
-		padding: 0 !important;
-	}
+    &__close {
+        width: unset !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+    }
 
-	button {
-		border: none;
-		padding: 10px 10px 10px 0;
-		width: 200px;
-		background-color: white;
-		text-align: left;
-		border-radius: 0 20px 25px 0;
-		color: #184C92;
-	}
+    button {
+        border: none;
+        padding: 10px 10px 10px 0;
+        width: 200px;
+        background-color: white;
+        text-align: left;
+        border-radius: 0 20px 25px 0;
+        color: #184C92;
+    }
 
-	&__list {
-		list-style-type: none;
-		position: relative;
-		margin-left: -32px;
+    &__list {
+        list-style-type: none;
+        position: relative;
+        margin-left: -32px;
 
-		svg, path {
-			fill: #184C92;
-		}
+        &-item {
+            margin-top: 10px;
 
-		&-item {
-			margin-top: 10px;
-			a {
-				padding: 15px 0;
-				display: block;
-				width: 250px !important;
-				text-decoration: none;
-				color: #184C92;
+            a {
+                padding: 15px 0;
+                display: block;
+                width: 250px !important;
+                text-decoration: none;
+                color: #184C92;
 
-				&.active-item {
-					background-color: #184C92;
-					color: white;
-					border-radius: 0 25px 25px 0;
+                &.active-item {
+                    background-color: #184C92;
+                    color: white;
+                    border-radius: 0 25px 25px 0;
 
-					svg, path {
-						fill: white;
-					}
-				}
-			}
-		}
+                    svg > path {
+                        stroke: white;
+                    }
+                }
+            }
+        }
 
-		.dropdown {
-			&-menu {
-				position: relative !important;
-				margin-left: 45px !important;
-				transform: translate(0, 10px) !important;
-				border: none !important;
-				margin-top: -25px !important;
+        .dropdown {
+            &-menu {
+                position: relative !important;
+                margin-left: 45px !important;
+                transform: translate(0, 10px) !important;
+                border: none !important;
+                margin-top: -25px !important;
 
-				a {
-					padding: 15px 15px !important;
-					display: block;
-				}
-			}
+                a {
+                    padding: 15px 15px !important;
+                    display: block;
+                }
+            }
 
-			&-menu.show {
-				position: unset;
-			}
+            &-menu.show {
+                position: unset;
+            }
 
-			&-toggle {
-				padding: 10px 0;
-				width: 90%;
-				text-align: left;
-				position: relative;
-				background-color: white;
-				border: none;
-				border-radius: 0 30px 30px 0;
-				color: #184C92;
+            &-toggle {
+                padding: 10px 0;
+                width: 90%;
+                text-align: left;
+                position: relative;
+                background-color: white;
+                border: none;
+                border-radius: 0 30px 30px 0;
+                color: #184C92;
 
-				&::after {
-					position: absolute;
-					top: 50%;
-					right: 20px;
-					transform: translateY(-50%);
-				}
-			}
-		}
-	}
+                &::after {
+                    position: absolute;
+                    top: 50%;
+                    right: 20px;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
 
-	@media screen and (max-width: 991px) {
-		margin-left: -320px;
-		transition: margin-left 0.5s;
+    @media screen and (max-width: 991px) {
+        margin-left: -320px;
+        transition: margin-left 0.5s;
 
-		&__header {
-			margin-top: 10px;
-		}
-	}
+        &__header {
+            margin-top: 10px;
+        }
+    }
 
-	&.nav-active {
-		margin-left: 0;
-	}
+    &.nav-active {
+        margin-left: 0;
+    }
 }
