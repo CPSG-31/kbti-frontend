@@ -4,7 +4,7 @@ const API_ENDPOINT = {
   LOGIN: `${CONFIG.BASE_URL}/login`,
   REGISTER: `${CONFIG.BASE_URL}/register`,
   DELETE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
-  CATEGORY: `${CONFIG.BASE_URL}/categories`,
+  CATEGORIES: `${CONFIG.BASE_URL}/categories`,
   CREATE_DEFINITION: `${CONFIG.BASE_URL}/definitions`,
   UPDATE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
@@ -22,6 +22,9 @@ const API_ENDPOINT = {
   ADMIN_ACTION_DEFINITION_DELETE: (id) => `${CONFIG.BASE_URL}/admin/definitions/${id}/delete`,
   ADMIN_DETAIL_USER: (id) => `${CONFIG.BASE_URL}/users/${id}`,
   ADMIN_ACTION_UPDATE_USER: (id) => `${CONFIG.BASE_URL}/users/${id}/role`,
+  GET_RANDOM_DEFINITIONS: `${CONFIG.BASE_URL}/terms/random`,
+  GET_NEWLY_ADDED_TERMS: `${CONFIG.BASE_URL}/terms/new`,
+  DASHBOARD: `${CONFIG.BASE_URL}/dashboard`,
 };
 
 export default API_ENDPOINT;

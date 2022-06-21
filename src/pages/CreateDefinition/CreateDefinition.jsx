@@ -25,14 +25,14 @@ const FormCreateDefinition = ({ categories, loading, error }) => {
       definition: definitionInput.current.value,
       category_id: parseInt(categoryInput.current.value, Number),
     };
-    
+
     try {
       await axios.post(API_ENDPOINT.CREATE_DEFINITION, sendDataRequest, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       await Swal.fire({
         title: 'Berhasil!',
         text: 'Definisi berhasil ditambahkan!',
@@ -42,11 +42,11 @@ const FormCreateDefinition = ({ categories, loading, error }) => {
       navigate('/dashboard');
     } catch (errorResponse) {
       const statusErrorMessage = errorResponse.response.status;
-      
+
       if (statusErrorMessage === 401) {
         return logout('Authorization gagal, mohon login ulang!');
       }
-      
+
       Swal.fire({
         title: 'Gagal!',
         text: 'Terjadi kesalahan saat membuat definisi!',
@@ -107,30 +107,30 @@ const CreateDefinition = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(API_ENDPOINT.CATEGORY);
-        
+        const response = await axios.get(API_ENDPOINT.CATEGORIES);
+
         setCategories(response.data);
         setIsLoading(false);
       } catch (error) {
         const statusErrorMessage = error.response.message;
-        
+
         if (statusErrorMessage === 401) {
           return logout('Authorization gagal, mohon login ulang!');
         }
-        
+
         setIsLoading(false);
         setErrorMessage(statusErrorMessage);
       }
     };
-    
+
     fetchData();
   }, []);
-  
+
   return (
     <>
       <div className="container py-5">
         <div className="d-flex flex-column align-items-center justify-content-center my-5">
-          <FormCreateDefinition categories={categories} loading={isLoading} error={errorMessage}/>
+          <FormCreateDefinition categories={categories} loading={isLoading} error={errorMessage} />
         </div>
       </div>
     </>
