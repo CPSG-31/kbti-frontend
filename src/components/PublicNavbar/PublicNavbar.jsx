@@ -7,6 +7,7 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import './PublicNavbar.css';
 import Logo from '../../assets/images/logo/logo-yellow.png';
+import API_ENDPOINT from '../../globals/apiEndpoint';
 
 function PublicNavbar() {
   const { isLoggedIn, role_id: roleId, token, logout } = useAuth();
@@ -15,12 +16,12 @@ function PublicNavbar() {
   let actionNavbar;
 
   const fetchCategories = async () => {
-    const response = await axios.get('https://kbti-api.herokuapp.com/categories');
+    const response = await axios.get(API_ENDPOINT.CATEGORIES);
     const categoryData = response.data;
 
     return categoryData;
   };
-  
+
   const logoutHandler = () => {
     logout();
   };
@@ -30,11 +31,11 @@ function PublicNavbar() {
       const response = await fetchCategories();
       setCategories(response.data);
     };
-    
+
     firstTimeFetchData();
   }, []);
 
-  
+
   const categoryElements = (categoryList) => categoryList && categoryList.map((categoryItem) => {
     return (
       <li key={categoryItem.id}>
@@ -141,12 +142,12 @@ function PublicNavbar() {
                   className="dropdown-menu"
                   aria-labelledby="navbarDropdownMenuLink"
                 >
-                {categoryElements(categories)}
+                  {categoryElements(categories)}
                 </ul>
               </li>
             </div>
             <div className="nav__action d-flex my-3 my-md-0 mt-4 mt-md-0">
-                {actionNavbar}
+              {actionNavbar}
             </div>
           </ul>
         </div>

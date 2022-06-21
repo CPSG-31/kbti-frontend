@@ -10,6 +10,7 @@ import { UserTermCard } from '../../components';
 import { PlusSvg, InfoSvg } from '../../icons';
 import emptyListImg from '../../assets/images/empty-list.png';
 import STATUS from '../../globals/const';
+import API_ENDPOINT from '../../globals/apiEndpoint';
 
 const DashboardUser = () => {
   const { isLoggedIn } = useAuth();
@@ -29,14 +30,15 @@ const DashboardUser = () => {
   );
 
   const fetchUserData = async () => {
-    const response = await axios.get('https://kbti-api.herokuapp.com/dashboard', { headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    const response = await axios.get(API_ENDPOINT.DASHBOARD, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     return response.data;
   };
-  
+
   const showInfoHandler = () => {
     Swal.fire({
       title: 'Info',
@@ -44,7 +46,7 @@ const DashboardUser = () => {
       icon: 'info',
     });
   };
-  
+
 
   useEffect(() => {
     const firstTimeFetchData = async () => {
@@ -52,16 +54,18 @@ const DashboardUser = () => {
       setuserData(response.data);
       setTermList(response.data.definitions);
     };
-    
+
     firstTimeFetchData();
   }, []);
 
-  const handleDeteleButton = async (termId) => {
-   const response = await axios.delete(`https://kbti-api.herokuapp.com/definitions/${termId}`, { headers: {
-      Authorization: `Bearer ${token}`,
-    } });
+  const handleDeteleButton = async (definitionId) => {
+    const response = await axios.delete(API_ENDPOINT.DELETE_DEFINITION(definitionId), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     window.location.reload();
-};
+  };
 
   const termCardElements = (termData) => termData && termData.map((definition) => {
     return (
@@ -91,14 +95,14 @@ const DashboardUser = () => {
       <div className="row gx-5 row-cols-2">
         <div className="dashboard__aside-container col-12 col-lg-4 mt-4 mb-4">
           <div className="dashboard__user-action d-flex">
-          <Link
-            to={isLoggedIn ? '/definitions/create' : '/login'}
-            className="add-term__button btn btn-kbti w-100 rounded-pill pt4 my-1 me-3 align-middle lh-lg"
-            role="button"
-          >
+            <Link
+              to={isLoggedIn ? '/definitions/create' : '/login'}
+              className="add-term__button btn btn-kbti w-100 rounded-pill pt4 my-1 me-3 align-middle lh-lg"
+              role="button"
+            >
               <PlusSvg className="me-2" />
               <span className="btn-text">Tambah istilah baru</span>
-          </Link>
+            </Link>
             <button type="button" className="info-btn p-0 m-0 rounded-circle" onClick={showInfoHandler}>
               <InfoSvg className="info-btn__icon" />
             </button>
@@ -111,7 +115,7 @@ const DashboardUser = () => {
               <h2 className="card-title">
                 Halo,
                 {' '}
-                { userData.username}
+                {userData.username}
               </h2>
               <h6 className="card-subtitle mt-5 text-muted">
                 status definisi yang kamu buat
@@ -124,7 +128,7 @@ const DashboardUser = () => {
                     className="btn btn-link col-4 m-0 p-0 d-flex flex-column"
                   >
                     <span className="status-count text-center w-100">
-                    {userData.total_approved}
+                      {userData.total_approved}
                     </span>
                     <span className="status-text text-center w-100">
                       disetujui
@@ -136,7 +140,7 @@ const DashboardUser = () => {
                     className="btn btn-link col-4 m-0 p-0 d-flex flex-column"
                   >
                     <span className="status-count text-center w-100">
-                    {userData.total_review}
+                      {userData.total_review}
                     </span>
                     <span className="status-text text-center w-100">
                       direview
@@ -148,7 +152,7 @@ const DashboardUser = () => {
                     className="btn btn-link col-4 m-0 p-0 d-flex flex-column"
                   >
                     <span className="status-count text-center w-100">
-                    {userData.total_reject}
+                      {userData.total_reject}
                     </span>
                     <span className="status-text text-center w-100">
                       ditolak
@@ -162,17 +166,17 @@ const DashboardUser = () => {
         <div className="dashboard__terms-container col-12 col-lg-8 mt-4">
           {termList.length !== totalTerms
             ? (
-            <div
-              className="dashboard__terms-header d-flex justify-content-end"
-            >
-              <button
-                type="button"
-                onClick={() => setTermList(userData.definitions)}
-                className="btn btn-link mb-4"
+              <div
+                className="dashboard__terms-header d-flex justify-content-end"
               >
-              Lihat semua
-              </button>
-            </div>
+                <button
+                  type="button"
+                  onClick={() => setTermList(userData.definitions)}
+                  className="btn btn-link mb-4"
+                >
+                  Lihat semua
+                </button>
+              </div>
             ) : ''}
           {termCardElements(termList).length > 0
             ? termCardElements(termList)

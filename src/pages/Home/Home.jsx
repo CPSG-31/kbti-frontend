@@ -7,6 +7,7 @@ import { TermPill, TermCard, Loading, EmptyMessage, SearchBar } from '../../comp
 import './Home.css';
 import { PlusSvg } from '../../icons';
 import useAuth from '../../hooks/useAuth';
+import API_ENDPOINT from '../../globals/apiEndpoint';
 
 function Home() {
   const { isLoggedIn } = useAuth();
@@ -14,13 +15,13 @@ function Home() {
   const [newTerms, setNewTerms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  
+
   useEffect(() => {
     const firstTimeFetchData = async () => {
       setIsLoading(true);
       try {
-        const responseRandomTerms = await axios.get('https://kbti-api.herokuapp.com/terms/random');
-        const responseNewTerms = await axios.get('https://kbti-api.herokuapp.com/terms/new');
+        const responseRandomTerms = axios.get(API_ENDPOINT.GET_RANDOM_DEFINITIONS);
+        const responseNewTerms = axios.get(API_ENDPOINT.GET_NEWLY_ADDED_TERMS);
         const [randomTermsRes, newTermsRes] = await axios.all([responseRandomTerms, responseNewTerms]);
         setRandomTerms(randomTermsRes.data);
         setNewTerms(newTermsRes.data);
@@ -31,10 +32,10 @@ function Home() {
         setIsLoading(false);
       }
     };
-    
+
     firstTimeFetchData();
   }, []);
-  
+
   const randomTermElements = randomTerms && randomTerms?.data?.map((definition) => {
     return <TermCard key={definition.id} dataDefinition={definition} />;
   });
@@ -65,7 +66,7 @@ function Home() {
           <div className="random-term___container col-12 col-lg-8 mt-4">
             {isLoading && randomTerms && <Loading />}
             {errorMessage && <EmptyMessage message={`${errorMessage}, terjadi kesalahan`} />}
-           {randomTermElements}
+            {randomTermElements}
           </div>
         </div>
       </div>

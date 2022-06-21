@@ -17,44 +17,44 @@ const UpdateDefinition = () => {
   const getDefinitionInput = useRef();
   const getCategoryInput = useRef();
   const navigate = useNavigate();
-  
+
   const listOptionCategory = dataCategory && dataCategory.data.map((category) => {
     return (
       <option key={category.id} value={category.id}>{category.category}</option>
     );
   });
-  
+
   const submitHandler = async (event) => {
     event.preventDefault();
-    
+
     const sendBodyRequest = {
       term: getTermInput.current.value,
       definition: getDefinitionInput.current.value,
       category_id: +getCategoryInput.current.value,
     };
-    
+
     try {
       await axios.put(API_ENDPOINT.UPDATE_DEFINITION(idDefinition), sendBodyRequest, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       await Swal.fire({
         title: 'Berhasil!',
         text: 'Berhasil mengubah definisi',
         icon: 'success',
         timer: 2000,
       });
-      
+
       navigate('/dashboard', { replace: true });
     } catch (error) {
       const statusErrorMessage = error.response.status;
-      
+
       if (statusErrorMessage === 401) {
         return logout('Authorization gagal, mohon login ulang!');
       }
-      
+
       Swal.fire({
         title: 'Error',
         text: 'Gagal mengubah definisi, silahkan coba lagi',
@@ -63,7 +63,7 @@ const UpdateDefinition = () => {
       });
     }
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,38 +72,38 @@ const UpdateDefinition = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        
-        const categoryResponse = axios.get(API_ENDPOINT.CATEGORY, {
+
+        const categoryResponse = axios.get(API_ENDPOINT.CATEGORIES, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        
+
         const getAllResponse = await axios.all([definitionResponse, categoryResponse]);
         const [definition, category] = getAllResponse;
         setDataDefinition(definition.data);
         setDataCategory(category.data);
       } catch (error) {
         const statusErrorMessage = error.response.status;
-        
+
         if (statusErrorMessage === 401) {
           return logout('Authorization gagal, mohon login ulang!');
         }
-        
+
         await Swal.fire({
           title: 'Error',
           text: 'Terjadi kesalahan, mohon coba lagi',
           icon: 'error',
           timer: 2000,
         });
-        
+
         navigate('/dashboard', { replace: true });
       }
     };
-    
+
     fetchData();
   }, []);
-  
+
   return (
     <>
       <div className="container py-5">
