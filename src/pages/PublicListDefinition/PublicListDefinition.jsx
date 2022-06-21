@@ -8,7 +8,7 @@ import './PublicListDefinition.css';
 
 const PublicListDefinition = () => {
   const [searchParams] = useSearchParams();
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn } = useAuth();
   const term = searchParams.get('term');
   const categoryId = searchParams.get('categoryId');
   const categoryName = searchParams.get('categoryName');
@@ -41,10 +41,15 @@ const PublicListDefinition = () => {
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
-        const errorMessageResponse = error.response.data.message;
+        const statusErrorMessage = error.response.status;
+  
+        if (statusErrorMessage === 500) {
+          setIsLoading(false);
+          return setErrorMessage('Terjadi kesalahan pada server, mohon coba lagi!');
+        }
         
         setIsLoading(false);
-        setErrorMessage(errorMessageResponse);
+        setErrorMessage('Data definisi tidak ditemukan, mohon lakukan pencarian!');
       }
     };
 
@@ -57,7 +62,7 @@ const PublicListDefinition = () => {
         <div className="random-term___container">
           <h3 className="mt-5 mb-3">
             {term && 'Definisi dari'}
-            {categoryId && 'Category dari'}
+            {categoryId && 'Kategori dari'}
             <span>
               {' '}
               &quot;
@@ -66,7 +71,7 @@ const PublicListDefinition = () => {
             </span>
           </h3>
           {isLoading && <Loading />}
-          {errorMessage && !data && <EmptyMessage message={`${errorMessage}, lakukan pencarian`} />}
+          {errorMessage && !data && <EmptyMessage message={errorMessage} />}
           {data && (
             data.data.map((definition) => {
               return <TermCard key={definition.id} dataDefinition={definition} />;

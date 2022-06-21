@@ -34,6 +34,9 @@ const ListUser = () => {
   
       if (statusErrorMessage === 401) {
         return logout('Authorization gagal, mohon login ulang!');
+      } else if (statusErrorMessage === 500) {
+        setIsLoading(false);
+        return setErrorMessage('Terjadi kesalahan pada server!');
       }
       
       setIsLoading(false);
@@ -81,7 +84,7 @@ const ListUser = () => {
           } else {
             Swal.fire({
               title: 'Gagal!',
-              text: `${error.response.data.message}!`,
+              text: 'Gagal menghapus user!',
               icon: 'error',
               timer: 2000,
             });
@@ -101,7 +104,7 @@ const ListUser = () => {
   
       {isLoading && <Loading />}
       {errorMessage && <EmptyMessage message="Tidak dapat menemukan user"/>}
-      {data && (
+      {data && !errorMessage && (
         <>
           <Table
             items={data}
