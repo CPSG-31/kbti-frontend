@@ -11,8 +11,16 @@ export const AuthContext = createContext({
 });
 
 const AuthContextProvider = ({ children }) => {
-  const authenticationData = JSON.parse(localStorage.getItem('authentication'));
+  let authenticationData;
+  
+  try {
+    authenticationData = JSON.parse(localStorage.getItem('authentication'));
+  } catch (error) {
+    authenticationData = null;
+  }
+  
   const [token, setToken] = useState(authenticationData?.token || '');
+  const [role, setRole] = useState(authenticationData?.role_id || '');
   const navigate = useNavigate();
 
   const loginHandler = (authenticationResponse) => {
@@ -22,6 +30,7 @@ const AuthContextProvider = ({ children }) => {
     };
     
     setToken(response.token);
+    setRole(response.role_id);
     localStorage.setItem('authentication', JSON.stringify({
       token: response.token,
       role_id: response.role_id,
@@ -45,14 +54,16 @@ const AuthContextProvider = ({ children }) => {
       });
     }
     setToken('');
+    setRole('');
     localStorage.removeItem('authentication');
     navigate('/');
   };
   
+  console.log(role);
   const contextValue = {
     isLoggedIn: !!token,
     token,
-    role_id: authenticationData?.role_id,
+    role_id: role,
     login: loginHandler,
     logout: logoutHandler,
   };
