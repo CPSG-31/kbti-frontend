@@ -46,6 +46,7 @@
         "consistent-return": "off",
         "object-shorthand": "off",
         "no-undef": "off",
-        "no-else-return": "off"
+        "no-else-return": "off",
+        "camelcase": "off"
     }
 }
