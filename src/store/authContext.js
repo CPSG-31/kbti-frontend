@@ -59,7 +59,6 @@ const AuthContextProvider = ({ children }) => {
     navigate('/');
   };
   
-  console.log(role);
   const contextValue = {
     isLoggedIn: !!token,
     token,
