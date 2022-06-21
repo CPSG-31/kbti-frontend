@@ -6,13 +6,15 @@ import '../../index.css';
 import '../../styles/global.css';
 import '../../styles/Form.css';
 import API_ENDPOINT from '../../globals/apiEndpoint';
-import { EmptyMessage, Loading } from '../../components';
+import { Loading, EmptyMessage } from '../../components';
 
 const UpdateDefinition = () => {
   const { idDefinition } = useParams();
   const { token, logout } = useAuth();
   const [dataDefinition, setDataDefinition] = useState(null);
   const [dataCategory, setDataCategory] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const getTermInput = useRef();
   const getDefinitionInput = useRef();
   const getCategoryInput = useRef();
@@ -53,19 +55,27 @@ const UpdateDefinition = () => {
       
       if (statusErrorMessage === 401) {
         return logout('Authorization gagal, mohon login ulang!');
+      } else if (statusErrorMessage === 403) {
+        return Swal.fire({
+          title: 'Gagal!',
+          text: 'Anda tidak mempunyai akses untuk mengubah definisi ini',
+          icon: 'error',
+          timer: 2000,
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Gagal mengubah definisi, silahkan coba lagi',
+          icon: 'error',
+          timer: 2000,
+        });
       }
-      
-      Swal.fire({
-        title: 'Error',
-        text: 'Gagal mengubah definisi, silahkan coba lagi',
-        icon: 'error',
-        timer: 2000,
-      });
     }
   };
   
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const definitionResponse = axios.get(API_ENDPOINT.DEFINITION(idDefinition), {
           headers: {
@@ -83,21 +93,19 @@ const UpdateDefinition = () => {
         const [definition, category] = getAllResponse;
         setDataDefinition(definition.data);
         setDataCategory(category.data);
+        setIsLoading(false);
       } catch (error) {
         const statusErrorMessage = error.response.status;
         
         if (statusErrorMessage === 401) {
           return logout('Authorization gagal, mohon login ulang!');
+        } else if (statusErrorMessage === 500) {
+          setIsLoading(false);
+          return setErrorMessage('Terjadi kesalahan pada server!');
         }
         
-        await Swal.fire({
-          title: 'Error',
-          text: 'Terjadi kesalahan, mohon coba lagi',
-          icon: 'error',
-          timer: 2000,
-        });
-        
-        navigate('/dashboard', { replace: true });
+        setErrorMessage('Definisi tidak ditemukan!');
+        setIsLoading(false);
       }
     };
     
@@ -109,6 +117,8 @@ const UpdateDefinition = () => {
       <div className="container py-5">
         <div className="d-flex flex-column align-items-center justify-content-center my-5">
           <h1 className="form__title mb-5">Edit Istilah</h1>
+          {isLoading && <Loading />}
+          {errorMessage && <p className="text-center fw-bold fs-3">{errorMessage}</p>}
           <form className="col-12 col-md-8 col-lg-6" onSubmit={submitHandler}>
             <div className="row mb-3">
               <label htmlFor="termInput" className="form-label">

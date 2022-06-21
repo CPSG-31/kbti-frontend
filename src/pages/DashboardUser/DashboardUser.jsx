@@ -40,11 +40,10 @@ const DashboardUser = () => {
   const showInfoHandler = () => {
     Swal.fire({
       title: 'Info',
-      text: 'Terdapat 3 kategori definisi yang dapat Anda pilih:',
+      text: 'Setiap definisi dari istilah yang kamu buat akan direview oleh admin, setelah itu jika diterima maka istilahmu akan ditampilkan untuk publik',
       icon: 'info',
     });
   };
-  
 
   useEffect(() => {
     const firstTimeFetchData = async () => {
@@ -84,7 +83,6 @@ const DashboardUser = () => {
       />
     </div>
   );
-
 
   return (
     <div className="dashboard-user">

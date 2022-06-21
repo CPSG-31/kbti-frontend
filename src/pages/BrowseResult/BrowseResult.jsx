@@ -21,8 +21,14 @@ const BrowseResult = () => {
         setIsLoading(false);
         setErrorMessage(null);
       } catch (error) {
-        const errorMessageResponse = error.response.data.message;
-        setErrorMessage(errorMessageResponse);
+        const statusErrorMessage = error.response.status;
+        
+        if (statusErrorMessage === 500) {
+          setIsLoading(false);
+          return setErrorMessage('Terjadi kesalahan pada server, mohon coba lagi!');
+        }
+        
+        setErrorMessage('Hasil pencarian belum ditemukan!, mohon lakukan pencarian');
         setData(null);
         setIsLoading(false);
       }
@@ -45,7 +51,7 @@ const BrowseResult = () => {
       </h3>
       <div className="new-term__pils mb-3 px-2 mx-auto">
         {isLoading && <Loading />}
-        {errorMessage && !data && <EmptyMessage message={`${errorMessage}, lakukan pencarian`} />}
+        {errorMessage && !data && <EmptyMessage message={errorMessage} />}
         {data && data.data.map((keyword) => {
           return <TermPill key={keyword.term} term={keyword.term} />;
         })}
