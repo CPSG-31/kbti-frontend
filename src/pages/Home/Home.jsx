@@ -59,7 +59,7 @@ function Home() {
       <div className="term___container">
         <div className="row gx-5 row-cols-2">
           <div className="new-term__container col-12 col-lg-4 mt-4 mb-4">
-            <p>Istilah yang baru ditambahkan</p>
+            <p className="ms-1">Istilah yang baru ditambahkan</p>
             <div className="new-term__pils">
               {newTerms.map((newTerm, index) => {
                 return <TermPill key={`${index}newTerms`} term={newTerm.term} />;

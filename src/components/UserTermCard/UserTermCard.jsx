@@ -94,9 +94,6 @@ const UserTermCard = ({ dataDefinition, deleteButtonHandler }) => {
           </div>
         </div>
         <p className="card-text mt-2 mb-0">{definition}</p>
-        <a href="#" className="">
-          Baca Selengkapnya
-        </a>
         <div className="term__action d-flex justify-content-end mt-1">
           <button type="button" className="term__action-button btn">
             <EditSvg />
