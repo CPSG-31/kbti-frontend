@@ -38,6 +38,7 @@ const App = () => {
     } catch (error) {
       tokenFromStorage = null;
     }
+    setIsNotValid(false);
     if (tokenFromStorage !== null) {
       const checkToken = async () => {
         try {
@@ -63,7 +64,7 @@ const App = () => {
       };
       checkToken();
     } else {
-      setRole('guest');
+      setRole('');
     }
   }, [roleId]);
   
