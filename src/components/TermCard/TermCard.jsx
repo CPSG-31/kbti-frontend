@@ -18,7 +18,7 @@ const TermCard = ({ index, dataDefinition }) => {
     username,
     updated_at: updatedAt,
   } = dataDefinition;
-  const [isVoted, setIsVoted] = useState({ upVotes: false, downVotes: false });
+  const [voteStatus, setVoteStatus] = useState({ upVotes: false, downVotes: false });
   const [totalVotes, setTotalVotes] = useState(upVotes - downVotes);
   const { isLoggedIn, token } = useAuth();
   const navigate = useNavigate();
@@ -38,10 +38,14 @@ const TermCard = ({ index, dataDefinition }) => {
       return navigate('/login');
     }
 
-    const voteStatus = (isUpvote) ? { upVotes: true, downVotes: false } : { upVotes: false, downVotes: true };
-    setIsVoted(voteStatus);
-
     const { data: vote } = await voteDefinition(isUpvote);
+
+    if (vote.is_voted) {
+      setVoteStatus((isUpvote) ? { upVotes: true, downVotes: false } : { upVotes: false, downVotes: true });
+    } else {
+      setVoteStatus({ upVotes: false, downVotes: false });
+    }
+
     setTotalVotes(vote.up_votes - vote.down_votes);
   };
 
@@ -53,7 +57,7 @@ const TermCard = ({ index, dataDefinition }) => {
             <button
               type="button"
               className="btn pb-0"
-              disabled={isVoted.upVotes}
+              disabled={voteStatus.upVotes}
               onClick={voteHandler.bind(null, true)}
             >
               <UpvoteSvg />
@@ -64,7 +68,7 @@ const TermCard = ({ index, dataDefinition }) => {
             <button
               type="button"
               className="btn pt-0"
-              disabled={isVoted.downVotes}
+              disabled={voteStatus.downVotes}
               onClick={voteHandler.bind(null, false)}
             >
               <DownvoteSvg />
@@ -76,11 +80,13 @@ const TermCard = ({ index, dataDefinition }) => {
             <div className="term__category rounded d-inline-block p-1">
               <p className="term___category-text m-0">{category}</p>
             </div>
-            <h2 className="card-title mb-0 lh-1">{term}</h2>
+            <h2 className="card-title mb-0 lh-1">
+              <a className="card-link" href={`/definitions?term=${term}`}>{term}</a>
+            </h2>
             <div className="term__info mb-2">
-              <a href="#" className="term__username">
+              <span className="term__username">
                 {username}
-              </a>
+              </span>
               <span className="mx-1 text-muted">&#8226;</span>
               <small className="text-muted">{formatDate(updatedAt)}</small>
             </div>
