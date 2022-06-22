@@ -1,12 +1,13 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
 import './DashboardUser.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
-import { UserTermCard } from '../../components';
+import { UserTermCard, Loading } from '../../components';
 import { PlusSvg, InfoSvg } from '../../icons';
 import emptyListImg from '../../assets/images/empty-list.png';
 import STATUS from '../../globals/const';
@@ -16,7 +17,8 @@ const DashboardUser = () => {
   const { isLoggedIn } = useAuth();
   const { token } = useAuth();
   const [termList, setTermList] = useState([]);
-  const [userData, setuserData] = useState(termList);
+  const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState(termList);
   const totalTerms = userData.total_approved + userData.total_reject + userData.total_review;
 
   const approvedTerms = userData.definitions && userData.definitions.filter(
@@ -29,15 +31,15 @@ const DashboardUser = () => {
     (userTerm) => userTerm.statusDefinition === STATUS.rejected,
   );
 
-  const fetchUserData = async () => {
-    const response = await axios.get(API_ENDPOINT.DASHBOARD, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  // const fetchUserData = async () => {
+  //   const response = await axios.get(API_ENDPOINT.DASHBOARD, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
 
-    return response.data;
-  };
+  //   return response.data;
+  // };
 
   const showInfoHandler = () => {
     Swal.fire({
@@ -47,25 +49,99 @@ const DashboardUser = () => {
     });
   };
 
+  const fetchUserData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(API_ENDPOINT.DASHBOARD, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });      
 
-  useEffect(() => {
-    const firstTimeFetchData = async () => {
-      const response = await fetchUserData();
-      setuserData(response.data);
-      setTermList(response.data.definitions);
-    };
-
-    firstTimeFetchData();
+      setUserData(response.data.data);
+      setTermList(response.data.data.definitions);
+      setIsLoading(false);
+    } catch (error) {
+      const statusErrorMessage = error.response.status;
+      const responseErrorMessage = error.response.data.message;
+  
+      if (statusErrorMessage === 401) {
+        return logout('Authorization gagal, mohon login ulang!');
+      }
+      
+      setIsLoading(false);
+      setErrorMessage(responseErrorMessage);
+    }
   }, []);
 
-  const handleDeteleButton = async (definitionId) => {
-    const response = await axios.delete(API_ENDPOINT.DELETE_DEFINITION(definitionId), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  
+
+  // useEffect(() => {
+  //   const firstTimeFetchData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await fetchUserData();
+  //       setUserData(response.data);
+  //       setTermList(response.data.definitions);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       const responseErrorMessage = error.response.data.message;
+  //       setErrorMessage(responseErrorMessage);
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   firstTimeFetchData();
+  // }, []);
+    
+  const handleDeteleButton = async (id) => {
+    await Swal.fire({
+      title: 'Apakah Anda Yakin?',
+      text: 'Ingin menghapus definisi ini!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(API_ENDPOINT.DELETE_DEFINITION(id), {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          Swal.fire({
+            title: 'Berhasil!',
+            text: 'Definisi berhasil dihapus!',
+            icon: 'success',
+            timer: 2000,
+          });
+
+          await fetchUserData();
+        } catch (error) {
+          const statusErrorMessage = error.response.status;
+          const responseErrorMessage = error.response.data.message;
+          
+          if (statusErrorMessage === 401) {
+            return logout('Authorization gagal, mohon login ulang!');
+          } else {
+            await Swal.fire({
+              title: 'Error',
+              text: responseErrorMessage,
+              icon: 'error',
+              timer: 2000,
+            });
+          }
+        }
+      }
     });
-    window.location.reload();
   };
+  
 
   const termCardElements = (termData) => termData && termData.map((definition) => {
     return (
@@ -110,7 +186,11 @@ const DashboardUser = () => {
           <div
             className="dashboard__user-info mt-3 card w-100"
             style={{ width: '18rem' }}
-          >
+          >         
+          
+          {isLoading && userData ? <Loading />
+          
+          : (             
             <div className="card-body">
               <h2 className="card-title">
                 Halo,
@@ -161,14 +241,19 @@ const DashboardUser = () => {
                 </div>
               </div>
             </div>
+)}      
           </div>
         </div>
+                         
         <div className="dashboard__terms-container col-12 col-lg-8 mt-4">
+        {isLoading && userData && <Loading />} 
           {termList.length !== totalTerms
             ? (
-              <div
-                className="dashboard__terms-header d-flex justify-content-end"
-              >
+              isLoading ? '' 
+              : (
+                <div
+                  className="dashboard__terms-header d-flex justify-content-end"
+                >
                 <button
                   type="button"
                   onClick={() => setTermList(userData.definitions)}
@@ -176,11 +261,14 @@ const DashboardUser = () => {
                 >
                   Lihat semua
                 </button>
-              </div>
-            ) : ''}
-          {termCardElements(termList).length > 0
-            ? termCardElements(termList)
-            : emptyListState}
+                </div>
+              )
+            ) : ''}     
+
+
+            {termCardElements(termList).length > 0
+              ? termCardElements(termList)
+              : (isLoading ? '' : emptyListState)}
         </div>
       </div>
     </div>
