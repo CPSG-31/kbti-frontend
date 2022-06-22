@@ -1,23 +1,24 @@
 /* eslint-disable no-undef */
 /* eslint-disable operator-linebreak */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import useRequest from '../../hooks/useRequest';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import '../../index.css';
 import '../../styles/global.css';
 import '../../styles/Form.css';
+import useAuth from '../../hooks/useAuth';
 
-const FormCreateDefinition = ({ categories }) => {
+const FormCreateDefinition = ({ categories, loading, error }) => {
   const navigate = useNavigate();
-  const { sendRequest, status } = useRequest();
   const termInput = useRef();
   const definitionInput = useRef();
   const categoryInput = useRef();
+  const { token } = useAuth();
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const token = JSON.parse(localStorage.getItem('authentication'));
 
     const sendDataRequest = {
       term: termInput.current.value,
@@ -25,25 +26,35 @@ const FormCreateDefinition = ({ categories }) => {
       category_id: parseInt(categoryInput.current.value, Number),
     };
 
-    await sendRequest({
-      requestUrl: API_ENDPOINT.CREATE_DEFINITION,
-      method: 'POST',
-      data: sendDataRequest,
-      token: token.token,
-    });
-  };
+    try {
+      await axios.post(API_ENDPOINT.CREATE_DEFINITION, sendDataRequest, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  if (status === 'completed') {
-    Swal.fire({
-      icon: 'success',
-      title: 'Definisi berhasil Ditambahkan',
-      showConfirmButton: false,
-      timer: 3000,
-    });
-    setTimeout(() => {
-      navigate('/');
-    }, 3000);
-  }
+      await Swal.fire({
+        title: 'Berhasil!',
+        text: 'Definisi berhasil ditambahkan!',
+        icon: 'success',
+        timer: 2000,
+      });
+      navigate('/dashboard');
+    } catch (errorResponse) {
+      const statusErrorMessage = errorResponse.response.status;
+
+      if (statusErrorMessage === 401) {
+        return logout('Authorization gagal, mohon login ulang!');
+      }
+
+      Swal.fire({
+        title: 'Gagal!',
+        text: 'Terjadi kesalahan saat membuat definisi!',
+        icon: 'error',
+        showConfirmButton: true,
+      });
+    }
+  };
 
   return (
     <form className="col-12 col-md-8 col-lg-6" onSubmit={submitHandler}>
@@ -64,9 +75,11 @@ const FormCreateDefinition = ({ categories }) => {
         <label htmlFor="categoryInput" className="form-label">
           Kategori
           <select defaultValue="DEFAULT" className="form-control form__input mt-1" name="category" id="categoryInput" ref={categoryInput}>
-            <option disabled className="text-secondary" value="DEFAULT">
-              &mdash; Pilih Kategori &mdash;
-            </option>
+            {loading ? <option value="DEFAULT">Loading...</option> : (
+              <option disabled className="text-secondary" value="DEFAULT">
+                &mdash; Pilih Kategori &mdash;
+              </option>
+            )}
             {categories &&
               categories.data?.map((category) => {
                 return (
@@ -86,19 +99,38 @@ const FormCreateDefinition = ({ categories }) => {
 };
 
 const CreateDefinition = () => {
-  const { sendRequest, data: categoryData } = useRequest();
+  const [categories, setCategories] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    sendRequest({
-      requestUrl: `${API_ENDPOINT.CATEGORY}`,
-      method: 'GET',
-    });
-  }, [sendRequest]);
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(API_ENDPOINT.CATEGORIES);
+
+        setCategories(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        const statusErrorMessage = error.response.message;
+
+        if (statusErrorMessage === 401) {
+          return logout('Authorization gagal, mohon login ulang!');
+        }
+
+        setIsLoading(false);
+        setErrorMessage(statusErrorMessage);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className="container py-5">
         <div className="d-flex flex-column align-items-center justify-content-center my-5">
-          <FormCreateDefinition categories={categoryData} />
+          <FormCreateDefinition categories={categories} loading={isLoading} error={errorMessage} />
         </div>
       </div>
     </>

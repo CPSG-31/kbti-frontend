@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { createContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext({
   isLoggedIn: false,
@@ -12,6 +13,7 @@ export const AuthContext = createContext({
 const AuthContextProvider = ({ children }) => {
   const authenticationData = JSON.parse(localStorage.getItem('authentication'));
   const [token, setToken] = useState(authenticationData?.token || '');
+  const navigate = useNavigate();
 
   const loginHandler = (authenticationResponse) => {
     const response = {
@@ -26,9 +28,25 @@ const AuthContextProvider = ({ children }) => {
     }));
   };
   
-  const logoutHandler = () => {
+  const logoutHandler = async (message = null) => {
+    if (message) {
+      await Swal.fire({
+        title: 'Gagal',
+        text: message,
+        icon: 'error',
+        timer: 2000,
+      });
+    } else {
+      await Swal.fire({
+        title: 'Logout',
+        text: 'Kamu berhasil logout',
+        icon: 'success',
+        timer: 2000,
+      });
+    }
     setToken('');
     localStorage.removeItem('authentication');
+    navigate('/');
   };
   
   const contextValue = {

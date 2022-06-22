@@ -4,8 +4,14 @@ import { useNavigate } from 'react-router-dom';
 const SearhBar = () => {
   const searchInput = useRef();
   const navigate = useNavigate();
-
-  const submitHandler = () => navigate(`/search?q=${searchInput.current.value}`);
+  
+  const submitHandler = (event) => {
+    event.preventDefault();
+    navigate({
+      pathname: '/search',
+      search: `?q=${searchInput.current.value}`,
+    });
+  };
 
   return (
     <form className="d-flex mt-2 mb-md-4" onSubmit={submitHandler}>

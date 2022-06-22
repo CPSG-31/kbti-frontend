@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import axios from 'axios';
 import './UserTermCard.css';
+import { Link } from 'react-router-dom';
 import { EditSvg, ThumbsUpSvg, ThumbsDownSvg, TrashSvg } from '../../icons';
 import STATUS from '../../globals/const';
 import formatDate from '../../utils/formatDate';
@@ -84,7 +85,6 @@ const UserTermCard = ({ dataDefinition, deleteButtonHandler }) => {
         <div className="term__info">
           <div className="term__info mb-2">
             <p
-              href="#"
               className="term__category d-inline-block mb-1 p-1 rounded"
             >
               {category}
@@ -95,9 +95,10 @@ const UserTermCard = ({ dataDefinition, deleteButtonHandler }) => {
         </div>
         <p className="card-text mt-2 mb-0">{definition}</p>
         <div className="term__action d-flex justify-content-end mt-1">
-          <button type="button" className="term__action-button btn">
+          {/* eslint-disable-next-line react/void-dom-elements-no-children */}
+          <Link to={`/definitions/${id}/edit`} className="term__action-button btn">
             <EditSvg />
-          </button>
+          </Link>
           <button onClick={() => deleteButtonHandler(id)} type="button" className="term__action-button btn">
             <TrashSvg />
           </button>

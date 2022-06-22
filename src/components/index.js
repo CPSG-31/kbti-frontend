@@ -13,3 +13,5 @@ export { default as TermPill } from './TermPill/TermPill';
 export { default as TermCard } from './TermCard/TermCard';
 export { default as UserTermCard } from './UserTermCard/UserTermCard';
 export { default as SearchBar } from './SearchBar/SearchBar';
+export { default as Loading } from './Loading/Loading';
+export { default as EmptyMessage } from './EmptyMessage/EmptyMessage';

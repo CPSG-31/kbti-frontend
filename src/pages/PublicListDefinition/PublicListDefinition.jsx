@@ -1,59 +1,77 @@
-import { useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
-import { SearchBar, TermCard } from '../../components';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+import { SearchBar, TermCard, Loading, EmptyMessage } from '../../components';
 import API_ENDPOINT from '../../globals/apiEndpoint';
-import useRequest from '../../hooks/useRequest';
-import { PlusSvg } from '../../icons';
 import useAuth from '../../hooks/useAuth';
 import './PublicListDefinition.css';
 
 const PublicListDefinition = () => {
-  let searchResult;
   const [searchParams] = useSearchParams();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
   const term = searchParams.get('term');
   const categoryId = searchParams.get('categoryId');
-  const { sendRequest, status, data: resultData } = useRequest();
+  const categoryName = searchParams.get('categoryName');
+  const [data, setData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getSearchResult = async () => {
+      let apiEndPoint;
+      
       if (term) {
-        await sendRequest({
-          requestUrl: API_ENDPOINT.GET_DEFINITIONS_BY_TERM(term),
-          method: 'GET',
-        });
+        apiEndPoint = API_ENDPOINT.GET_DEFINITIONS_BY_TERM(term);
+      } else if (categoryId) {
+        apiEndPoint = API_ENDPOINT.GET_DEFINITIONS_BY_CATEGORY_ID(categoryId);
+      } else {
+        return setErrorMessage('Terjadi kesalahan');
       }
-      if (categoryId) {
-        await sendRequest({
-          requestUrl: API_ENDPOINT.GET_DEFINITIONS_BY_CATEGORY_ID(categoryId),
-          method: 'GET',
+  
+      setIsLoading(true);
+      setErrorMessage(null);
+      setData(null);
+      try {
+        const response = await axios.get(apiEndPoint, {
+          headers: {
+            Authorization: `Bearer ${isLoggedIn}`,
+          },
         });
+        
+        setData(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        const errorMessageResponse = error.response.data.message;
+        
+        setIsLoading(false);
+        setErrorMessage(errorMessageResponse);
       }
     };
 
     getSearchResult();
-  }, [sendRequest]);
-
-  if (status === 'completed') {
-    searchResult = resultData.data.map((definition) => {
-      return <TermCard key={definition.id} dataDefinition={definition} />;
-    });
-  }
+  }, [term, categoryId]);
 
   return (
     <div className="definitionList">
       <SearchBar />
         <div className="random-term___container">
           <h3 className="mt-5 mb-3">
-            Definisi dari
+            {term && 'Definisi dari'}
+            {categoryId && 'Category dari'}
             <span>
               {' '}
               &quot;
-              {term}
+              {term || categoryName}
               &quot;
             </span>
           </h3>
-          {searchResult}
+          {isLoading && <Loading />}
+          {errorMessage && !data && <EmptyMessage message={`${errorMessage}, lakukan pencarian`} />}
+          {data && (
+            data.data.map((definition) => {
+              return <TermCard key={definition.id} dataDefinition={definition} />;
+            })
+          )}
         </div>
     </div>
   );

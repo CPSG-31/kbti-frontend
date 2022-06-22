@@ -1,9 +1,9 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TermCard.css';
 import { UpvoteSvg, DownvoteSvg, FlagSvg, ShareSvg } from '../../icons';
 import useAuth from '../../hooks/useAuth';
-import useRequest from '../../hooks/useRequest';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import formatDate from '../../utils/formatDate';
 
@@ -18,40 +18,31 @@ const TermCard = ({ index, dataDefinition }) => {
     username,
     updated_at: updatedAt,
   } = dataDefinition;
-  const [count, setCount] = useState(0);
   const [isVoted, setIsVoted] = useState({ upVotes: false, downVotes: false });
+  const [totalVotes, setTotalVotes] = useState(upVotes - downVotes);
   const { isLoggedIn, token } = useAuth();
   const navigate = useNavigate();
 
-  const { sendRequest } = useRequest();
-
-  const voteDefinition = async (isUpvote) => {
-    await sendRequest({
-      requestUrl: API_ENDPOINT.VOTE_DEFINITION(id),
-      method: 'POST',
-      token,
-      data: {
-        is_upvote: isUpvote,
+  const voteDefinition = async (isUpvote) => axios.post(API_ENDPOINT.VOTE_DEFINITION(id), { is_upvote: isUpvote }, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(!!token) && {
+        Authorization: `Bearer ${token}`,
       },
-    });
-  };
+    },
+  }).then((res) => res.data);
 
-  const voteHandler = (isUpvote) => {
+
+  const voteHandler = async (isUpvote) => {
     if (!isLoggedIn) {
       return navigate('/login');
     }
 
-    setCount(0);
+    const voteStatus = (isUpvote) ? { upVotes: true, downVotes: false } : { upVotes: false, downVotes: true };
+    setIsVoted(voteStatus);
 
-    if (isUpvote) {
-      setCount(isVoted.downVotes ? count + 2 : count + 1);
-      setIsVoted({ upVotes: true, downVotes: false });
-      voteDefinition(true);
-    } else {
-      setCount(isVoted.upVotes ? count - 2 : count - 1);
-      setIsVoted({ upVotes: false, downVotes: true });
-      voteDefinition(false);
-    }
+    const { data: vote } = await voteDefinition(isUpvote);
+    setTotalVotes(vote.up_votes - vote.down_votes);
   };
 
   return (
@@ -68,7 +59,7 @@ const TermCard = ({ index, dataDefinition }) => {
               <UpvoteSvg />
             </button>
             <div className="vote__count fs-6 lh-2">
-              {upVotes - downVotes + count}
+              {totalVotes}
             </div>
             <button
               type="button"

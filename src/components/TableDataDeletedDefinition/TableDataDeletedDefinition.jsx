@@ -1,7 +1,8 @@
+import formatDate from '../../utils/formatDate';
 import { DeleteIcon } from '../../assets/icons';
 import './TableDataDeletedDefinition.scss';
 
-const TableDataDeletedDefinition = ({ items, currentPage }) => {
+const TableDataDeletedDefinition = ({ items, currentPage, onDeleteDefinition }) => {
   return (
     <>
       <thead>
@@ -16,24 +17,26 @@ const TableDataDeletedDefinition = ({ items, currentPage }) => {
       </thead>
       <tbody>
       {
-        items.map((definition, index) => {
-          const { id, term, definition: detailDefinition, creator, date } = definition;
+        items.data.map((definition, index) => {
+          const { id, term, definition: detailDefinition, username, deleted_at: deletedAt } = definition;
       
           const rowIndex = currentPage === 1 ? index + 1 : ((currentPage - 1) * 10) + index + 1;
       
           return (
             <tr key={id} className="table__data">
               <td>{rowIndex}</td>
-              <td>{term}</td>
-              <td className="table__data-description">
+              <td className="text-start">{term}</td>
+              <td className="table__data-description text-start">
                 <p>{detailDefinition}</p>
               </td>
-              <td className="table__data-author">{creator}</td>
+              <td className="table__data-author">
+                <span>{username}</span>
+              </td>
               <td className="table__data-date">
-                <span>{date}</span>
+                <span>{formatDate(deletedAt)}</span>
               </td>
               <td className="table__data-action">
-                <button className="btn table__data-action__delete">
+                <button className="btn table__data-action__delete" onClick={onDeleteDefinition.bind(null, id)}>
                   <DeleteIcon />
                   Hapus Permanent
                 </button>

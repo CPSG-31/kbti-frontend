@@ -1,4 +1,5 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import navbarLogo from '../../assets/images/logo/logo-yellow.png';
 import {
   CloseIcon,
@@ -12,6 +13,7 @@ import './AdminNavbar.scss';
 
 const AdminNavbar = ({ toggleClass, onClose }) => {
   const location = useLocation();
+  const { logout } = useAuth();
   
   const getActiveNavLink = (path) => {
     return location.pathname === path ? 'active-item' : '';
@@ -19,6 +21,10 @@ const AdminNavbar = ({ toggleClass, onClose }) => {
   
   const toggleClassHandler = () => {
     onClose();
+  };
+  
+  const logoutHandler = () => {
+    logout();
   };
   
   return (
@@ -60,7 +66,7 @@ const AdminNavbar = ({ toggleClass, onClose }) => {
           </NavLink>
         </li>
         <li className="nv__list-item">
-          <button type="button">
+          <button type="button" onClick={logoutHandler}>
             <LogoutIcon />
             Keluar
           </button>
