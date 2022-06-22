@@ -23,7 +23,7 @@
 .term__username {
   font-style: italic;
   font-weight: 400;
-  text-decoration-line: underline;
+  text-decoration: underline;
   color: #184c92;
 }
 
@@ -35,4 +35,8 @@
 .term__action-button:hover {
   box-shadow: none !important;
   background: rgba(24, 76, 146, 0.2);
+}
+
+.vote__count {
+  color: #184c92;
 }

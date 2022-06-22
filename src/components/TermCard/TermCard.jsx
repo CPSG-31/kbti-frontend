@@ -62,7 +62,7 @@ const TermCard = ({ index, dataDefinition }) => {
             >
               <UpvoteSvg />
             </button>
-            <div className="vote__count fs-6 lh-2">
+            <div className="vote__count fs-6 lh-2 fw-bolder">
               {totalVotes}
             </div>
             <button
