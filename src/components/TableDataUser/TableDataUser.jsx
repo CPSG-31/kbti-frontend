@@ -16,7 +16,7 @@ const TableDataUser = ({ items, currentPage, onDeleteUser }) => {
       <tbody>
         {
           items?.data?.map((user, index) => {
-            const { id, username, role_name } = user;
+            const { id, username, role_name: roleName } = user;
       
             const rowIndex = currentPage === 1 ? index + 1 : ((currentPage - 1) * 10) + index + 1;
       
@@ -24,7 +24,7 @@ const TableDataUser = ({ items, currentPage, onDeleteUser }) => {
               <tr key={id} className="table__data">
                 <td>{rowIndex}</td>
                 <td>{username}</td>
-                <td>{role_name}</td>
+                <td>{roleName}</td>
                 <td className="table__data-action table__data-action-user">
                   <Link to={`/dashboard/users/${id}`}>
                     <EditIcon />
