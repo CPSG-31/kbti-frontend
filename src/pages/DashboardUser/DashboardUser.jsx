@@ -30,17 +30,7 @@ const DashboardUser = () => {
   const rejectedTerms = userData.definitions && userData.definitions.filter(
     (userTerm) => userTerm.statusDefinition === STATUS.rejected,
   );
-
-  // const fetchUserData = async () => {
-  //   const response = await axios.get(API_ENDPOINT.DASHBOARD, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-
-  //   return response.data;
-  // };
-
+  
   const showInfoHandler = () => {
     Swal.fire({
       title: 'Info',
@@ -78,25 +68,6 @@ const DashboardUser = () => {
     fetchUserData();
   }, []);
   
-
-  // useEffect(() => {
-  //   const firstTimeFetchData = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const response = await fetchUserData();
-  //       setUserData(response.data);
-  //       setTermList(response.data.definitions);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       const responseErrorMessage = error.response.data.message;
-  //       setErrorMessage(responseErrorMessage);
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   firstTimeFetchData();
-  // }, []);
-    
   const handleDeteleButton = async (id) => {
     await Swal.fire({
       title: 'Apakah Anda Yakin?',
