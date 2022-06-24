@@ -36,7 +36,7 @@ precacheAndRoute(
 registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
 
 registerRoute(
-  /https:\/\/kbti-api.herokuapp.com\/(?!auth\/token).*\/*/,
+  /https:\/\/kbti-api.herokuapp.com\/(?!auth\/token|admin|users|dashboard).*\/*/,
   new StaleWhileRevalidate({
     cacheName: 'KBTI-API',
     plugins: [
