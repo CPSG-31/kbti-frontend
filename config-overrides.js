@@ -9,7 +9,7 @@ module.exports = override(
       name: 'KBTI',
       short_name: 'KBTI',
       description: 'KBTI merupakan aplikasi untuk pencarian istilah tentang IT',
-      start_url: './',
+      start_url: '/',
       filename: 'manifest.json',
       display: 'standalone',
       background_color: '#ffffff',
