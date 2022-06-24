@@ -32,7 +32,6 @@ const ListDeletedDefinition = () => {
       setIsLoading(false);
     } catch (error) {
       const statusErrorMessage = error.response.data.code;
-      const responseErrorMessage = error.response.data.message;
   
       if (statusErrorMessage === 401) {
         return logout('Authorization gagal, mohon login ulang!');
@@ -42,7 +41,7 @@ const ListDeletedDefinition = () => {
       }
       
       setIsLoading(false);
-      setErrorMessage(responseErrorMessage);
+      setErrorMessage(error);
     }
   }, []);
   

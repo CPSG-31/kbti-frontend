@@ -73,7 +73,6 @@ const UpdateRole = () => {
         setIsLoading(false);
       } catch (error) {
         const statusErrorMessage = error.response.status;
-        const responseErrorMessage = error.response.data.message;
   
         if (statusErrorMessage === 401) {
           return logout('Authorization gagal, mohon login ulang!');
@@ -83,7 +82,7 @@ const UpdateRole = () => {
         }
   
         setIsLoading(false);
-        setErrorMessage(responseErrorMessage);
+        setErrorMessage(error);
       }
     };
     

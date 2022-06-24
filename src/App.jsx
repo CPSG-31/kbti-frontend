@@ -58,8 +58,11 @@ const App = () => {
           const roleIdResponse = tokenData.data.role_id;
           setRole(roleIdResponse === 1 ? 'admin' : roleIdResponse === 2 ? 'user' : 'guest');
         } catch (error) {
-          setIsNotValid(true);
-          return logout('Authorization gagal, mohon login ulang!');
+          const statusErrorMessage = error.response.status;
+          if (statusErrorMessage === 401) {
+            setIsNotValid(true);
+            return logout('Authorization gagal, mohon login ulang!');
+          }
         }
       };
       checkToken();
