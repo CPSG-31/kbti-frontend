@@ -1,8 +1,7 @@
 import 'regenerator-runtime';
 import { clientsClaim, setCacheNameDetails } from 'workbox-core';
-import { precacheAndRoute } from 'workbox-precaching/precacheAndRoute';
-import { cleanupOutdatedCaches } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
+import { precacheAndRoute, createHandlerBoundToURL, cleanupOutdatedCaches } from 'workbox-precaching';
+import { registerRoute, NavigationRoute } from 'workbox-routing';
 import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
@@ -33,6 +32,8 @@ precacheAndRoute(
     ignoreURLParametersMatching: [/.*/],
   },
 );
+
+registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
 
 registerRoute(
   /https:\/\/kbti-api.herokuapp.com\/(?!auth\/token).*\/*/,
