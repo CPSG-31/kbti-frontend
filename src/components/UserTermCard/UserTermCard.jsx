@@ -94,12 +94,9 @@ const UserTermCard = ({ dataDefinition, deleteButtonHandler }) => {
           </div>
         </div>
         <p className="card-text mt-2 mb-0">{definition}</p>
-        <a href="#" className="">
-          Baca Selengkapnya
-        </a>
         <div className="term__action d-flex justify-content-end mt-1">
           {/* eslint-disable-next-line react/void-dom-elements-no-children */}
-          <Link to={`/definitions/${id}/edit`} className="term__action-button btn">
+          <Link to={`/definitions/${id}/edit`} className="term__action-button btn pt-1">
             <EditSvg />
           </Link>
           <button onClick={() => deleteButtonHandler(id)} type="button" className="term__action-button btn">
