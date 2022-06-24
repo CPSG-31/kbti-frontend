@@ -11,8 +11,8 @@ import API_ENDPOINT from '../../globals/apiEndpoint';
 
 function Home() {
   const { isLoggedIn } = useAuth();
-  const [randomTerms, setRandomTerms] = useState([]);
-  const [newTerms, setNewTerms] = useState([]);
+  const [randomTerms, setRandomTerms] = useState(null);
+  const [newTerms, setNewTerms] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -27,16 +27,22 @@ function Home() {
         setNewTerms(newTermsRes.data);
         setIsLoading(false);
       } catch (error) {
-        const responseErrorMessage = error.response.data.message;
-        setErrorMessage(responseErrorMessage);
+        const statusErrorMessage = error.response.status;
+        
+        if (statusErrorMessage === 500) {
+          setIsLoading(false);
+          return setErrorMessage('Terjadi kesalahan pada server, mohon coba lagi!');
+        }
+        
+        setErrorMessage('Data definisi tidak ditemukan!');
         setIsLoading(false);
       }
     };
 
     firstTimeFetchData();
   }, []);
-
-  const randomTermElements = randomTerms && randomTerms?.data?.map((definition) => {
+  
+  const randomTermElements = randomTerms && !errorMessage && randomTerms?.data?.map((definition) => {
     return <TermCard key={definition.id} dataDefinition={definition} />;
   });
 
@@ -48,9 +54,10 @@ function Home() {
           <div className="new-term__container col-12 col-lg-4 mt-4 mb-4">
             <p className="ms-2">Istilah yang baru ditambahkan</p>
             {isLoading && newTerms && <Loading />}
+
             {errorMessage && <p className="text-center fw-bold">{errorMessage}</p>}
             <div className="new-term__pils">
-              {newTerms && newTerms?.data?.map((newTerm, index) => {
+              {newTerms && !errorMessage && newTerms?.data?.map((newTerm, index) => {
                 return <TermPill key={`${index}newTerms`} term={newTerm.term} />;
               })}
             </div>
@@ -64,7 +71,7 @@ function Home() {
             </Link>
           </div>
           <div className="random-term___container col-12 col-lg-8 mt-4">
-            {isLoading && randomTerms && <Loading />}
+            {isLoading && <Loading />}
             {errorMessage && <EmptyMessage message={`${errorMessage}, terjadi kesalahan`} />}
             {randomTermElements}
           </div>

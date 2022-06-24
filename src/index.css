@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
 body {
   font-family: "Lato", sans-serif !important;
   box-sizing: border-box;
@@ -17,4 +20,3 @@ Link {
   min-height: 44px !important;
   min-width: 44px !important;
 }
-

@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-expressions */
+import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
 import useAuth from './hooks/useAuth';
 
 import { AdminLayout, PublicLayout } from './layouts';
@@ -21,12 +23,51 @@ import {
 } from './pages';
 
 import './styles/global.css';
+import API_ENDPOINT from './globals/apiEndpoint';
 
 const App = () => {
-  const { role_id: roleId, isLoggedIn } = useAuth();
+  const { role_id: roleId, isLoggedIn, login, logout } = useAuth();
   
-  const role = roleId === 1 ? 'admin' : 'user';
-
+  const [role, setRole] = useState(null);
+  const [isNotValid, setIsNotValid] = useState(false);
+  
+  useEffect(() => {
+    let tokenFromStorage;
+    try {
+      tokenFromStorage = JSON.parse(localStorage.getItem('authentication'));
+    } catch (error) {
+      tokenFromStorage = null;
+    }
+    setIsNotValid(false);
+    if (tokenFromStorage !== null) {
+      const checkToken = async () => {
+        try {
+          const response = await axios.get(API_ENDPOINT.CHECK_TOKEN, {
+            headers: {
+              Authorization: `Bearer ${tokenFromStorage.token}`,
+            },
+          });
+          
+          const tokenData = response.data;
+          
+          if (tokenData.data.expires_at < +Date.now()) {
+            return logout('Sesi Berakhir, mohon login ulang!');
+          }
+          
+          await login(tokenData);
+          const roleIdResponse = tokenData.data.role_id;
+          setRole(roleIdResponse === 1 ? 'admin' : roleIdResponse === 2 ? 'user' : 'guest');
+        } catch (error) {
+          setIsNotValid(true);
+          return logout('Authorization gagal, mohon login ulang!');
+        }
+      };
+      checkToken();
+    } else {
+      setRole('');
+    }
+  }, [roleId]);
+  
   return (
     <Routes>
       <Route element={<PublicLayout />}>
@@ -70,8 +111,8 @@ const App = () => {
         </>
       )}
     
-      <Route element={<PublicLayout />}>
-        <Route path="*" element={<Error />} />
+      <Route element={!isLoggedIn || role || isNotValid ? <PublicLayout /> : ''}>
+        <Route path="*" element={!isLoggedIn || role || isNotValid ? <Error /> : ''} />
       </Route>
     </Routes>
   );

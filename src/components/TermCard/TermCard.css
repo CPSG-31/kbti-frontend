@@ -4,20 +4,27 @@
 }
 
 .term__category {
-  background-color: #F2F7FF;
-  color: #1D2A57;
+  background-color: #f2f7ff;
+  color: #1d2a57;
   margin-bottom: 24px;
 }
 
 .card-title {
-   color: #1D2A57;
+  color: #1d2a57;
 }
 
-.term__username{
+.card-link {
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  transition: ease-in-out 0.2s;
+}
+
+.term__username {
   font-style: italic;
   font-weight: 400;
-  text-decoration-line: underline;
-  color: #184C92;
+  text-decoration: underline;
+  color: #184c92;
 }
 
 .term__action-button {
@@ -28,4 +35,8 @@
 .term__action-button:hover {
   box-shadow: none !important;
   background: rgba(24, 76, 146, 0.2);
+}
+
+.vote__count {
+  color: #184c92;
 }
