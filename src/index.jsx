@@ -19,3 +19,39 @@ root.render(
     </AuthContextProvider>
   </BrowserRouter>,
 );
+
+window.addEventListener('load', async () => {
+  if ('serviceWorker' in navigator) {
+    await navigator.serviceWorker.register('/service-worker.js');
+    console.log('Berhasil mendaftarkan service worker');
+  } else {
+    console.log('Browser tidak mendukung service worker');
+  }
+  
+  if (!navigator.onLine) {
+    Swal.fire({
+      title: ' Tidak Ada Jaringan Internet (Offline)',
+      text: 'Anda Tidak Bisa Mengakses Internet, Maka Aplikasi Masuk ke Dalam Mode Offline',
+      icon: 'warning',
+      confirmButtonText: 'ok',
+    });
+  }
+});
+
+window.addEventListener('offline', (event) => {
+  Swal.fire({
+    title: ' Tidak Ada Jaringan Internet (Offline)',
+    text: 'Anda Tidak Bisa Mengakses Internet, Maka Aplikasi Masuk ke Dalam Mode Offline',
+    icon: 'warning',
+    confirmButtonText: 'ok',
+  });
+});
+
+window.addEventListener('online', (event) => {
+  Swal.fire({
+    title: ' Ada Jaringan Internet (Online)',
+    text: 'Anda Bisa Mengakses Internet, Maka Aplikasi Keluar dari Mode Offline',
+    icon: 'success',
+    confirmButtonText: 'ok',
+  });
+});
