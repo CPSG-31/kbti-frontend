@@ -26,6 +26,7 @@ const API_ENDPOINT = {
   GET_RANDOM_DEFINITIONS: `${CONFIG.BASE_URL}/terms/random`,
   GET_NEWLY_ADDED_TERMS: `${CONFIG.BASE_URL}/terms/new`,
   DASHBOARD: `${CONFIG.BASE_URL}/dashboard`,
+  DASHBOARD_STATISTICS: `${CONFIG.BASE_URL}/admin/statistics`,
 };
 
 export default API_ENDPOINT;
