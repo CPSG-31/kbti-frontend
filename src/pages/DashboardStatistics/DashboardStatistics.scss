@@ -1,0 +1,35 @@
+.dashboard__statistics {
+	padding: 30px;
+
+	h1 {
+		font-size: 26px;
+		color: #184C92;
+	}
+
+	.row {
+		margin-top: 10px;
+	}
+
+	&__card {
+		background-color: rgba(138, 170, 183, 0.8);
+		border-radius: 20px;
+		height: 150px;
+		text-align: center;
+		box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+		transition: all 0.3s ease-in-out;
+		cursor: pointer;
+
+		h2 {
+			font-size: 20px;
+			height: 50px;
+		}
+
+		p {
+			font-size: 30px;
+		}
+
+		&:hover {
+			transform: translateY(-10px);
+		}
+	}
+}
