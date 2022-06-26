@@ -15,14 +15,13 @@ const TermCard = ({ index, dataDefinition }) => {
     definition,
     down_votes: downVotes,
     up_votes: upVotes,
-    username,
+    username: name,
     updated_at: updatedAt,
   } = dataDefinition;
   const [isVoted, setIsVoted] = useState({ upVotes: false, downVotes: false });
   const [totalVotes, setTotalVotes] = useState(upVotes - downVotes);
-  const { isLoggedIn, token } = useAuth();
+  const { isLoggedIn, token, username } = useAuth();
   const navigate = useNavigate();
-
   const voteDefinition = async (isUpvote) => axios.post(API_ENDPOINT.VOTE_DEFINITION(id), { is_upvote: isUpvote }, {
     headers: {
       'Content-Type': 'application/json',
@@ -43,6 +42,69 @@ const TermCard = ({ index, dataDefinition }) => {
 
     const { data: vote } = await voteDefinition(isUpvote);
     setTotalVotes(vote.up_votes - vote.down_votes);
+  };
+  
+  const reportHandler = async () => {
+    if (!isLoggedIn) {
+      await Swal.fire({
+        title: 'Login dulu!',
+        text: 'Anda harus login untuk melaporkan definisi ini!',
+        icon: 'warning',
+        timer: 2000,
+      });
+      return navigate('/login');
+    }
+    
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbz4KQQB8sNN0D0WA-5HHGlS9NpoJpI9ld5x2DAxlXc80BzljC_k5R7Y-UjnczMx0mE_/exec';
+  
+    Swal.fire({
+      title: 'Form Laporan',
+      html: `
+      <form name="form-to-google-sheets">
+        <div class="d-flex flex-column">
+          <label>ID Definisi</label>
+          <input type="text" name="idDefinition" id="idDefinition" class="swal2-input text-muted" readonly value="${id}" placeholder="ID Definition">
+        </div>
+        <div class="d-flex flex-column mt-2">
+          <label>Nama Pembuat</label>
+          <input type="text" readonly value="${name}" id="NamaPembuat" name="NamaPembuat" class="swal2-input text-muted" placeholder="Nama Pembuat">
+        </div>
+        <div class="d-flex flex-column mt-2">
+          <label>Nama Istilah</label>
+          <input type="text" readonly value="${term}" id="NamaIstilah" name="NamaIstilah" class="swal2-input text-muted" placeholder="Nama Istilah">
+        </div>
+        <div class="d-flex flex-column mt-2">
+          <label>Nama Pelapor</label>
+          <input type="text" readonly value="${username}" id="NamaPelapor" name="NamaPelapor" class="swal2-input text-muted" placeholder="Nama Pelapor">
+        </div>
+        <div class="d-flex flex-column mt-3">
+          <label>Pesan Keluhan</label>
+          <textarea type="text" id="PesanKeluhan" name="PesanKeluhan" class="swal2-input d-inline-block" style="height: 200px !important;" placeholder="PesanKeluhan"></textarea>
+        </div>
+      </form>
+  `,
+      confirmButtonText: 'Lapor',
+      focusConfirm: false,
+      preConfirm: () => {
+        const forms = document.forms['form-to-google-sheets'];
+        
+        axios.post(scriptUrl, new FormData(forms)).then((res) => {
+          Swal.fire({
+            title: 'Terima Kasih',
+            text: 'Terima kasih atas laporan Anda',
+            icon: 'success',
+            confirmButtonText: 'OK',
+          });
+        }).catch(() => {
+          Swal.fire({
+            title: 'Gagal',
+            text: 'Terjadi kesalahan saat mengirim laporan',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        });
+      }
+    });
   };
 
   return (
@@ -79,14 +141,14 @@ const TermCard = ({ index, dataDefinition }) => {
             <h2 className="card-title mb-0 lh-1">{term}</h2>
             <div className="term__info mb-2">
               <a href="#" className="term__username">
-                {username}
+                {name}
               </a>
               <span className="mx-1 text-muted">&#8226;</span>
               <small className="text-muted">{formatDate(updatedAt)}</small>
             </div>
             <p className="card-text mb-3">{definition}</p>
             <div className="term__action d-flex justify-content-end mt-1">
-              <button type="button" className="term__action-button btn">
+              <button type="button" className="term__action-button btn" onClick={reportHandler}>
                 <FlagSvg />
               </button>
               <button type="button" className="term__action-button btn">
