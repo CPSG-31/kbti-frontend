@@ -44,7 +44,7 @@ function Home() {
     <div className="homepage">
       <SearchBar />
       <div className="term___container">
-        <div className="row gx-5 row-cols-2">
+        <div className="row md:gx-5 sm:gx-1 row-cols-2">
           <div className="new-term__container col-12 col-lg-4 mt-4 mb-4">
             <p className="ms-2">Istilah yang baru ditambahkan</p>
             {isLoading && newTerms && <Loading />}
