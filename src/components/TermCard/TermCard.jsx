@@ -47,7 +47,7 @@ const TermCard = ({ index, dataDefinition }) => {
 
     setTotalVotes(vote.up_votes - vote.down_votes);
   };
-  
+
   const reportHandler = async () => {
     if (!isLoggedIn) {
       await Swal.fire({
@@ -58,32 +58,23 @@ const TermCard = ({ index, dataDefinition }) => {
       });
       return navigate('/login');
     }
-    
+
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbz4KQQB8sNN0D0WA-5HHGlS9NpoJpI9ld5x2DAxlXc80BzljC_k5R7Y-UjnczMx0mE_/exec';
-  
+
     Swal.fire({
       title: 'Form Laporan',
       html: `
       <form name="form-to-google-sheets">
-        <div class="d-flex flex-column">
-          <label>ID Definisi</label>
-          <input type="text" name="idDefinition" id="idDefinition" class="swal2-input text-muted" readonly value="${id}" placeholder="ID Definition">
-        </div>
-        <div class="d-flex flex-column mt-2">
-          <label>Nama Pembuat</label>
-          <input type="text" readonly value="${name}" id="NamaPembuat" name="NamaPembuat" class="swal2-input text-muted" placeholder="Nama Pembuat">
-        </div>
+        <input type="hidden" name="idDefinition" id="idDefinition" class="swal2-input text-muted" readonly value="${id}" placeholder="ID Definition">
+        <input type="hidden" readonly value="${name}" id="NamaPembuat" name="NamaPembuat" class="swal2-input text-muted" placeholder="Nama Pembuat">
+        <input type="hidden" readonly value="${username}" id="NamaPelapor" name="NamaPelapor" class="swal2-input text-muted" placeholder="Nama Pelapor">
         <div class="d-flex flex-column mt-2">
           <label>Nama Istilah</label>
           <input type="text" readonly value="${term}" id="NamaIstilah" name="NamaIstilah" class="swal2-input text-muted" placeholder="Nama Istilah">
         </div>
-        <div class="d-flex flex-column mt-2">
-          <label>Nama Pelapor</label>
-          <input type="text" readonly value="${username}" id="NamaPelapor" name="NamaPelapor" class="swal2-input text-muted" placeholder="Nama Pelapor">
-        </div>
         <div class="d-flex flex-column mt-3">
           <label>Pesan Keluhan</label>
-          <textarea type="text" id="PesanKeluhan" name="PesanKeluhan" class="swal2-input d-inline-block" style="height: 200px !important;" placeholder="PesanKeluhan"></textarea>
+          <textarea type="text" id="PesanKeluhan" name="PesanKeluhan" class="swal2-input d-inline-block p-3" rows="4" style="font-size:1.1rem; min-height:12rem !important;" placeholder="Sampaikan laporanmu terkait definisi ini."></textarea>
         </div>
       </form>
   `,
@@ -91,7 +82,7 @@ const TermCard = ({ index, dataDefinition }) => {
       focusConfirm: false,
       preConfirm: () => {
         const forms = document.forms['form-to-google-sheets'];
-        
+
         axios.post(scriptUrl, new FormData(forms)).then((res) => {
           Swal.fire({
             title: 'Terima Kasih',
@@ -107,7 +98,7 @@ const TermCard = ({ index, dataDefinition }) => {
             confirmButtonText: 'OK',
           });
         });
-      }
+      },
     });
   };
 
