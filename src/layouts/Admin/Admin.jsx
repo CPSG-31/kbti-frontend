@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { NavbarAdmin, Footer } from '../../components';
+import { DashboardStatistics } from '../../pages';
 import './Admin.scss';
 
 function AdminLayout() {
@@ -24,7 +25,7 @@ function AdminLayout() {
                 <button type="button" className="btn nav__drawer-container-item" onClick={openNavbarHandler}>☰</button>
               </div>
             )}
-            {location.pathname === '/dashboard' ? <p>Statistic</p> : <Outlet />}
+            {location.pathname === '/dashboard' || location.pathname === '/dashboard/' ? <DashboardStatistics /> : <Outlet />}
           </main>
           <footer className="px-3 px-lg-5 footer-admin">
             <Footer />

@@ -55,6 +55,7 @@
         "no-use-before-define": "off",
         "no-param-reassign": "off",
         "no-underscore-dangle": "off",
-        "no-restricted-globals": "off"
+        "no-restricted-globals": "off",
+        "react/no-array-index-key": "off"
     }
 }
