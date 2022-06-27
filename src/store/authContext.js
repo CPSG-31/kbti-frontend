@@ -21,19 +21,23 @@ const AuthContextProvider = ({ children }) => {
   
   const [token, setToken] = useState(authenticationData?.token || '');
   const [role, setRole] = useState(authenticationData?.role_id || '');
+  const [username, setUsername] = useState(authenticationData?.username || '');
   const navigate = useNavigate();
 
   const loginHandler = (authenticationResponse) => {
     const response = {
       token: authenticationResponse?.data?.access_token?.token,
       role_id: authenticationResponse?.data?.role_id,
+      username: authenticationResponse?.data?.username,
     };
     
     setToken(response.token);
     setRole(response.role_id);
+    setUsername(response.username);
     localStorage.setItem('authentication', JSON.stringify({
       token: response.token,
       role_id: response.role_id,
+      username: response.username,
     }));
   };
   
@@ -63,6 +67,7 @@ const AuthContextProvider = ({ children }) => {
     isLoggedIn: !!token,
     token,
     role_id: role,
+    username,
     login: loginHandler,
     logout: logoutHandler,
   };
