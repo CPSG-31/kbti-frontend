@@ -39,7 +39,7 @@ function PublicNavbar() {
   const categoryElements = (categoryList) => categoryList && categoryList.map((categoryItem) => {
     return (
       <li key={categoryItem.id}>
-        <Link className="dropdown-item category-item" to={`/definitions?categoryId=${categoryItem.id}&categoryName=${categoryItem.category}`}>
+        <Link className="dropdown-item category-item pt-2" to={`/definitions?categoryId=${categoryItem.id}&categoryName=${categoryItem.category}`}>
           {categoryItem.category}
         </Link>
       </li>
@@ -50,10 +50,10 @@ function PublicNavbar() {
     actionNavbar = (
       <>
         <li className="nav-item my-auto me-3">
-          <Link className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50" to="/login">Login</Link>
+          <Link className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50 px-4" to="/login">Masuk</Link>
         </li>
         <li className="nav-item my-auto">
-          <Link className="btn btn-light d-inline-block rounded-pill fw-bold pt-2" to="/register">Register</Link>
+          <Link className="btn btn-light d-inline-block rounded-pill fw-bold pt-2 px-4" to="/register">Daftar</Link>
         </li>
       </>
     );
@@ -61,10 +61,10 @@ function PublicNavbar() {
     actionNavbar = (
       <>
         <li className="nav-item my-auto me-3">
-          <Link to="/dashboard" className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50">Dashboard</Link>
+          <Link to="/dashboard" className="btn btn-outline-light d-inline-block rounded-pill fw-bold pt-2 h-50 px-4">Dashboard</Link>
         </li>
         <li className="nav-item my-auto">
-          <button onClick={logoutHandler} className="btn btn-light rounded-pill fw-bold pt-2">Logout</button>
+          <button onClick={logoutHandler} className="btn btn-light rounded-pill fw-bold pt-2 px-4">Logout</button>
         </li>
       </>
     );
@@ -117,7 +117,7 @@ function PublicNavbar() {
                         <Link
                           to={`/search?q=${letter}`}
                           type="button"
-                          className="col-1 btn btn-outline-warning rounded-circle fw-bold"
+                          className="col-1 btn btn-outline-warning rounded-circle fw-bold pt-2"
                           key={index}
                         >
                           {letter}

@@ -52,8 +52,9 @@ function Home() {
       <div className="term___container">
         <div className="row gx-5 row-cols-2">
           <div className="new-term__container col-12 col-lg-4 mt-4 mb-4">
-            <p>Istilah yang baru ditambahkan</p>
-            {isLoading && <Loading />}
+            <p className="ms-2">Istilah yang baru ditambahkan</p>
+            {isLoading && newTerms && <Loading />}
+
             {errorMessage && <p className="text-center fw-bold">{errorMessage}</p>}
             <div className="new-term__pils">
               {newTerms && !errorMessage && newTerms?.data?.map((newTerm, index) => {
