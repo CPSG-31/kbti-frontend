@@ -1,0 +1,25 @@
+.table__data {
+	&-action__delete {
+		border-radius: 25px;
+		width: 200px;
+		color: #184C92;
+
+		svg {
+			margin-top: -5px;
+			margin-right: 5px;
+		}
+		&:hover {
+			background-color: #06c5dc;
+		}
+	}
+
+	&-author span {
+		display: inline-block;
+		width: 150px;
+	}
+
+	&-date span {
+		display: inline-block;
+		width: 130px;
+	}
+}

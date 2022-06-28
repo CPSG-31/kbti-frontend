@@ -1,0 +1,20 @@
+.definitionList {
+    background-color: #f8fafc;
+    min-height: calc(100vh - 100px);
+    padding: 4% 5%;
+  }
+  
+  @media (min-width: 768px) {
+    .definitionList {
+      padding: 2% 18%;
+    }
+  }
+  
+  @media (min-width: 992px) {
+      .definitionList {
+        padding: 2% 27%;
+      }
+    }
+    
+  
+  

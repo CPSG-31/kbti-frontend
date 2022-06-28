@@ -1,0 +1,30 @@
+.list__user-admin {
+	color: #184C92;
+	padding: 30px;
+
+	h1 {
+		font-size: 26px;
+		margin-bottom: 40px;
+	}
+
+	.table-responsive {
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+		border: 1px solid #184C92;
+
+		thead {
+			background-color: #184C92;
+
+			th {
+				color: #fff !important;
+			}
+		}
+	}
+
+	@media screen and (max-width: 500px){
+		.table-responsive {
+			width: 100%;
+		}
+	}
+}

@@ -1,19 +1,57 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
+import './styles/global.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import App from './App';
+import AuthContextProvider from './store/authContext';
+
+const container = document.getElementById('root');
+
+const root = ReactDOM.createRoot(container);
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
+  </BrowserRouter>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+window.addEventListener('load', async () => {
+  if ('serviceWorker' in navigator) {
+    await navigator.serviceWorker.register('/service-worker.js');
+    console.log('Berhasil mendaftarkan service worker');
+  } else {
+    console.log('Browser tidak mendukung service worker');
+  }
+
+  if (!navigator.onLine) {
+    Swal.fire({
+      title: ' Tidak Ada Jaringan Internet (Offline)',
+      text: 'Anda Tidak Bisa Mengakses Internet, Maka Aplikasi Masuk ke Dalam Mode Offline',
+      icon: 'warning',
+      confirmButtonText: 'ok',
+    });
+  }
+});
+
+window.addEventListener('offline', (event) => {
+  Swal.fire({
+    title: ' Tidak Ada Jaringan Internet (Offline)',
+    text: 'Anda Tidak Bisa Mengakses Internet, Maka Aplikasi Masuk ke Dalam Mode Offline',
+    icon: 'warning',
+    confirmButtonText: 'ok',
+  });
+});
+
+window.addEventListener('online', (event) => {
+  Swal.fire({
+    title: ' Ada Jaringan Internet (Online)',
+    text: 'Anda Bisa Mengakses Internet, Maka Aplikasi Keluar dari Mode Offline',
+    icon: 'success',
+    confirmButtonText: 'ok',
+  });
+});

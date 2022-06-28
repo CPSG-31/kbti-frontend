@@ -1,0 +1,12 @@
+.form-admin {
+	&__button-save {
+		margin-top: 30px;
+		background-color: #184C92 !important;
+		color: white !important;
+
+		&:hover {
+			background-color: #06c5dc !important;
+			color: #184C92 !important;
+		}
+	}
+}

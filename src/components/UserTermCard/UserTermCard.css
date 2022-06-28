@@ -1,0 +1,66 @@
+a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #184c92;
+}
+
+.card {
+  box-shadow: -1px 1px 7px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.card-title {
+  color: #1d2a57;
+}
+
+.term__action-button {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.term__action-button:hover {
+  box-shadow: none !important;
+  background: rgba(24, 76, 146, 0.2);
+}
+
+.term__status-pending {
+  background-color: #ff8029;
+  height: 22px;
+}
+
+.term__status-approved {
+  background-color: #00b200;
+  height: 22px;
+}
+.term__vote-container {
+  padding: 2px 0;
+  color: #184c92;
+  font-weight: 600;
+}
+
+.term__upvote-container {
+  border: 1px solid #184c92;
+  border-width: 2px 1px 2px 2px;
+  border-radius: 20px 0 0 20px;
+  min-width: 3.6em;
+}
+
+.term__downvote-container {
+  border: 1px solid #184c92;
+  border-width: 2px 2px 2px 1px;
+  border-radius: 0 20px 20px 0;
+  min-width: 3.6em;
+}
+
+.term__status-rejected {
+  background-color: #ef4444;
+  height: 22px;
+}
+
+.term___status-text {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 1.5px 10px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+}

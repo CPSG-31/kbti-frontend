@@ -1,0 +1,30 @@
+.navbar {
+  background-color: #1d2a57;
+  color: white;
+}
+
+.navbar-nav {
+  width: 100%;
+}
+
+.navbar-brand img {
+  width: 100px;
+}
+
+.navbar .dropdown-menu {
+  min-width: 230px;
+  background-color: #1d2a57;
+}
+
+.navbar .dropdown-toggle::after {
+  margin-left: 0.35rem;
+  vertical-align: 0.2rem;
+}
+
+.category-item {
+  color: #fff;
+}
+
+.category-item:hover {
+  background-color: #fec400;
+}

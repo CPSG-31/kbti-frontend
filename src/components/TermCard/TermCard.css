@@ -1,0 +1,55 @@
+.card {
+  box-shadow: -1px 1px 7px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.term__category {
+  background-color: #f2f7ff;
+  color: #1d2a57;
+  margin-bottom: 24px;
+}
+
+.card-title {
+  color: #1d2a57;
+}
+
+.card-link {
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  transition: ease-in-out 0.2s;
+}
+
+.term__username {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.term__action-button {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.term__action-button:hover {
+  box-shadow: none !important;
+  background: rgba(24, 76, 146, 0.2);
+}
+
+.vote__count {
+  color: #184c92;
+}
+
+.share-link__button {
+  color: #0c63e4;
+}
+
+.share-link__button:nth-child(3) {
+  margin-bottom: 10px;
+}
+
+.share-link__button:hover {
+  background: #4b79b6;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.8);
+  color: white;
+  display: inline-block;
+}

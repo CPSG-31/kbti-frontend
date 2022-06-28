@@ -1,0 +1,40 @@
+.admin-layout {
+	header {
+		@media screen and (max-width: 991px) {
+			position: fixed;
+			height: 100vh;
+			z-index: 2;
+			background-color: white;
+		}
+	}
+
+	&__body {
+		background-color: #e5e5e5;
+		min-height: 100vh;
+
+		main {
+			flex: 1 0;
+
+			.nav__drawer-container {
+				padding: 10px 0;
+				background-color: white;
+
+				&-item {
+					font-size: 20px;
+				}
+			}
+		}
+
+		.footer-admin {
+			flex: 0 0;
+		}
+	}
+
+	.nav__drawer-container {
+		display: none;
+
+		@media screen and (max-width: 1270px) {
+			display: block;
+		}
+	}
+}

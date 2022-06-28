@@ -1,0 +1,75 @@
+h2 {
+  font-family: "Lora", serif !important;
+  font-weight: 600;
+  color: #1d2a57;
+}
+
+.dashboard-user {
+  background-color: #f8fafc;
+  min-height: calc(100vh - 100px);
+  padding: 4% 5%;
+}
+
+.info-btn {
+  width: 48px;
+  height: 50px;
+  border: none;
+  background-color: #f8fafc;
+}
+
+.dashboard__user-info {
+  box-shadow: -1px 1px 7px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border: 0;
+}
+
+.status-container {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 8px 5px;
+}
+
+.btn-link {
+  text-decoration: none;
+  color: #184c92;
+}
+
+.btn-link:hover {
+  color: #1d2a57;
+}
+
+.info-btn{
+background-color: #FFFF;
+}
+.status-count {
+  font-size: 1.8em;
+}
+
+.status-text {
+  font-size: 16px;
+}
+
+.empty-list-text {
+  font-weight: 400;
+  color: #6c6c6c;
+}
+
+.empty-list-img {
+  width: 90%;
+}
+
+@media (min-width: 768px) {
+  .dashboard-user {
+    padding: 2% 18%;
+  }
+}
+
+@media (min-width: 992px) {
+  .dashboard-user {
+    padding: 2% 8%;
+  }
+
+  .empty-list-img {
+    width: 60%;
+  }
+}

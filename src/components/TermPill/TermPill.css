@@ -1,0 +1,11 @@
+.term-pill{
+    font-weight: 700;
+    border-color: #184C92;
+    color: #184C92;
+    margin: 0 0.6em 0.6em 0;
+}
+
+.term-pill:hover{
+    color: #fff;
+    background-color: #184C92;
+}

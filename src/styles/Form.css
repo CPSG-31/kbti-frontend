@@ -1,0 +1,22 @@
+.btn-kbti {
+  width: 168px;
+}
+
+.form__title {
+  color: #184c92;
+  font-family: Lato, "Segoe UI", sans-serif !important;
+  text-align: center;
+}
+
+.form-label {
+  color: #184c92;
+  font-size: 1.1rem;
+}
+
+.form__input {
+  color: #184c92;
+  border: thin solid #184c92;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  padding: 0.75rem 0 0.75rem 1.1rem;
+}

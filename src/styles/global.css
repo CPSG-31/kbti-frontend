@@ -1,0 +1,36 @@
+.btn-kbti {
+  color: #fff !important;
+  background-color: #184c92;
+  border-color: #184c92;
+}
+
+.btn-kbti:hover {
+  color: #fff;
+  background-color: #1d2a57;
+  border-color: #1d2a57;
+}
+
+.btn-outline-kbti{
+  font-weight: 700;
+  color: #184C92;
+  border-color: #184C92;
+}
+
+.btn-outline-kbti:hover{
+  font-weight: 700;
+  color: #fff;
+  background-color: #184C92;
+}
+
+.kbti-link {
+  color: #1d2a57;
+  font-weight: 600;
+}
+
+.kbti-link:hover {
+  color: #184c92;
+}
+
+.page-link {
+  z-index: 1 !important;
+}
