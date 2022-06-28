@@ -47,7 +47,6 @@ const DashboardStatistics = () => {
     fetchData();
   }, []);
   
-  console.log(data);
   return (
     <section className="dashboard__statistics">
       <h1>Statistik</h1>
