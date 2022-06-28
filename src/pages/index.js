@@ -14,3 +14,4 @@ export { default as ReviewDetailDefinition } from './ReviewDetailDefinition/Revi
 export { default as DashboardUser } from './DashboardUser/DashboardUser';
 export { default as DashboardStatistics } from './DashboardStatistics/DashboardStatistics';
 export { default as DefinitionDetail } from './DefinitionDetail/DefinitionDetail';
+export { default as AboutUs } from './AboutUs/AboutUs';

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import formatDate from '../../utils/formatDate';
+import truncate from '../../utils/truncate';
 import { ReviewIcon } from '../../assets/icons';
 import './TableDataReviewDefinition.scss';
 
@@ -28,7 +29,7 @@ const TableDataReviewDefinition = ({ items, currentPage }) => {
               <td>{rowIndex}</td>
               <td className="text-start">{term}</td>
               <td className="table__data-description text-start">
-                <p>{detailDefinition}</p>
+                <p>{truncate(detailDefinition, 90)}</p>
               </td>
               <td className="table__data-author">
                 <span>{username}</span>

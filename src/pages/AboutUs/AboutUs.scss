@@ -1,0 +1,71 @@
+.about-us {
+	font-family: "Lato", sans-serif !important;
+
+	h1, h2 {
+		font-size: 40px;
+		color: #1D2A57;
+		font-weight: normal;
+		position: relative;
+		margin-bottom: 40px;
+
+		&::before {
+			content: "";
+			position: absolute;
+			bottom: -5px;
+			width: 200px;
+			height: 2px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: #AAAAAA;
+		}
+
+	}
+
+	&__description {
+		padding: 20px;
+		margin-bottom: 10px;
+		p {
+			max-width: 600px;
+			margin: 0 auto 50px;
+		}
+	}
+
+	&__card {
+		margin-bottom: 20px;
+		img {
+			width: 200px;
+			border-radius: 50%;
+		}
+
+		h3 {
+			width: 200px;
+			margin: 10px auto 0;
+			font-size: 20px;
+			height: 40px;
+			font-weight: 500;
+		}
+
+		p {
+			margin-top: 12px;
+		}
+
+		&-social {
+			a {
+				fill: #1D2A57;
+
+				svg {
+					width: 35px;
+					height: 35px;
+				}
+			}
+
+			a:nth-child(1) {
+				margin-right: 20px;
+			}
+		}
+	}
+
+	.container {
+		margin-bottom: 50px;
+	}
+}

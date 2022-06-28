@@ -11,25 +11,39 @@
 	}
 
 	&__card {
-		background-color: rgba(138, 170, 183, 0.8);
+		background-color: white;
 		border-radius: 20px;
 		height: 150px;
 		text-align: center;
-		box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+		box-shadow: 1px 1px 15px 2px rgba(0,0,0,0.2);
 		transition: all 0.3s ease-in-out;
 		cursor: pointer;
 
 		h2 {
+			color: white;
 			font-size: 20px;
 			height: 50px;
 		}
 
 		p {
+			color: white;
 			font-size: 30px;
 		}
 
 		&:hover {
 			transform: translateY(-10px);
 		}
+	}
+
+	.statistics-1 {
+		background-color: orange;
+	}
+
+	.statistics-2 {
+		background-color: #03a903;
+	}
+
+	.statistics-3, .statistics-4 {
+		background-color: #f64d4d;
 	}
 }
