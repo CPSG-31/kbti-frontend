@@ -1,4 +1,5 @@
 import formatDate from '../../utils/formatDate';
+import truncate from '../../utils/truncate';
 import { DeleteIcon } from '../../assets/icons';
 import './TableDataDeletedDefinition.scss';
 
@@ -27,7 +28,7 @@ const TableDataDeletedDefinition = ({ items, currentPage, onDeleteDefinition }) 
               <td>{rowIndex}</td>
               <td className="text-start">{term}</td>
               <td className="table__data-description text-start">
-                <p>{detailDefinition}</p>
+                <p>{truncate(detailDefinition, 60)}</p>
               </td>
               <td className="table__data-author">
                 <span>{username}</span>

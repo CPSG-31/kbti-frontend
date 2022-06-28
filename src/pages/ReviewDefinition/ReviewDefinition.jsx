@@ -33,14 +33,16 @@ const ReviewDefinition = () => {
       setIsLoading(false);
     } catch (error) {
       const statusErrorMessage = error.response.status;
-      const responseErrorMessage = error.response.data.message;
-      
+  
       if (statusErrorMessage === 401) {
         return logout('Authorization gagal, mohon login ulang!');
+      } else if (statusErrorMessage === 500) {
+        setIsLoading(false);
+        return setErrorMessage('Terjadi kesalahan pada server!');
       }
       
       setIsLoading(false);
-      setErrorMessage(responseErrorMessage);
+      setErrorMessage(error);
     }
   }, []);
   
@@ -59,7 +61,7 @@ const ReviewDefinition = () => {
       <h1>Tinjau Definisi Baru</h1>
       {isLoading && <Loading />}
       {errorMessage && <EmptyMessage message="Tidak ada definisi yang bisa direview"/>}
-      {data && (
+      {data && !errorMessage && (
         <>
           <Table
             items={data}

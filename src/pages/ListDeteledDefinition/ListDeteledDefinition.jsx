@@ -32,21 +32,16 @@ const ListDeletedDefinition = () => {
       setIsLoading(false);
     } catch (error) {
       const statusErrorMessage = error.response.data.code;
-      const responseErrorMessage = error.response.data.message;
-      
+  
       if (statusErrorMessage === 401) {
-        await Swal.fire({
-          title: 'Error',
-          text: `${responseErrorMessage}, mohon login ulang!`,
-          icon: 'error',
-          timer: 2000,
-        });
-        
-        logout();
+        return logout('Authorization gagal, mohon login ulang!');
+      } else if (statusErrorMessage === 500) {
+        setIsLoading(false);
+        return setErrorMessage('Terjadi kesalahan pada server!');
       }
       
       setIsLoading(false);
-      setErrorMessage(responseErrorMessage);
+      setErrorMessage(error);
     }
   }, []);
   
@@ -74,23 +69,24 @@ const ListDeletedDefinition = () => {
               Authorization: `Bearer ${token}`,
             },
           });
+          
           Swal.fire({
             title: 'Berhasil!',
             text: 'Definisi berhasil dihapus permanent!',
             icon: 'success',
             timer: 2000,
           });
+          
           await fetchData(data.data.length === 1 ? currentPage - 1 : currentPage);
         } catch (error) {
           const statusErrorMessage = error.response.data.code;
-          const responseErrorMessage = error.response.data.message;
           
           if (statusErrorMessage === 401) {
             return logout('Authorization gagal, mohon login ulang!');
           } else {
             await Swal.fire({
-              title: 'Error',
-              text: responseErrorMessage,
+              title: 'Gagal',
+              text: 'Gagal menghapus permanen definisi!',
               icon: 'error',
               timer: 2000,
             });
@@ -110,7 +106,7 @@ const ListDeletedDefinition = () => {
   
       {isLoading && <Loading />}
       {errorMessage && <EmptyMessage message="Tidak ada list definisi yang bisa dihapus" />}
-      {data && (
+      {data && !errorMessage && (
         <>
           <Table
             items={data}

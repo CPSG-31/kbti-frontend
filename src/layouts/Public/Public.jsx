@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { NavbarPublic } from '../../components';
 import './Public.css';
 
@@ -12,7 +12,8 @@ const PublicLayout = () => {
         <Outlet />
       </main>
       <footer className="text-center py-3 text-light footer-user">
-      © 2022 KBTI  - Term of use - About
+      © 2022 KBTI  -
+        <Link className="text-white" to="/about-us">Tentang Kami</Link>
       </footer>
     </>
   );

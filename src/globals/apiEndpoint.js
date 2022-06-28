@@ -3,6 +3,7 @@ import CONFIG from './config';
 const API_ENDPOINT = {
   LOGIN: `${CONFIG.BASE_URL}/login`,
   REGISTER: `${CONFIG.BASE_URL}/register`,
+  CHECK_TOKEN: `${CONFIG.BASE_URL}/auth/token`,
   DELETE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   CATEGORIES: `${CONFIG.BASE_URL}/categories`,
   CREATE_DEFINITION: `${CONFIG.BASE_URL}/definitions`,
@@ -25,6 +26,7 @@ const API_ENDPOINT = {
   GET_RANDOM_DEFINITIONS: `${CONFIG.BASE_URL}/terms/random`,
   GET_NEWLY_ADDED_TERMS: `${CONFIG.BASE_URL}/terms/new`,
   DASHBOARD: `${CONFIG.BASE_URL}/dashboard`,
+  DASHBOARD_STATISTICS: `${CONFIG.BASE_URL}/admin/statistics`,
 };
 
 export default API_ENDPOINT;

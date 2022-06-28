@@ -39,14 +39,13 @@ const UpdateRole = () => {
       navigate('/dashboard/users');
     } catch (error) {
       const statusErrorMessage = error.response.status;
-      const responseErrorMessage = error.response.data.message;
   
       if (statusErrorMessage === 401) {
         return logout('Authorization gagal, mohon login ulang!');
       } else {
         await Swal.fire({
           title: 'Error',
-          text: responseErrorMessage,
+          text: 'Gagal mengubah role user',
           icon: 'error',
           timer: 2000,
         });
@@ -74,14 +73,16 @@ const UpdateRole = () => {
         setIsLoading(false);
       } catch (error) {
         const statusErrorMessage = error.response.status;
-        const responseErrorMessage = error.response.data.message;
   
         if (statusErrorMessage === 401) {
           return logout('Authorization gagal, mohon login ulang!');
+        } else if (statusErrorMessage === 500) {
+          setIsLoading(false);
+          return setErrorMessage('Terjadi kesalahan pada server!');
         }
   
         setIsLoading(false);
-        setErrorMessage(responseErrorMessage);
+        setErrorMessage(error);
       }
     };
     
@@ -93,7 +94,7 @@ const UpdateRole = () => {
       <h1 className="text-center">Update Role</h1>
       {isLoading && <Loading />}
       {errorMessage && <EmptyMessage message="User tidak ditemukan" />}
-      {data && (
+      {data && !errorMessage && (
         <form className="form-admin__container" onSubmit={submitHandler}>
           <div className="form-admin__group">
             <label htmlFor="username">Username</label>

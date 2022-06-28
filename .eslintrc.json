@@ -46,6 +46,16 @@
         "consistent-return": "off",
         "object-shorthand": "off",
         "no-undef": "off",
-        "no-else-return": "off"
+        "no-else-return": "off",
+        "camelcase": "off",
+        "no-mixed-operators": "off",
+        "no-nested-ternary": "off",
+        "operator-linebreak": "off",
+        "comma-dangle": "off",
+        "no-use-before-define": "off",
+        "no-param-reassign": "off",
+        "no-underscore-dangle": "off",
+        "no-restricted-globals": "off",
+        "react/no-array-index-key": "off"
     }
 }

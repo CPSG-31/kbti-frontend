@@ -29,4 +29,12 @@
 			flex: 0 0;
 		}
 	}
+
+	.nav__drawer-container {
+		display: none;
+
+		@media screen and (max-width: 1270px) {
+			display: block;
+		}
+	}
 }

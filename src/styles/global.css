@@ -30,3 +30,7 @@
 .kbti-link:hover {
   color: #184c92;
 }
+
+.page-link {
+  z-index: 1 !important;
+}

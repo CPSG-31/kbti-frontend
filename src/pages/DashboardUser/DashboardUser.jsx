@@ -30,21 +30,11 @@ const DashboardUser = () => {
   const rejectedTerms = userData.definitions && userData.definitions.filter(
     (userTerm) => userTerm.statusDefinition === STATUS.rejected,
   );
-
-  // const fetchUserData = async () => {
-  //   const response = await axios.get(API_ENDPOINT.DASHBOARD, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-
-  //   return response.data;
-  // };
-
+  
   const showInfoHandler = () => {
     Swal.fire({
       title: 'Info',
-      text: 'Terdapat 3 kategori definisi yang dapat Anda pilih:',
+      text: 'Setiap definisi dari istilah yang kamu buat akan direview oleh admin, setelah itu jika diterima maka istilahmu akan ditampilkan untuk publik',
       icon: 'info',
     });
   };
@@ -78,8 +68,6 @@ const DashboardUser = () => {
     fetchUserData();
   }, []);
   
-
-    
   const handleDeteleButton = async (id) => {
     await Swal.fire({
       title: 'Apakah Anda Yakin?',
@@ -147,7 +135,6 @@ const DashboardUser = () => {
       />
     </div>
   );
-
 
   return (
     <div className="dashboard-user">
