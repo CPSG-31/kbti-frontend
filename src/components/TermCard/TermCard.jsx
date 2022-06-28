@@ -74,31 +74,34 @@ const TermCard = ({ index, dataDefinition }) => {
         </div>
         <div class="d-flex flex-column mt-3">
           <label>Pesan Keluhan</label>
-          <textarea type="text" id="PesanKeluhan" name="PesanKeluhan" class="swal2-input d-inline-block p-3" rows="4" style="font-size:1.1rem; min-height:12rem !important;" placeholder="Sampaikan laporanmu terkait definisi ini."></textarea>
+          <textarea required type="text" id="PesanKeluhan" name="PesanKeluhan" class="swal2-input d-inline-block p-3" rows="4" style="font-size:1.1rem; min-height:12rem !important;" placeholder="Sampaikan laporanmu terkait definisi ini."></textarea>
         </div>
+        <button type="submit" class="report-button btn btn-primary mt-3">Lapor</button>
       </form>
   `,
-      confirmButtonText: 'Lapor',
       focusConfirm: false,
-      preConfirm: () => {
-        const forms = document.forms['form-to-google-sheets'];
-
-        axios.post(scriptUrl, new FormData(forms)).then((res) => {
-          Swal.fire({
-            title: 'Terima Kasih',
-            text: 'Terima kasih atas laporan Anda',
-            icon: 'success',
-            confirmButtonText: 'OK',
-          });
-        }).catch(() => {
-          Swal.fire({
-            title: 'Gagal',
-            text: 'Terjadi kesalahan saat mengirim laporan',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          });
+      showConfirmButton: false,
+    });
+  
+    const forms = document.forms['form-to-google-sheets'];
+    
+    forms.addEventListener('submit', (event) => {
+      event.preventDefault();
+      axios.post(scriptUrl, new FormData(forms)).then((res) => {
+        Swal.fire({
+          title: 'Terima Kasih',
+          text: 'Terima kasih atas laporan Anda',
+          icon: 'success',
+          confirmButtonText: 'OK',
         });
-      },
+      }).catch(() => {
+        Swal.fire({
+          title: 'Gagal',
+          text: 'Terjadi kesalahan saat mengirim laporan',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      });
     });
   };
 
