@@ -13,4 +13,5 @@ export { default as DetailUser } from './UpdateRole/UpdateRole';
 export { default as ReviewDetailDefinition } from './ReviewDetailDefinition/ReviewDetailDefinition';
 export { default as DashboardUser } from './DashboardUser/DashboardUser';
 export { default as DashboardStatistics } from './DashboardStatistics/DashboardStatistics';
+export { default as DefinitionDetail } from './DefinitionDetail/DefinitionDetail';
 export { default as AboutUs } from './AboutUs/AboutUs';

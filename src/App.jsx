@@ -21,6 +21,7 @@ import {
   DetailUser,
   ReviewDetailDefinition,
   DashboardUser,
+  DefinitionDetail
   AboutUs,
 } from './pages';
 
@@ -79,6 +80,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="search" element={<BrowseResult />} />
         <Route path="definitions" element={<PublicListDefintion />}/>
+        <Route path="definition/detail/:idDefinition" element={<DefinitionDetail />} />
         <Route path="about-us" element={<AboutUs />} />
       </Route>
     
