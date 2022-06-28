@@ -57,7 +57,7 @@ const DashboardStatistics = () => {
         data && !errorMessage && (
           <div className="row gx-5 gy-4">
             <div className="col-12 col-md-6 col-xl-4">
-              <div className="dashboard__statistics__card p-4">
+              <div className="dashboard__statistics__card statistics-1 p-4">
                 <h2 className="dashboard__statistics__card__title">
                   {cardTitle[0]}
                 </h2>
@@ -67,7 +67,7 @@ const DashboardStatistics = () => {
               </div>
             </div>
             <div className="col-12 col-md-6 col-xl-4">
-              <div className="dashboard__statistics__card p-4">
+              <div className="dashboard__statistics__card statistics-2 p-4">
                 <h2 className="dashboard__statistics__card__title">
                   {cardTitle[1]}
                 </h2>
@@ -77,7 +77,7 @@ const DashboardStatistics = () => {
               </div>
             </div>
             <div className="col-12 col-md-6 col-xl-4">
-              <div className="dashboard__statistics__card p-4">
+              <div className="dashboard__statistics__card statistics-3 p-4">
                 <h2 className="dashboard__statistics__card__title">
                   {cardTitle[2]}
                 </h2>
@@ -87,7 +87,7 @@ const DashboardStatistics = () => {
               </div>
             </div>
             <div className="col-12 col-md-6 col-xl-4">
-              <div className="dashboard__statistics__card p-4">
+              <div className="dashboard__statistics__card statistics-4 p-4">
                 <h2 className="dashboard__statistics__card__title">
                   {cardTitle[3]}
                 </h2>
@@ -97,7 +97,7 @@ const DashboardStatistics = () => {
               </div>
             </div>
             <div className="col-12 col-md-6 col-xl-4">
-              <div className="dashboard__statistics__card p-4">
+              <div className="dashboard__statistics__card statistics-5 p-4 bg-primary">
                 <h2 className="dashboard__statistics__card__title">
                   {cardTitle[4]}
                 </h2>
@@ -107,7 +107,7 @@ const DashboardStatistics = () => {
               </div>
             </div>
             <div className="col-12 col-md-6 col-xl-4">
-              <div className="dashboard__statistics__card p-4">
+              <div className="dashboard__statistics__card statistics-6 p-4 bg-info">
                 <h2 className="dashboard__statistics__card__title">
                   {cardTitle[5]}
                 </h2>

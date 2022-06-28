@@ -6,12 +6,8 @@ const Footer = () => {
     <div className="footer-admin__container d-flex flex-column flex-sm-row justify-content-between align-items-center">
       <p>&copy; 2022 KBTI</p>
       <p>
-        <Link to="/term-of-use">
-          Term of Use
-        </Link>
-         &nbsp; - &nbsp;
-        <Link to="/About Us">
-          About Us
+        <Link to="/about-us">
+          Tentang Kami
         </Link>
       </p>
     </div>
