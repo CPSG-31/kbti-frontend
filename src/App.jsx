@@ -19,7 +19,9 @@ import {
   ReviewDefinition,
   UpdateDefinition,
   DetailUser,
-  ReviewDetailDefinition, DashboardUser,
+  ReviewDetailDefinition,
+  DashboardUser,
+  DefinitionDetail
 } from './pages';
 
 import './styles/global.css';
@@ -77,6 +79,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="search" element={<BrowseResult />} />
         <Route path="definitions" element={<PublicListDefintion />}/>
+        <Route path="definition/detail/:idDefinition" element={<DefinitionDetail />} />
       </Route>
     
       {(!isLoggedIn || (role !== 'admin' && role !== 'user')) && (
