@@ -21,7 +21,7 @@ function AdminLayout() {
         <div className="w-100 d-flex flex-column admin-layout__body">
           <main>
             {!isOpen && (
-              <div className="nav__drawer-container d-block d-lg-none">
+              <div className="nav__drawer-container">
                 <button type="button" className="btn nav__drawer-container-item" onClick={openNavbarHandler}>☰</button>
               </div>
             )}

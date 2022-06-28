@@ -138,7 +138,7 @@ const DashboardUser = () => {
 
   return (
     <div className="dashboard-user">
-      <div className="row gx-5 row-cols-2">
+      <div className="row md:gx-5">
         <div className="dashboard__aside-container col-12 col-lg-4 mt-4 mb-4">
           <div className="dashboard__user-action d-flex">
             <Link
@@ -149,9 +149,6 @@ const DashboardUser = () => {
               <PlusSvg className="me-2" />
               <span className="btn-text">Tambah istilah baru</span>
             </Link>
-            <button type="button" className="info-btn p-0 m-0 rounded-circle" onClick={showInfoHandler}>
-              <InfoSvg className="info-btn__icon" />
-            </button>
           </div>
           <div
             className="dashboard__user-info mt-3 card w-100"
@@ -162,11 +159,16 @@ const DashboardUser = () => {
           
           : (             
             <div className="card-body">
-              <h2 className="card-title">
+            <div className="user-info__container d-flex justify-content-between align-items-center">
+              <h2 className="card-title mt-3">
                 Halo,
                 {' '}
                 {userData.username}
-              </h2>
+              </h2>              
+              <button type="button" className="info-btn p-0 m-0 rounded-circle" onClick={showInfoHandler}>
+                <InfoSvg className="info-btn__icon mt-0 pt-0" />
+              </button>
+            </div>
               <h6 className="card-subtitle mt-5 text-muted">
                 status definisi yang kamu buat
               </h6>

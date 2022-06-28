@@ -2,7 +2,12 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TermCard.css';
-import { UpvoteSvg, DownvoteSvg, FlagSvg, ShareSvg } from '../../icons';
+import {
+  UpvoteSvg,
+  DownvoteSvg,
+  FlagSvg,
+  ShareSvg,
+} from '../../icons';
 import useAuth from '../../hooks/useAuth';
 import API_ENDPOINT from '../../globals/apiEndpoint';
 import formatDate from '../../utils/formatDate';
@@ -30,24 +35,24 @@ const TermCard = ({ index, dataDefinition }) => {
       },
     },
   }).then((res) => res.data);
-
-
+  
+  
   const voteHandler = async (isUpvote) => {
     if (!isLoggedIn) {
       return navigate('/login');
     }
-
+    
     const { data: vote } = await voteDefinition(isUpvote);
-
+    
     if (vote.is_voted) {
       setVoteStatus((isUpvote) ? { upVotes: true, downVotes: false } : { upVotes: false, downVotes: true });
     } else {
       setVoteStatus({ upVotes: false, downVotes: false });
     }
-
+    
     setTotalVotes(vote.up_votes - vote.down_votes);
   };
-
+  
   const reportHandler = async () => {
     if (!isLoggedIn) {
       await Swal.fire({
@@ -58,9 +63,9 @@ const TermCard = ({ index, dataDefinition }) => {
       });
       return navigate('/login');
     }
-
+    
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbz4KQQB8sNN0D0WA-5HHGlS9NpoJpI9ld5x2DAxlXc80BzljC_k5R7Y-UjnczMx0mE_/exec';
-
+    
     Swal.fire({
       title: 'Form Laporan',
       html: `
@@ -104,7 +109,42 @@ const TermCard = ({ index, dataDefinition }) => {
       });
     });
   };
-
+  
+  const shareLinkHandler = () => {
+    const urlOrigin = window.location.origin;
+    
+    Swal.fire({
+      title: 'Share Link',
+      html: `
+        <div class="d-flex flex-column align-items-center">
+          <input id="shareLink" type="text" readonly value="${urlOrigin}/definition/detail/${id}" id="ShareLink" name="ShareLink" class="swal2-input text-muted d-inline-block" placeholder="Share Link">
+          <button style="width: 200px;" class="mb-3 btn btn-warning mt-2 copy-button" onclick="">Copy</button>
+          <p class"">Share into Media Social</p>
+          <div class="d-flex flex-column">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${urlOrigin}/definition/detail/${id}" target="_blank" class="share-link__button btn mt-2">Facebook</a>
+            <a href="https://twitter.com/intent/tweet?text=${term}%20${urlOrigin}/definition/detail/${id}" target="_blank" class="share-link__button btn mt-2">Twitter</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=${urlOrigin}/definition/detail/${id}" target="_blank" class="share-link__button btn mt-2">LinkedIn</a>
+          </div>
+        </div>
+      `,
+      showConfirmButton: false,
+      focusConfirm: false,
+    });
+    
+    const copyText = document.getElementById('shareLink');
+    const copyButton = document.querySelector('.copy-button');
+    copyButton.addEventListener('click', () => {
+      copyText.select();
+      document.execCommand('copy');
+      Swal.fire({
+        title: 'Berhasil',
+        text: 'Link telah disalin',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+    });
+  };
+  
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -140,9 +180,9 @@ const TermCard = ({ index, dataDefinition }) => {
               <a className="card-link" href={`/definitions?term=${term}`}>{term}</a>
             </h2>
             <div className="term__info mb-2">
-              <a href="#" className="term__username">
+              <span className="term__username">
                 {name}
-              </a>
+              </span>
               <span className="mx-1 text-muted">&#8226;</span>
               <small className="text-muted">{formatDate(updatedAt)}</small>
             </div>
@@ -151,7 +191,7 @@ const TermCard = ({ index, dataDefinition }) => {
               <button type="button" className="term__action-button btn" onClick={reportHandler}>
                 <FlagSvg />
               </button>
-              <button type="button" className="term__action-button btn">
+              <button type="button" className="term__action-button btn" onClick={shareLinkHandler}>
                 <ShareSvg />
               </button>
             </div>

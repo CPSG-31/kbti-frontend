@@ -7,3 +7,5 @@ export { ReactComponent as DeleteIcon } from './lib/deteleButton.svg';
 export { ReactComponent as ReviewIcon } from './lib/review.svg';
 export { ReactComponent as PlusSvg } from './lib/plus.svg';
 export { ReactComponent as EditIcon } from './lib/edit.svg';
+export { ReactComponent as GithubIcon } from './lib/github.svg';
+export { ReactComponent as LinkedinIcon } from './lib/linkedin.svg';
