@@ -17,7 +17,7 @@ root.render(
     <AuthContextProvider>
       <App />
     </AuthContextProvider>
-  </BrowserRouter>,
+  </BrowserRouter>
 );
 
 window.addEventListener('load', async () => {
@@ -27,7 +27,7 @@ window.addEventListener('load', async () => {
   } else {
     console.log('Browser tidak mendukung service worker');
   }
-  
+
   if (!navigator.onLine) {
     Swal.fire({
       title: ' Tidak Ada Jaringan Internet (Offline)',
