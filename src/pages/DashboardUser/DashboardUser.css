@@ -38,6 +38,9 @@ h2 {
   color: #1d2a57;
 }
 
+.info-btn{
+background-color: #FFFF;
+}
 .status-count {
   font-size: 1.8em;
 }
