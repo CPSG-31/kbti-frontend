@@ -11,6 +11,7 @@ const API_ENDPOINT = {
   DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   SEARCH: (query) => `${CONFIG.BASE_URL}/search?q=${query}`,
   GET_DEFINITIONS_BY_TERM: (term) => `${CONFIG.BASE_URL}/definitions?term=${term}`,
+  GET_DEFINITION_BY_ID: (id) => `${CONFIG.BASE_URL}/definitions/${id}`,
   GET_DEFINITIONS_BY_CATEGORY_ID: (categoryId) => `${CONFIG.BASE_URL}/definitions?categoryId=${categoryId}`,
   VOTE_DEFINITION: (id) => `${CONFIG.BASE_URL}/definitions/${id}/vote`,
   ADMIN_DEFINITIONS: (page) => `${CONFIG.BASE_URL}/admin/definitions?page=${page}`,
