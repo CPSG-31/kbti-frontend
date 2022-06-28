@@ -21,7 +21,7 @@ import {
   DetailUser,
   ReviewDetailDefinition,
   DashboardUser,
-  DefinitionDetail
+  DefinitionDetail,
   AboutUs,
 } from './pages';
 
@@ -30,10 +30,10 @@ import API_ENDPOINT from './globals/apiEndpoint';
 
 const App = () => {
   const { role_id: roleId, isLoggedIn, login, logout } = useAuth();
-  
+
   const [role, setRole] = useState(null);
   const [isNotValid, setIsNotValid] = useState(false);
-  
+
   useEffect(() => {
     let tokenFromStorage;
     try {
@@ -50,13 +50,13 @@ const App = () => {
               Authorization: `Bearer ${tokenFromStorage.token}`,
             },
           });
-          
+
           const tokenData = response.data;
-          
+
           if (tokenData.data.expires_at < +Date.now()) {
             return logout('Sesi Berakhir, mohon login ulang!');
           }
-          
+
           await login(tokenData);
           const roleIdResponse = tokenData.data.role_id;
           setRole(roleIdResponse === 1 ? 'admin' : roleIdResponse === 2 ? 'user' : 'guest');
@@ -73,24 +73,24 @@ const App = () => {
       setRole('');
     }
   }, [roleId]);
-  
+
   return (
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="search" element={<BrowseResult />} />
-        <Route path="definitions" element={<PublicListDefintion />}/>
+        <Route path="definitions" element={<PublicListDefintion />} />
         <Route path="definition/detail/:idDefinition" element={<DefinitionDetail />} />
         <Route path="about-us" element={<AboutUs />} />
       </Route>
-    
+
       {(!isLoggedIn || (role !== 'admin' && role !== 'user')) && (
         <Route element={<PublicLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
       )}
-      
+
       {isLoggedIn && (
         <Route element={<PublicLayout />}>
           <Route path="definitions/create" element={<CreateDefinition />} />
@@ -98,27 +98,27 @@ const App = () => {
           <Route path="register" element={<Navigate to="/" />} />
         </Route>
       )}
-    
+
       {role === 'user' && isLoggedIn && (
         <Route element={<PublicLayout />}>
           <Route path="dashboard" element={<DashboardUser />} />
           <Route path="definitions/:idDefinition/edit" element={<UpdateDefinition />} />
         </Route>
       )}
-    
+
       {role === 'admin' && isLoggedIn && (
         <>
-          <Route path="dashboard" element={<AdminLayout />} >
-            <Route path="definitions" element={<ListDefinition />}/>
-            <Route path="definitions/review" element={<ReviewDefinition />}/>
-            <Route path="definitions/:idDefinition/review" element={<ReviewDetailDefinition />}/>
-            <Route path="definitions/deleted" element={<ListDeteledDefinition />}/>
-            <Route path="users" element={<ListUser />}/>
-            <Route path="users/:idUser" element={<DetailUser />}/>
+          <Route path="dashboard" element={<AdminLayout />}>
+            <Route path="definitions" element={<ListDefinition />} />
+            <Route path="definitions/review" element={<ReviewDefinition />} />
+            <Route path="definitions/:idDefinition/review" element={<ReviewDetailDefinition />} />
+            <Route path="definitions/deleted" element={<ListDeteledDefinition />} />
+            <Route path="users" element={<ListUser />} />
+            <Route path="users/:idUser" element={<DetailUser />} />
           </Route>
         </>
       )}
-    
+
       <Route element={!isLoggedIn || role || isNotValid ? <PublicLayout /> : ''}>
         <Route path="*" element={!isLoggedIn || role || isNotValid ? <Error /> : ''} />
       </Route>
