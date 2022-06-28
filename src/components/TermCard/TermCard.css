@@ -23,8 +23,6 @@
 .term__username {
   font-style: italic;
   font-weight: 400;
-  text-decoration: underline;
-  color: #184c92;
 }
 
 .term__action-button {
