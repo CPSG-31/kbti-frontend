@@ -12,7 +12,7 @@ module.exports = override(
       start_url: '/',
       filename: 'manifest.json',
       display: 'standalone',
-      background_color: '#ffffff',
+      background_color: '#2196f3',
       orientation: 'portrait',
       theme_color: '#2196f3',
       publicPath: '/',
