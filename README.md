@@ -10,12 +10,12 @@ KBTI is a web that provides a collection of definitions filled in by users. A us
 
 1. Clone the project
     ```bash
-      git clone https://github.com/CPSG-31/kbti-backend.git
+      git clone https://github.com/CPSG-31/kbti-frontend.git
     ```
 
 2. Go to the project directory
     ```bash
-      cd kbti-backend
+      cd kbti-frontend
     ```
 
 3. Install dependencies
