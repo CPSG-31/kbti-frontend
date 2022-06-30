@@ -6,6 +6,34 @@
 
 KBTI is a web that provides a collection of definitions filled in by users. A user can vote to measure how good and accurate the definitions made by other users are. The language used in, it's Indonesian. So it's hoped that it can help users who don't understand foreign languages and also make it easy to use in finding the desired definition.
 
+## Run Locally
+
+1. Clone the project
+    ```bash
+      git clone https://github.com/CPSG-31/kbti-backend.git
+    ```
+
+2. Go to the project directory
+    ```bash
+      cd kbti-backend
+    ```
+
+3. Install dependencies
+    ```bash
+      npm install
+    ```
+
+4. Start the server
+    ```bash
+      npm run start
+    ```
+
+
+## Screenshot
+[screenshot documentation] (https://docs.google.com/document/d/1qRyDgjt5BXucqiPVhSCVVrV-8151NzN5-FGsSzplGIY/edit?usp=sharing)
+
+
+    
 ## Credit
 
 - Framework:
