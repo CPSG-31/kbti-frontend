@@ -30,7 +30,7 @@ KBTI is a web that provides a collection of definitions filled in by users. A us
 
 
 ## Screenshot
-[screenshot documentation] (https://docs.google.com/document/d/1qRyDgjt5BXucqiPVhSCVVrV-8151NzN5-FGsSzplGIY/edit?usp=sharing)
+[screenshot documentation](https://docs.google.com/document/d/1qRyDgjt5BXucqiPVhSCVVrV-8151NzN5-FGsSzplGIY/edit?usp=sharing)
 
 
     
